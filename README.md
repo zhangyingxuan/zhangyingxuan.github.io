@@ -16,8 +16,8 @@ QQ: 912544981
 #### 4.赞助
 想给作者予以鼓励？欢迎打赏吧。  
 支付宝:  
-<img width="200" height="200" src="/assets/zhifubao.png"/>
+<img width="200" height="300" src="/assets/zhifubao.png"/>
 
 微信:  
-<img width="200" height="200" src="/assets/weixin.png"/>
+<img width="200" height="300" src="/assets/weixin.png"/>
 
