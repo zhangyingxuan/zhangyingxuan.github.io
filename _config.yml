@@ -1,5 +1,5 @@
 markdown: kramdown
-highlighter: pygments
+rouge: pygments
 permalink: /posts/:title.html
 excerpt_separator: "<!-- more -->"
 
