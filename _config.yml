@@ -3,25 +3,27 @@ highlighter: pygments
 permalink: /posts/:title.html
 excerpt_separator: "<!-- more -->"
 
-github: panxw
-author: "潘学文"
-email: winfirm#163.com
-name: "潘学文个人博客"
-url: http://www.panxw.com
-domain: www.panxw.com
+github: zhangyingxuan
+author: "张颖旋"
+email: 827516789@qq.com
+name: "张颖旋个人博客"
+url: https://github.com/zhangyingxuan/zhangyingxuan.github.io
+domain: github.com/zhangyingxuan/zhangyingxuan.github.io
 all_categories: [
-["android", "Android开发","/posts/android.html"], 
+["weixin", "微信开发","/posts/weixin.html"],
+["front", "前端开发","/posts/front.html"],
+["service", "Web建站","/posts/service.html"],
+["phone", "移动原生","/posts/phone.html"],
 ["program", "软件编程","/posts/program.html"],
-["web", "Web建站","/posts/web.html"], 
 ["linux", "Linux相关","/posts/linux.html"],
-["read", "读书笔记","/posts/read.html"], 
+["read", "读书笔记","/posts/read.html"],
 ["other", "杂记","/posts/other.html"],
 ["about", "关于","/about.html"]
 ]
 
 paginate: 8
 paginate_path: "posts/page:num"
-timezone: America/Los_Angeles
+#timezone: America/Los_Angeles
 
 collections:
   docs:
