@@ -4,77 +4,8 @@
     <bookmark url="file://E:/git2/demo/vue-ui/src/components/vux-ui/layout-vux.vue" description="x-header" line="8" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="21dfd725-e020-46e7-a76d-33645f43d0d8" name="Default" comment="add by yixuanz vue-cli 爬坑之路 2018-1-28 23:49:43">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/images/column_list_code.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/images/gulp-flow.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/images/inner_net_cross.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/images/inner_net_cross3.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/images/markdown-vscode.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/images/openPermission1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/images/openPermission2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/images/openPermission3.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/images/test_result_cloudflare.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/images/test_reuslt_incapsula.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/images/translateVue2/translateVue2-vux-tree.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/images/translateVue2/vue-cli-vuex1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/images/translateVue2/vue-cli-vuex2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/images/translateVue2/vue-cli-vuex3.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/images/translateVue2/vue-cli-vuex4.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/images/translateVue2/vue-cli-vuex5.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/images/vue-build-error.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/images/vue-cli-close-eslint.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/images/webpack-flow.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/images/weixin.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/images/zhifubao.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/markdown-exported-files.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/2018-01-30-echarts打包手册.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/2018-02-04-微信本地联调.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/2018-02-5-VUE2.0查漏补缺.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/2018-02-5-vue-cli爬坑之路3-问题集.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/front/dealPlan.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/front/front.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/front/frontKeng.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/front/linux.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/front/markdown-vscode.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/front/markdown-webstorm.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/front/markdown.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/front/other.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/front/phone.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/front/program.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/front/sass.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/front/service.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/front/webpack.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/front/weixin.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/h5/2018-01-30-H5方向总结.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/h5/2018-02-05-混合开发快速入门.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/h5/2018-02-28-H5方向总结.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/h5/2018-04-11-vux框架安装&amp;主题修改.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/javaWeb/eclipse-install.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/javaWeb/es6-logs.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/javaWeb/prepare-我想了解的.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/javaWeb/prepare.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/javaWeb/vue-cli-debug.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/javaWeb/vue-cli-install.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/javaWeb/常用前端判断.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/javaWeb/混合开发问题集.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/vue-cli/vue-cli-axios.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/vue-cli/vue-cli-jquery.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/vue-cli/vue-cli-network.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/vue-cli/vue-cli-router.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/vue-cli/vue-cli-ui.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/vue-cli/vue-cli-vuex.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/vue-cli/vue-cli.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/vue-cli/vue-缓存页面.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/vue-cli/vuex.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/周报/2018-4-8周报.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/images/markdown-vscode.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/js/china.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/js/map.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/js/map5.js" />
+    <list default="true" id="21dfd725-e020-46e7-a76d-33645f43d0d8" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2018-01-30-CSS3动效.md" afterPath="$PROJECT_DIR$/_posts/2018-01-30-CSS3动效.md" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/_posts/2018-02-5-vue2.0课程.md" afterPath="$PROJECT_DIR$/_posts/h5/2018-02-05-vue2.0课程.md" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -442,7 +373,7 @@
       <workItem from="1522820365019" duration="7014000" />
       <workItem from="1523264021561" duration="2838000" />
       <workItem from="1523427334466" duration="579000" />
-      <workItem from="1523511759314" duration="1813000" />
+      <workItem from="1523511759314" duration="2451000" />
     </task>
     <task id="LOCAL-00001" summary="add by yixuanz vue-cli 爬坑之路 2018-1-28 23:49:43">
       <created>1517154588282</created>
@@ -549,11 +480,18 @@
       <option name="project" value="LOCAL" />
       <updated>1519798676606</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="add by yixuanz 积累文档上传 2018-4-12 22:37:39">
+      <created>1523543871422</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1523543871422</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="160840000" />
+    <option name="totallyTimeSpent" value="161478000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1364" height="728" extended-state="0" />
@@ -637,7 +575,8 @@
     <MESSAGE value="modify by yixuanz update blog content 2018-2-3 11:38:41" />
     <MESSAGE value="add by yixuanz JS梳理、vue2.0基础课程 2018-2-9 09:11:52" />
     <MESSAGE value="add by yixuanz 常见跨域问题梳理 2018-2-28 14:17:51" />
-    <option name="LAST_COMMIT_MESSAGE" value="add by yixuanz 常见跨域问题梳理 2018-2-28 14:17:51" />
+    <MESSAGE value="add by yixuanz 积累文档上传 2018-4-12 22:37:39" />
+    <option name="LAST_COMMIT_MESSAGE" value="add by yixuanz 积累文档上传 2018-4-12 22:37:39" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
