@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="21dfd725-e020-46e7-a76d-33645f43d0d8" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/_posts/2019-03-28-百度地图mapv接入及使用.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/_posts/2019-03-28-百度地图接入及使用.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/_posts/2019-04-04-echart3中国地图（重庆地图）.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/_posts/2019-04-16-echart3使用技巧.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/_config.yml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -54,12 +48,13 @@
         <entry file="file://$PROJECT_DIR$/_posts/2019-03-28-百度地图mapv接入及使用.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="212">
-                <caret line="69" selection-start-line="69" selection-end-line="69" />
+              <first_editor relative-caret-position="363">
+                <caret line="389" lean-forward="true" selection-start-line="389" selection-end-line="389" />
                 <folding>
                   <element signature="e#405#1459#0" />
                   <element signature="e#1470#3728#0" />
                   <element signature="e#407#3264#0" />
+                  <element signature="e#7302#9020#0" />
                   <element signature="e#3611#6123#0" />
                 </folding>
               </first_editor>
@@ -345,7 +340,7 @@
       <workItem from="1523264021561" duration="2838000" />
       <workItem from="1523427334466" duration="579000" />
       <workItem from="1523511759314" duration="2451000" />
-      <workItem from="1555380681206" duration="14622000" />
+      <workItem from="1555380681206" duration="15829000" />
     </task>
     <task id="LOCAL-00001" summary="add by yixuanz vue-cli 爬坑之路 2018-1-28 23:49:43">
       <created>1517154588282</created>
@@ -463,13 +458,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="176100000" />
+    <option name="totallyTimeSpent" value="177307000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1358" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49324325" visible="true" weight="0.17334037" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49324325" visible="true" weight="0.17334037" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" sideWeight="0.5067568" side_tool="true" weight="0.25301206" />
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
@@ -482,7 +477,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.3412162" />
       <window_info anchor="bottom" id="Messages" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" visible="true" weight="0.37635574" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.37635574" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.3289689" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -787,12 +782,13 @@
     <entry file="file://$PROJECT_DIR$/_posts/2019-03-28-百度地图mapv接入及使用.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="212">
-            <caret line="69" selection-start-line="69" selection-end-line="69" />
+          <first_editor relative-caret-position="363">
+            <caret line="389" lean-forward="true" selection-start-line="389" selection-end-line="389" />
             <folding>
               <element signature="e#405#1459#0" />
               <element signature="e#1470#3728#0" />
               <element signature="e#407#3264#0" />
+              <element signature="e#7302#9020#0" />
               <element signature="e#3611#6123#0" />
             </folding>
           </first_editor>
