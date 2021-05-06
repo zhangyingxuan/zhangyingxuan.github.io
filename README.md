@@ -14,11 +14,3 @@ NexT 是由 [Hexo NexT](https://github.com/iissnan/hexo-theme-next) 移植而来
 ## 浏览器支持 Browser support
 
 ![Browser support](http://iissnan.com/nexus/next/browser-support.png)
-
-## 捐赠
-
-支付宝/微信捐赠链接还是要有的，万一真的有人捐呢。
-
-<img width="200px" height="300px" src='http://i2.bvimg.com/630937/2b1b2309d9811bb2.jpg'>
-
-<img width="200px" height="300px" src='http://i2.bvimg.com/630937/3e42a92cf4cee03d.jpg'>
