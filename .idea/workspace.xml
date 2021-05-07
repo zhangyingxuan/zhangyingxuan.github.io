@@ -1,300 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="21dfd725-e020-46e7-a76d-33645f43d0d8" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2021-05-06-vue优化.md" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2021-05-06-vue优化.md" afterDir="false" />
     </list>
-    <ignored path="$PROJECT_DIR$/.tmp/" />
-    <ignored path="$PROJECT_DIR$/temp/" />
-    <ignored path="$PROJECT_DIR$/tmp/" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FavoritesManager">
-    <favorites_list name="zhangyingxuan.github.io" />
-  </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/_posts/2018-02-5-vue-cli爬坑之路3-问题集.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="-1188" />
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/_posts/2019-03-28-百度地图接入及使用.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="198">
-                <caret line="10" selection-start-line="10" selection-end-line="10" />
-                <folding>
-                  <element signature="e#1926#4731#0" />
-                  <element signature="e#5193#18613#0" />
-                </folding>
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/_posts/2019-03-28-百度地图mapv接入及使用.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="363">
-                <caret line="389" lean-forward="true" selection-start-line="389" selection-end-line="389" />
-                <folding>
-                  <element signature="e#405#1459#0" />
-                  <element signature="e#1470#3728#0" />
-                  <element signature="e#407#3264#0" />
-                  <element signature="e#7302#9020#0" />
-                  <element signature="e#3611#6123#0" />
-                </folding>
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/_posts/2019-04-16-echart3使用技巧.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="44">
-                <caret line="2" column="46" selection-start-line="2" selection-start-column="46" selection-end-line="2" selection-end-column="46" />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/_posts/2019-04-04-echart3中国地图（重庆地图）.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="2684">
-                <caret line="122" column="26" lean-forward="true" selection-start-line="122" selection-start-column="26" selection-end-line="122" selection-end-column="26" />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/_config.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="319">
-              <caret line="15" column="51" selection-start-line="15" selection-start-column="51" selection-end-line="15" selection-end-column="51" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/_data/languages/zh-Hans.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="214">
-              <caret line="31" column="13" lean-forward="true" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/_posts/h5/2018-01-30-H5方向总结.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor />
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/_posts/h5/2018-02-05-vue2.0课程.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor />
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/_posts/h5/2018-02-05-混合开发快速入门.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor />
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>gemoji</find>
-      <find>Next Theme Tutorial</find>
-      <find>no</find>
-      <find>Archives</find>
-      <find>archives</find>
-      <find>categories</find>
-      <find>home</find>
-      <find>markdown-exported-files.xml</find>
-      <find>jekyll</find>
-      <find>baidu_analysis</find>
-      <find>A Couple of Examples</find>
-      <find>Foo</find>
-      <find>site-title</find>
-      <find>next</find>
-      <find>site</find>
-      <find>sessionId</find>
-      <find>rewrittenCookies</find>
-      <find>&gt;</find>
-      <find>事件处理</find>
-      <find>注意事项</find>
-      <find>事件修饰符</find>
-      <find>es6</find>
-      <find>json</find>
-      <find>js</find>
-      <find>flex</find>
-      <find>css</find>
-      <find>John Doe</find>
-      <find>强力驱动</find>
-      <find>John Doe</find>
-      <find>footer</find>
-    </findStrings>
-    <replaceStrings>
-      <replace>###</replace>
-    </replaceStrings>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/Gemfile.lock" />
-        <option value="$PROJECT_DIR$/_posts/2017-07-19-highlight-test.md" />
-        <option value="$PROJECT_DIR$/_posts/2018-01-28-vue-cli爬坑之路2.md" />
-        <option value="$PROJECT_DIR$/_posts/2018-01-28-vue-cli爬坑之路.md" />
-        <option value="$PROJECT_DIR$/_posts/2018-01-30-echarts打包手册.md" />
-        <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/_posts/2018-01-30-echarts地图标注.md" />
-        <option value="$PROJECT_DIR$/_posts/2018-02-04-JS梳理.md" />
-        <option value="$PROJECT_DIR$/_posts/2018-02-5-混合开发快速入门.md" />
-        <option value="$PROJECT_DIR$/_posts/2018-02-5-vue2.0课程.md" />
-        <option value="$PROJECT_DIR$/_posts/javaWeb/index.html" />
-        <option value="$PROJECT_DIR$/_posts/javaWeb/123.html" />
-        <option value="$PROJECT_DIR$/_posts/2018-01-30-H5方向总结.md" />
-        <option value="$PROJECT_DIR$/_posts/2018-02-04-微信本地联调.md" />
-        <option value="$PROJECT_DIR$/_posts/2018-01-30-CSS3动效.md" />
-        <option value="$PROJECT_DIR$/_posts/2018-02-05-vue2.0课程.md" />
-        <option value="$PROJECT_DIR$/_posts/2018-02-05-混合开发快速入门.md" />
-        <option value="$PROJECT_DIR$/_posts/javaWeb/面试准备.md" />
-        <option value="$PROJECT_DIR$/_posts/2018-02-5-VUE2.0查漏补缺.md" />
-        <option value="$PROJECT_DIR$/_posts/2018-02-28-H5方向总结.md" />
-        <option value="$PROJECT_DIR$/_posts/2018-02-04-跨域问题整理.md" />
-        <option value="$PROJECT_DIR$/_posts/h5/2018-02-28-H5方向总结.md" />
-        <option value="$PROJECT_DIR$/_posts/vue-cli/vue-缓存页面.md" />
-        <option value="$PROJECT_DIR$/_posts/vue-cli/常用前端判断.md" />
-        <option value="$PROJECT_DIR$/_posts/vue-cli/混合开发问题集.md" />
-        <option value="$PROJECT_DIR$/_posts/javaWeb/prepare-我想了解的.md" />
-        <option value="$PROJECT_DIR$/_posts/javaWeb/prepare.md" />
-        <option value="$PROJECT_DIR$/_posts/周报/2013-12-24-categories.md" />
-        <option value="$PROJECT_DIR$/_posts/周报/2018-4-8周报.md" />
-        <option value="$PROJECT_DIR$/_posts/h5/2018-04-11-vux框架安装&amp;主题修改.md" />
-        <option value="$PROJECT_DIR$/_posts/2018-02-5-vue-cli爬坑之路3-问题集.md" />
-        <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/_posts/2019-04-16-echart3使用技巧.md" />
-        <option value="$PROJECT_DIR$/_posts/2019-04-04-echart3中国地图（重庆地图）.md" />
-        <option value="$PROJECT_DIR$/_config.yml" />
-        <option value="$PROJECT_DIR$/_posts/2019-03-28-百度地图接入及mapv使用.md" />
-        <option value="$PROJECT_DIR$/_posts/2019-03-28-百度地图接入及使用.md" />
-        <option value="$PROJECT_DIR$/_posts/2019-03-28-百度地图mapv接入及使用.md" />
-      </list>
-    </option>
-  </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1358" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
-  </component>
+  <component name="ProjectId" id="1s8tkUgGvbxBB3bAwXQg756z3VV" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <autoscrollFromSource ProjectPane="true" />
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="zhangyingxuan.github.io" type="b2602c69:ProjectViewProjectNode" />
-              <item name="zhangyingxuan.github.io" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="zhangyingxuan.github.io" type="b2602c69:ProjectViewProjectNode" />
-              <item name="zhangyingxuan.github.io" type="462c0819:PsiDirectoryNode" />
-              <item name="_data" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="zhangyingxuan.github.io" type="b2602c69:ProjectViewProjectNode" />
-              <item name="zhangyingxuan.github.io" type="462c0819:PsiDirectoryNode" />
-              <item name="_data" type="462c0819:PsiDirectoryNode" />
-              <item name="languages" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="zhangyingxuan.github.io" type="b2602c69:ProjectViewProjectNode" />
-              <item name="zhangyingxuan.github.io" type="462c0819:PsiDirectoryNode" />
-              <item name="_posts" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-    </panes>
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://E:/github/zhangyingxuan.github.io/_posts/2018-02-5-vue-cli爬坑之路3-问题集.md" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/_posts" />
     <property name="settings.editor.selected.configurable" value="configurable.group.build" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/_posts" />
+      <recent name="E:\github\zhangyingxuan.github.io\_posts\javaWeb" />
+      <recent name="E:\github\zhangyingxuan.github.io\_posts\h5" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/_posts" />
+      <recent name="$PROJECT_DIR$" />
       <recent name="E:\github\zhangyingxuan.github.io\_posts" />
       <recent name="E:\github\zhangyingxuan.github.io\_posts\h5" />
       <recent name="E:\github\zhangyingxuan.github.io\_posts\周报" />
-      <recent name="E:\github\zhangyingxuan.github.io\_posts\vue-cli" />
-      <recent name="E:\github\zhangyingxuan.github.io\_posts\javaWeb" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\github\zhangyingxuan.github.io\_posts\javaWeb" />
-      <recent name="E:\github\zhangyingxuan.github.io\_posts\h5" />
-    </key>
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -341,6 +106,9 @@
       <workItem from="1523427334466" duration="579000" />
       <workItem from="1523511759314" duration="2451000" />
       <workItem from="1555380681206" duration="15829000" />
+      <workItem from="1620266192570" duration="8708000" />
+      <workItem from="1620357494676" duration="1082000" />
+      <workItem from="1620368924852" duration="3039000" />
     </task>
     <task id="LOCAL-00001" summary="add by yixuanz vue-cli 爬坑之路 2018-1-28 23:49:43">
       <created>1517154588282</created>
@@ -457,76 +225,15 @@
     <option name="localTasksCounter" value="17" />
     <servers />
   </component>
-  <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="177307000" />
-  </component>
-  <component name="ToolWindowManager">
-    <frame x="1358" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
-    <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49324325" visible="true" weight="0.17334037" />
-      <window_info id="Structure" order="1" weight="0.25" />
-      <window_info id="Favorites" order="2" sideWeight="0.5067568" side_tool="true" weight="0.25301206" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="7" weight="0.3412162" />
-      <window_info anchor="bottom" id="Messages" order="8" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.37635574" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.3289689" />
-      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-    </layout>
-    <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49324325" visible="true" weight="0.19457014" />
-      <window_info id="Structure" order="1" weight="0.25" />
-      <window_info id="Favorites" order="2" sideWeight="0.5067568" side_tool="true" weight="0.25301206" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="7" weight="0.3412162" />
-      <window_info anchor="bottom" id="Messages" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.3496732" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.3289689" />
-      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-    </layout-to-restore>
-  </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="RECENTLY_FILTERED_USER_GROUPS">
-                <collection />
-              </option>
-              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
-                <collection />
-              </option>
-              <option name="COLUMN_ORDER">
-                <list>
-                  <option value="0" />
-                  <option value="1" />
-                  <option value="2" />
-                  <option value="3" />
-                </list>
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
@@ -545,6 +252,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add by yixuanz vue-cli 爬坑之路 2018-1-28 23:49:43" />
@@ -558,243 +266,15 @@
     <MESSAGE value="add by yixuanz 积累文档上传 2018-4-12 22:37:39" />
     <option name="LAST_COMMIT_MESSAGE" value="add by yixuanz 积累文档上传 2018-4-12 22:37:39" />
   </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/_posts/2013-12-24-elements.md" />
-    <entry file="file://$PROJECT_DIR$/_includes/_partials/header.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="14" column="46" selection-start-line="14" selection-start-column="41" selection-end-line="14" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_posts/front/dealPlan.md" />
-    <entry file="file://$PROJECT_DIR$/_posts/front/front.md" />
-    <entry file="file://$PROJECT_DIR$/assets/js/map5.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/images/zhifubao.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://E:/SVN/自研项目/my2017/README.md" />
-    <entry file="file://$PROJECT_DIR$/assets/images/css3demoMap.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/images/css3demo1.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_posts/2018-01-30-echarts地图标注.md" />
-    <entry file="file://$PROJECT_DIR$/_posts/2018-01-28-vue-cli爬坑之路2.md" />
-    <entry file="file://$PROJECT_DIR$/_posts/javaWeb/123.html" />
-    <entry file="file://$PROJECT_DIR$/_posts/javaWeb/index.html" />
-    <entry file="file://$PROJECT_DIR$/_posts/javaWeb/es6-logs.md" />
-    <entry file="file://$PROJECT_DIR$/_posts/2018-01-28-vue-cli爬坑之路.md" />
-    <entry file="file://$PROJECT_DIR$/_posts/2018-01-30-CSS3动效.md" />
-    <entry file="file://$PROJECT_DIR$/assets/images/translateVue2/vue-cli-vuex1.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_posts/vue-cli/vue-cli-vuex.md" />
-    <entry file="file://$PROJECT_DIR$/_posts/2018-01-30-echarts打包手册.md" />
-    <entry file="file://$PROJECT_DIR$/_posts/2018-02-04-微信本地联调.md" />
-    <entry file="file://$PROJECT_DIR$/_posts/2018-02-04-跨域问题整理.md" />
-    <entry file="file://$PROJECT_DIR$/_posts/2018-02-04-JS梳理.md" />
-    <entry file="file://$PROJECT_DIR$/_posts/vue-cli/vue-cli-jquery.md" />
-    <entry file="file://$PROJECT_DIR$/_posts/vue-cli/vuex.md" />
-    <entry file="file://$PROJECT_DIR$/_posts/javaWeb/vue-cli-debug.md" />
-    <entry file="file://$PROJECT_DIR$/_posts/javaWeb/vue-cli-install.md" />
-    <entry file="file://$PROJECT_DIR$/_posts/vue-cli/vue-缓存页面.md" />
-    <entry file="file://$PROJECT_DIR$/_posts/2013-12-24-long-title.md" />
-    <entry file="file://$PROJECT_DIR$/_posts/javaWeb/prepare-我想了解的.md" />
-    <entry file="file://$PROJECT_DIR$/_posts/2018-02-5-VUE2.0查漏补缺.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_posts/2013-12-24-categories.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_posts/周报/2018-4-8周报.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_posts/h5/2018-02-28-H5方向总结.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_posts/h5/2018-04-11-vux框架安装&amp;主题修改.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_posts/javaWeb/prepare.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_posts/javaWeb/常用前端判断.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_posts/javaWeb/混合开发问题集.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="13" column="5" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.en.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="-3359" />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_posts/javaWeb/eclipse-install.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_posts/h5/2018-01-30-H5方向总结.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_posts/h5/2018-02-05-vue2.0课程.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_posts/h5/2018-02-05-混合开发快速入门.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_config.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="15" column="51" selection-start-line="15" selection-start-column="51" selection-end-line="15" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_data/languages/zh-Hans.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="214">
-          <caret line="31" column="13" lean-forward="true" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_posts/2019-04-16-echart3使用技巧.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="44">
-            <caret line="2" column="46" selection-start-line="2" selection-start-column="46" selection-end-line="2" selection-end-column="46" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_posts/2018-02-5-vue-cli爬坑之路3-问题集.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="-1188" />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_posts/2019-04-04-echart3中国地图（重庆地图）.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="2684">
-            <caret line="122" column="26" lean-forward="true" selection-start-line="122" selection-start-column="26" selection-end-line="122" selection-end-column="26" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_posts/2019-03-28-百度地图接入及使用.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="198">
-            <caret line="10" selection-start-line="10" selection-end-line="10" />
-            <folding>
-              <element signature="e#1926#4731#0" />
-              <element signature="e#5193#18613#0" />
-            </folding>
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_posts/2019-03-28-百度地图mapv接入及使用.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="363">
-            <caret line="389" lean-forward="true" selection-start-line="389" selection-end-line="389" />
-            <folding>
-              <element signature="e#405#1459#0" />
-              <element signature="e#1470#3728#0" />
-              <element signature="e#407#3264#0" />
-              <element signature="e#7302#9020#0" />
-              <element signature="e#3611#6123#0" />
-            </folding>
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
+  <component name="WindowStateProjectService">
+    <state x="451" y="-1051" width="858" height="685" key="find.popup" timestamp="1620357983847">
+      <screen x="-400" y="-1417" width="2560" height="1417" />
+    </state>
+    <state x="451" y="-1051" width="858" height="685" key="find.popup/-400.-1417.2560.1417/0.23.1792.1006@-400.-1417.2560.1417" timestamp="1620357983847" />
+    <state x="596" y="283" width="600" height="486" key="find.popup/0.23.1792.1006@0.23.1792.1006" timestamp="1620268279268" />
+    <state x="545" y="-374" key="run.anything.popup" timestamp="1620287156543">
+      <screen x="-400" y="-1417" width="2560" height="1417" />
+    </state>
+    <state x="545" y="-374" key="run.anything.popup/-400.-1417.2560.1417/0.23.1792.1006@-400.-1417.2560.1417" timestamp="1620287156543" />
   </component>
 </project>
