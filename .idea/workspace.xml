@@ -21,7 +21,6 @@
   <component name="ChangeListManager">
     <list default="true" id="21dfd725-e020-46e7-a76d-33645f43d0d8" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_posts/2021-05-06-vue优化.md" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2021-05-06-vue优化.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +107,7 @@
       <workItem from="1555380681206" duration="15829000" />
       <workItem from="1620266192570" duration="8708000" />
       <workItem from="1620357494676" duration="1082000" />
-      <workItem from="1620368924852" duration="3039000" />
+      <workItem from="1620368924852" duration="3649000" />
     </task>
     <task id="LOCAL-00001" summary="add by yixuanz vue-cli 爬坑之路 2018-1-28 23:49:43">
       <created>1517154588282</created>
