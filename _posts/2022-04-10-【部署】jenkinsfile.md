@@ -2,9 +2,10 @@
 title: 2022-10-10-部署 - jenkinsfile
 description: jenkinsfile
 categories:
- - jenkinsfile
+ - 部署
 tags:
  - jenkinsfile
+ - 前端工程化
 ---
 **这里对语法进行简单介绍**
 
