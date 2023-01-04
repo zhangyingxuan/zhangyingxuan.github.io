@@ -143,7 +143,50 @@ eslint app.js --fix
 1. 安装依赖
 ```
 ```
-2. 配置规则
+2. 配置规则，prettier.config.js 参考配置如下
+``` js
+module.exports = {
+  // 一行最多 120 字符
+  printWidth: 120,
+  // 使用 2 个空格缩进
+  tabWidth: 2,
+  // 不使用缩进符，而使用空格
+  useTabs: false,
+  // 行尾需要有分号
+  semi: true,
+  // 使用单引号
+  singleQuote: true,
+  // 对象的 key 仅在必要时用引号
+  quoteProps: 'as-needed',
+  // jsx 不使用单引号，而使用双引号
+  jsxSingleQuote: false,
+  // 末尾需要有逗号
+  trailingComma: 'all',
+  // 大括号内的首尾需要空格
+  bracketSpacing: true,
+  // jsx 标签的反尖括号需要换行
+  jsxBracketSameLine: false,
+  // 箭头函数，只有一个参数的时候，也需要括号
+  arrowParens: 'always',
+  // 每个文件格式化的范围是文件的全部内容
+  rangeStart: 0,
+  rangeEnd: Infinity,
+  // 不需要写文件开头的 @prettier
+  requirePragma: false,
+  // 不需要自动在文件开头插入 @prettier
+  insertPragma: false,
+  // 使用默认的折行标准
+  proseWrap: 'preserve',
+  // 根据显示样式决定 html 要不要折行
+  htmlWhitespaceSensitivity: 'css',
+  // vue 文件中的 script 和 style 内不用缩进
+  vueIndentScriptAndStyle: false,
+  // 换行符使用 lf
+  endOfLine: 'lf',
+};
+
+```
+
 3. 配置忽略文件.prettierignore
 
 ```
@@ -164,8 +207,17 @@ prettier的作用是对```Formatting rules```这类规则自动化处理，自�
 - 禁用 Linters 自己的 Formatting rules，让 Prettier 接管这些职责。这些配置有现成的 Config，Linters 的配置继承这个 Config 就可以了。
 - 让 Linters 执行时首先能够调用 Prettier 格式化带啊，然后再检查 Code-quality 类规则。这是 由 Linters 的 Plugin 实现的。
 
-
-
+# VSCODE 安装eslint、prettier、vetur、volar插件及配置
+1. 安装插件
+2. 配置eslint
+3. 配置prettier
+一般而言，我们还需要集成 vscode-prettier这个插件来完成自动保存格式化，在插件市场安装好了以后，在我们的.vscode/settings.json中添加如下规则
+```
+{
+   "editor.formatOnSave": true, // 开启自动保存
+   "editor.defaultFormatter": "esbenp.prettier-vscode", // 默认格式化工具选择prettier
+}
+```
 # 参考文献
 [eslint + prettier + lint-staged 项目规范](https://juejin.cn/post/7043702363156119565)
 https://blog.csdn.net/sinat_36728518/article/details/124932438
