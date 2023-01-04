@@ -45,13 +45,15 @@ How would you like to use ESLint? (Use arrow keys)
 4. 添加 .eslintignore 忽略配置
 
 ```
-/node_modules
-/dist
-/src/assets/js
-/src/views
-/package-lock.json
-.DS_Store
-vue.config.js
+public
+dist
+*.d.ts
+/src/assets
+package.json
+.eslintrc.js
+.prettierrc.js
+commitlint.config.js
+stylelint.config.js
 ```
 5. 执行 yarn lint 
 会提示非常多的下列错误，原因是.vue 文件解析出错。默认eslint不会解析vue文件，所以我们需要一个额外的解析器来帮我们解析vue文件。
@@ -61,15 +63,138 @@ vue.config.js
 1. 修改eslint.js
 ```json
 {
-    ...
-    // 新增，解析vue文件
-    "parser":"vue-eslint-parser",
-    "parserOptions": {
-        "ecmaVersion": "latest",
-        "parser": "@typescript-eslint/parser",
-        "sourceType": "module"
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "eslint-config-airbnb-base",
+    "plugin:vue/vue3-recommended",
+    "plugin:prettier/recommended"
+  ],
+  "env": {
+    "browser": true,
+    "node": true,
+    "jest": true,
+    "es6": true
+  },
+  "plugins": [
+    "vue",
+    "@typescript-eslint"
+  ],
+  "globals": {
+    "cy": "readonly",
+    "clipboardData": "readonly",
+    "PKG_VERSION": true,
+    "defineProps": "readonly",
+    "defineEmits": "readonly"
+  },
+  "parserOptions": {
+    "parser": "@typescript-eslint/parser",
+    "sourceType": "module",
+    "allowImportExportEverywhere": true,
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "settings": {
+    "import/extensions": [
+      ".js",
+      ".jsx",
+      ".ts",
+      ".tsx"
+    ]
+  },
+  "rules": {
+    "no-console": [
+      "error",
+      {
+        "allow": ["info", "warn", "error"]
+      }
+    ],
+    // code style config
+    "no-continue": "off",
+    "no-restricted-syntax": "off",
+    "no-plusplus": "off",
+    "no-param-reassign":  "off",
+    "no-shadow":  "off",
+    "no-underscore-dangle": "off",
+    "no-unused-vars": "off",
+    "no-unused-expressions": "off",
+    "no-return-assign": "off",
+    "no-use-before-define": "off",
+    "func-names": "off",
+    "guard-for-in": "off",
+    "consistent-return": "off",
+    "no-restricted-globals": "off",
+    "default-param-last": "off",
+    "default-case": "off",
+    "prefer-spread": "off",
+
+    // import config
+    "import/extensions": "off",
+    "import/no-unresolved": "off",
+    "import/no-extraneous-dependencies": "off",
+    "import/prefer-default-export": "off",
+    "import/no-relative-packages": "off",
+    
+    // typescript config
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-require-imports": 0,
+    "@typescript-eslint/no-var-requires": 0,
+    "@typescript-eslint/prefer-for-of": 0,
+    "@typescript-eslint/ban-types": 0,
+    "@typescript-eslint/no-unused-vars": 0,
+    "@typescript-eslint/no-empty-function": 0,
+    "@typescript-eslint/ban-ts-comment": 0,
+    "vue/require-default-prop": 0,
+    "vue/multi-word-component-names": 0,
+    "vue/no-deprecated-slot-attribute": 0
+  },
+  "overrides": [
+    {
+      "files": ["*.vue"],
+      "rules": {
+        "vue/component-name-in-template-casing": [2, "kebab-case"],
+        "vue/require-default-prop": 0
+      }
     },
-    ...
+    {
+      "files": [
+        "**/_example/*",
+        "script/**/*",
+        "script/*",
+        "*.js",
+        "site/**/*",
+        "site/*"
+      ],
+      "rules": {
+        "no-var-requires": 0,
+        "no-console": 0,
+        "no-unused-expressions": 0,
+        "no-alert": 0
+      }
+    },
+    {
+      "files": [
+        "*.ts",
+        "*.tsx"
+      ],
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": 0
+      }
+    },
+    {
+      "files": [
+        "*.test.js"
+      ],
+      "rules": {
+        "import/no-dynamic-require": "off",
+        "global-require": "off"
+      }
+    },
+    {
+      "files": "*"
+    }
+  ]
 }
 // 两个parser的区别在于，外面的parser用来解析vue文件，使得eslint能解析<template>标签中的内容，而parserOptions中的parser，即@typescript-eslint/parser用来解析vue文件中<script>标签中的代码。
 ```
@@ -143,7 +268,7 @@ eslint app.js --fix
 1. 安装依赖
 ```
 ```
-2. 配置规则，prettier.config.js 参考配置如下
+2. 配置规则（JS及TS项目均适用），prettier.config.js 参考配置如下
 ``` js
 module.exports = {
   // 一行最多 120 字符
@@ -164,7 +289,7 @@ module.exports = {
   trailingComma: 'all',
   // 大括号内的首尾需要空格
   bracketSpacing: true,
-  // jsx 标签的反尖括号需要换行
+  // jsx 标签的反尖括号需要换行，注意：tsx 不生效
   jsxBracketSameLine: false,
   // 箭头函数，只有一个参数的时候，也需要括号
   arrowParens: 'always',
