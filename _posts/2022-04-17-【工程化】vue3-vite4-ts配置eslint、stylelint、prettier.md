@@ -262,8 +262,40 @@ eslint app.js --fix
 - postcss
 - less
 - sass
-- 
 
+## 2.1 什么是Stylelint
+    Stylelint是一个强大的，现代的代码检查工具，与ESLint类似，Stylelint能够通过定义一系列的编码风格规则帮助我们避免在样式表中出现错误。
+
+    目前在开源社区上，关于CSS Lint的解决方案主要包括了csslint、SCSS-Lint和Stylelint等几种。而由于Stylelint在技术架构上基于AST 的方式扩展CSS，除原生CSS 语法，其也支持 SCSS、Less 这类预处理器，并且也有非常多的第三方插件，因此我们团队选择了Stylelint作为CSS Lint工具。
+
+    官方文档：https://stylelint.io/
+
+## 2.2 安装Stylelint
+   可以选采用npm安装Stylelint。其中，stylelint-config-standard是Stylelint的标准配置。如果想使用airbnb或prettier的规范，也可以将stylelint-config-standard改为stylelint-config-airbnb或stylelint-config-prettier。
+```
+npm install stylelint stylelint-config-standard --save-dev
+```
+
+- 问题： stylelint-config-tencent、stylelint-config-prettier、stylelint-config-airbnb区别
+
+## 2.3 安装适配预处理语法的插件
+    如果我们项目中采用了如sass或less等css预处理器，那么可以安装适配预处理语法的插件。以sass为例，需要安装stylelint-scss插件。
+```
+npm install stylelint-scss --save-dev
+```
+## 2.4 安装CSS属性排序插件
+    我们也可以选择安装stylelint-order插件。该插件能够强制我们按照某个顺序编写css，比如先写定位，再写盒模型，再写内容区样式，最后写CSS3相关属性，这样可以更好的保证我们代码的可读性。
+```
+npm install stylelint-order --save-dev
+```
+## 2. Stylelint配置
+2.1 Stylelint配置方式
+    安装好Stylelint之后，就需要对Stylelint进行配置。Stylelint的配置方式包括了以下几种：
+
+在package.json中添加stylelint属性并添加规则
+在.stylelintrc文件中指定，.stylelintrc文件支持添加一个文件扩展名来区分 JSON，YAML 或 JS 格式，如创建.stylelintrc.json、.stylelintrc.yaml、.stylelintrc.yml或.stylelintrc.js文件
+在stylelint.config.js文件中指定，该文件将会exports一个配置对象
+    在这里，我们选择了在项目根目录创建.stylelintrc.js来配置Stylelint。
 # 三、初始化prettier
 1. 安装依赖
 ```
@@ -342,7 +374,26 @@ prettier的作用是对```Formatting rules```这类规则自动化处理，自�
    "editor.formatOnSave": true, // 开启自动保存
    "editor.defaultFormatter": "esbenp.prettier-vscode", // 默认格式化工具选择prettier
 }
+
+  "editor.tabSize": 2, //制表符符号eslint
+  "editor.formatOnSave": true, //保存时自动格式化
+  //保存时自动将代码按ESLint格式进行修复
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "prettier.eslintIntegration": true, //让prettier使用eslint的代码格式进行校验
+  "prettier.semi": true, //补齐代码结尾的分号
+  "prettier.singleQuote": true, //使用单引号替代双引号
+  "prettier.trailingComma": "all", // 对象补齐最后一个逗号
+```
+
+### 配置 vue 文件 自动eslint，否则.vue文件不会自动格式化
+```
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
 ```
 # 参考文献
+[styelint](https://www.cnblogs.com/Yellow-ice/p/15346883.html)
 [eslint + prettier + lint-staged 项目规范](https://juejin.cn/post/7043702363156119565)
 https://blog.csdn.net/sinat_36728518/article/details/124932438
