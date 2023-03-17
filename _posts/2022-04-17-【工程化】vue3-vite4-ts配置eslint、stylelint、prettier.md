@@ -33,7 +33,15 @@ How would you like to use ESLint? (Use arrow keys)
 
 - 选择完毕后，将安装相关依赖，并生成 ```.eslintrc.js``` 或 json格式的配置文件
 
-3. 配置lint 命令
+- 手动安装，依赖扩展 devDependencies
+```
+"eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-import-resolver-alias": "^1.1.2",
+```
+
+1. 配置lint 命令
 ```json
 {
     "scripts":{
@@ -42,7 +50,7 @@ How would you like to use ESLint? (Use arrow keys)
     }
 }
 ```
-4. 添加 .eslintignore 忽略配置
+1. 添加 .eslintignore 忽略配置
 
 ```
 public

@@ -33,5 +33,7 @@ tags:
   };
 
   pollingWorker.postMessage('init');
+
+  
 </script>
 ```

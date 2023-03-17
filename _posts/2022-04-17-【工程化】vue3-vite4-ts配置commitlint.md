@@ -17,15 +17,16 @@ tags:
 * 扩展——支持团队自定义提交模板（cz-customizable）
 * 分析——支持生成commit日志（standard-version），利于版本迭代
 ## 安装
-项目级别安装（可保证团队成员版本一致）
+1. 项目级别安装（可保证团队成员版本一致）
 ```javascript
 npm install --save-dev commitizen
 ```
-初始化（NPM5.2+）
+2. 初始化Commitizen配套的适配器，如果你的npm版本在5.2以上，那么你可以使用npx来初始化.
 
 ```javascript
 npx commitizen init cz-conventional-changelog --save-dev --save-exact
 ```
+
 该初始化命令主要完成以下3步：
 
 1. 安装cz-conventional-changelog包（提供日志标准）
@@ -34,6 +35,7 @@ npx commitizen init cz-conventional-changelog --save-dev --save-exact
 ```javascript
 "devDependencies": {
   "cz-conventional-changelog": "^3.3.0"
+	"cz-customizable": "^6.3.0",
 },
 ```
 3. 在package.json根路径新增npm执行命令config.commit及config.commitizen配置项
