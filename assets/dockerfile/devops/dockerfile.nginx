@@ -1,0 +1,35 @@
+FROM centos:7
+RUN yum install -y gcc gcc-c++ make \
+  openssl-devel pcre-devel gd-devel \
+  iproute net-tools telnet wget curl unzip && \
+  yum clean all && \
+  rm -rf /var/cache/yum/*
+# 安装 nginx
+RUN wget http://nginx.org/download/nginx-1.15.5.tar.gz && \
+  tar zxf nginx-1.15.5.tar.gz && \
+  cd nginx-1.15.5 && \
+  ./configure --prefix=/usr/local/nginx \
+  --with-http_ssl_module \
+  --with-http_stub_status_module && \
+  make -j 4 && make install && \
+  cd / && rm -rf nginx-1.12.2*
+
+# 设置时区。这对于日志、调用链等功能能否在 TSF 控制台被检索到非常重要。
+RUN useradd -s /sbin/nologin -M www \ 
+  && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "Asia/Shanghai" > /etc/timezone \
+  && wget -P /root/ https://tsf-doc-attachment-1300555551.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E6%9C%89%E4%BA%91/%E6%96%87%E4%BB%B6%E9%85%8D%E7%BD%AE/tsf-consul-template-docker.zip \
+  && unzip /root/tsf-consul-template-docker.zip -d /root \
+  && tar -zxf  /root/tsf-consul-template-docker-x86.tar.gz -C /root/ \
+  && rm -rf /root/tsf-consul-template-docker.tar.gz
+
+ENV PATH $PATH:/usr/local/nginx/sbin
+#COPY nginx.conf /usr/local/nginx/conf/nginx.conf
+WORKDIR /usr/local/nginx
+
+EXPOSE 80
+
+# COPY dist /usr/share/nginx/html
+# COPY ./devops/nginx.conf /etc/nginx/nginx.conf
+
+# CMD ["nginx", "-g", "daemon off;"]
+CMD nginx -g 'daemon off;' ; sh -ec sh /root/tsf-consul-template-docker/script/start.sh

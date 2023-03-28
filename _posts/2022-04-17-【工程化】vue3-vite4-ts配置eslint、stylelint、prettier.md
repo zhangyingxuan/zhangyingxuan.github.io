@@ -35,7 +35,6 @@ How would you like to use ESLint? (Use arrow keys)
 
 - 手动安装，依赖扩展 devDependencies
 ```
-"eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-import-resolver-alias": "^1.1.2",
@@ -306,7 +305,9 @@ npm install stylelint-order --save-dev
     在这里，我们选择了在项目根目录创建.stylelintrc.js来配置Stylelint。
 # 三、初始化prettier
 1. 安装依赖
-```
+```js
+npm install --save-dev --save-exact prettier
+// --save-exact 锁版本，去除^ ~
 ```
 2. 配置规则（JS及TS项目均适用），prettier.config.js 参考配置如下
 ``` js
@@ -352,10 +353,25 @@ module.exports = {
 
 ```
 
-3. 配置忽略文件.prettierignore
+3. 配置忽略文件.prettierignore (如果有的话)
 
 ```
 ```
+
+4. 解决eslint冲突
+
+- 安装 ```pnpm install eslint-config-prettier eslint-plugin-prettier -D```
+- 添加配置到 eslint.js 文件
+```
+module.exports = {
+  extends: [
+    'plugin:@typescript-eslint/recommended', 
+    'plugin:vue/vue3-recommended', 
+    'plugin:prettier/recommended'
+    ],
+}
+```
+
 
 **Prettier 和各种 Linters 是什么关系？如何配合使用？**
 

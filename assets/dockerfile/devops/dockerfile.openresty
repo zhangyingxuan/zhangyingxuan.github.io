@@ -1,0 +1,24 @@
+FROM centos:7.6.1810
+
+MAINTAINER openresty1.15.8.2 <827516789@qq.com>
+
+RUN yum install -y yum-utils && yum-config-manager --add-repo https://openresty.org/package/centos/openresty.repo && yum clean all && yum install -y openresty  
+
+# 设置时区。这对于日志、调用链等功能能否在 TSF 控制台被检索到非常重要。
+RUN yum -y install wget unzip && useradd -s /sbin/nologin -M www \ 
+  && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "Asia/Shanghai" > /etc/timezone \
+  && wget -P /root/ https://tsf-doc-attachment-1300555551.cos.ap-guangzhou.myqcloud.com/%E5%85%AC%E6%9C%89%E4%BA%91/%E6%96%87%E4%BB%B6%E9%85%8D%E7%BD%AE/tsf-consul-template-docker.zip \
+  && unzip /root/tsf-consul-template-docker.zip -d /root \
+  && tar -zxf  /root/tsf-consul-template-docker-x86.tar.gz -C /root/ \
+  && rm -rf /root/tsf-consul-template-docker.tar.gz
+
+RUN useradd appuser &&  mkdir -p /mnt/data/logs/nginx/ && mkdir -p /home/appuser/openresty/nginx/logs/ &&  mkdir -p /home/appuser/www-prod/
+# ADD ./www-prod/ /home/appuser/www-prod/
+# ADD ./dist /usr/local/openresty/nginx/html/
+# ADD ./devops/nginx.conf /usr/local/openresty/nginx/conf/nginx.conf
+RUN chown -R appuser.appuser /usr/local/openresty/ && chown -R appuser.appuser /home/appuser/
+#ADD nginx.conf /usr/local/openresty/nginx/conf/nginx.conf
+EXPOSE 8004
+CMD /usr/local/openresty/nginx/sbin/nginx -g 'daemon off;' ; sh /root/tsf-consul-template-docker/script/start.sh
+# CMD ["sh", "-ec", "sh /root/tsf-consul-template-docker/script/start.sh","-g","daemon off;"]
+# CMD /usr/local/openresty/nginx/sbin/nginx -g 'daemon off;' -c   /usr/local/openresty/nginx/conf/nginx.conf
