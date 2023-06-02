@@ -14,5 +14,8 @@ tags:
 
 
 # pnpm
+```
+npm install pnpm -g
+```
 
 # 区别
