@@ -1,0 +1,44 @@
+@startuml 登录时序图
+actor 用户
+participant 浏览器
+participant payback服务
+participant user服务
+database mysql
+participant 同花顺服务
+
+用户->浏览器: 登录
+
+浏览器->payback服务: 传入account、password、code
+payback服务-->浏览器: 登录成功，返回token
+
+用户->浏览器: 加入自选
+浏览器->payback服务: 传入code
+
+payback服务->payback服务: 取出session中的account
+payback服务->user服务: 传入account
+user服务-->payback服务: 返回用户数据userid、ticket、user
+user服务->mysql: 取数
+mysql-->user服务: 返回用户数据
+
+group 加入自选
+  group 自选个股
+    payback服务->payback服务: 根据code返回后缀_17/_33/_151
+    payback服务->同花顺服务: 调用iwc/userinfo/self-stock/index/add 用户数据&个股code+后缀
+    alt 成功
+    同花顺服务-->payback服务: 自选成功/已有该自选
+    else 失败
+    同花顺服务-->payback服务: 未登录/登录过期
+    end
+  end
+    
+  group 自选板块
+    payback服务->payback服务:返回后缀_48
+    payback服务->同花顺服务: 调用iwc/userinfo/self-stock/index/add 用户数据&板块code+后缀
+    alt 成功
+    同花顺服务-->payback服务: 自选成功/已有该自选
+    else 失败
+    同花顺服务-->payback服务: 未登录/登录过期
+    end
+  end
+end
+@enduml
