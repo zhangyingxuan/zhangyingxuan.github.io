@@ -1,16 +1,16 @@
+.DS_Store
+Thumbs.db
+db.json
+*.log
+node_modules/
+public/
+.deploy*/
+_multiconfig.yml
 _site/*
 _theme_packages/*
-
-Thumbs.db
-.DS_Store
-
 !.gitkeep
-
 .rbenv-version
 .rvmrc
-
-.DS_Store
-node_modules
 /dist
 
 # local env files
