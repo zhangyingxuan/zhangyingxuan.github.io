@@ -1,0 +1,772 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/favicon.ico">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="开发相关工具调研微服务开发框架开源开发框架：https:&#x2F;&#x2F;github.com&#x2F;zeromicro&#x2F;go-zero ：一个带有 cli 工具的云原生 Go 微服务框架 微服务平台服务治理、配置中心。 consul 和 etcd 都比较合适，偏应用开发可以选择 consul，偏云原生体系可以选择 etcd 1.Consul适用于需要服务发现和健康检查的场景，特别是在构建微服务架构时。适用于需要跨多">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2025-03-03- 开发相关工具调研">
+<meta property="og:url" content="http://example.com/2025/03/03/2025-03-03-%20%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3%E5%B7%A5%E5%85%B7%E8%B0%83%E7%A0%94/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="开发相关工具调研微服务开发框架开源开发框架：https:&#x2F;&#x2F;github.com&#x2F;zeromicro&#x2F;go-zero ：一个带有 cli 工具的云原生 Go 微服务框架 微服务平台服务治理、配置中心。 consul 和 etcd 都比较合适，偏应用开发可以选择 consul，偏云原生体系可以选择 etcd 1.Consul适用于需要服务发现和健康检查的场景，特别是在构建微服务架构时。适用于需要跨多">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-03-03T21:39:00.000Z">
+<meta property="article:modified_time" content="2025-11-27T09:21:08.168Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>2025-03-03- 开发相关工具调研 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Blowsysun</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="2025-03-03- 开发相关工具调研"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-03-03 21:39" pubdate>
+          2025年3月3日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          16 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">2025-03-03- 开发相关工具调研</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>开发相关工具调研<br>微服务开发框架<br>开源开发框架：<br><a target="_blank" rel="noopener" href="https://github.com/zeromicro/go-zero">https://github.com/zeromicro/go-zero</a> ：一个带有 cli 工具的云原生 Go 微服务框架</p>
+<h2 id="微服务平台"><a href="#微服务平台" class="headerlink" title="微服务平台"></a>微服务平台</h2><p>服务治理、配置中心。</p>
+<p>consul 和 etcd 都比较合适，偏应用开发可以选择 consul，偏云原生体系可以选择 etcd</p>
+<p>1.Consul<br>适用于需要服务发现和健康检查的场景，特别是在构建微服务架构时。<br>适用于需要跨多个数据中心进行部署的场景，Consul 支持多数据中心，可以在不同地理区域中部署 Consul 集群。<br>2.Etcd<br>适用于需要强一致性数据存储的场景，Etcd 提供了高可用、强一致性的键值存储。<br>适用于 Kubernetes 和云原生项目的场景，Etcd 是 Kubernetes 的核心组件之一，也被广泛应用于其他云原生项目中。<br>适用于需要与其他云原生工具和框架集成的场景</p>
+<h2 id="API-网关"><a href="#API-网关" class="headerlink" title="API 网关"></a>API 网关</h2><p>1.开源云原生 API 网关：Kong：<a target="_blank" rel="noopener" href="https://github.com/Kong/kong">https://github.com/Kong/kong</a> 。Kong 是一个云原生、快速、可扩展的微服务 API 网关。Kong 提供了丰富的插件，用于实现认证、限流、日志记录等功能。Kong 支持多种语言，包括 Go。 2.腾讯云 API 网关：<a target="_blank" rel="noopener" href="https://cloud.tencent.com/document/product/1364/89294">https://cloud.tencent.com/document/product/1364/89294</a></p>
+<h2 id="中间件-插件"><a href="#中间件-插件" class="headerlink" title="中间件&#x2F;插件"></a>中间件&#x2F;插件</h2><h3 id="HTTP-客户端"><a href="#HTTP-客户端" class="headerlink" title="HTTP 客户端"></a>HTTP 客户端</h3><p>Go 语言的标准库 net&#x2F;http 就提供了 HTTP 客户端的实现，非常方便使用。如果需要更多的功能，如超时控制、重试策略等，可以使用第三方库，如 go-resty。</p>
+<p>示例代码：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;io/ioutil&quot;</span><br>	<span class="hljs-string">&quot;net/http&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	resp, err := http.Get(<span class="hljs-string">&quot;http://example.com/&quot;</span>)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-comment">// handle error</span><br>	&#125;<br>	<span class="hljs-keyword">defer</span> resp.Body.Close()<br>	body, err := ioutil.ReadAll(resp.Body)<br>	<span class="hljs-comment">// ...</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="MySQL-客户端"><a href="#MySQL-客户端" class="headerlink" title="MySQL 客户端"></a>MySQL 客户端</h3><p>sqlx 是一个 Go 语言的库，它扩展了标准库中的 database&#x2F;sql，提供了更方便的 API 和额外的功能。sqlx 的目标是提供一种简洁、安全且高性能的方式来操作 SQL 数据库</p>
+<p>官方文档：<a target="_blank" rel="noopener" href="https://jmoiron.github.io/sqlx/">https://jmoiron.github.io/sqlx/</a></p>
+<p>安装：<br>go get -u github.com&#x2F;jmoiron&#x2F;sqlx<br>go get -u github.com&#x2F;go-sql-driver&#x2F;mysql</p>
+<ul>
+<li>示例代码：</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;fmt&quot;</span><br>	<span class="hljs-string">&quot;github.com/jmoiron/sqlx&quot;</span><br>	_ <span class="hljs-string">&quot;github.com/go-sql-driver/mysql&quot;</span><br>)<br><br><span class="hljs-keyword">type</span> User <span class="hljs-keyword">struct</span> &#123;<br>	ID   <span class="hljs-type">int</span>    <span class="hljs-string">`db:&quot;id&quot;`</span><br>	Name <span class="hljs-type">string</span> <span class="hljs-string">`db:&quot;name&quot;`</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	dsn := <span class="hljs-string">&quot;user:password@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&amp;parseTime=True&amp;loc=Local&quot;</span><br>	db, err := sqlx.Connect(<span class="hljs-string">&quot;mysql&quot;</span>, dsn)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-built_in">panic</span>(<span class="hljs-string">&quot;failed to connect database&quot;</span>)<br>	&#125;<br><br>	<span class="hljs-comment">// Create</span><br>	_, err = db.Exec(<span class="hljs-string">&quot;INSERT INTO users (name) VALUES (?)&quot;</span>, <span class="hljs-string">&quot;John Doe&quot;</span>)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-built_in">panic</span>(err)<br>	&#125;<br><br>	<span class="hljs-comment">// Read</span><br>	<span class="hljs-keyword">var</span> user User<br>	err = db.Get(&amp;user, <span class="hljs-string">&quot;SELECT * FROM users WHERE id=?&quot;</span>, <span class="hljs-number">1</span>)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-built_in">panic</span>(err)<br>	&#125;<br>	fmt.Println(<span class="hljs-string">&quot;User:&quot;</span>, user.Name)<br><br>	<span class="hljs-comment">// Update</span><br>	_, err = db.Exec(<span class="hljs-string">&quot;UPDATE users SET name=? WHERE id=?&quot;</span>, <span class="hljs-string">&quot;Jane Doe&quot;</span>, <span class="hljs-number">1</span>)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-built_in">panic</span>(err)<br>	&#125;<br><br>	<span class="hljs-comment">// Delete</span><br>	_, err = db.Exec(<span class="hljs-string">&quot;DELETE FROM users WHERE id=?&quot;</span>, <span class="hljs-number">1</span>)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-built_in">panic</span>(err)<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Redis 客户端<br>Go 语言中有多个 Redis 客户端库，如 go-redis 和 redigo。其中 go-redis 提供了丰富的功能和良好的性能。</p>
+<p>示例代码：<br>package main</p>
+<p>import (<br>“fmt”<br>“github.com&#x2F;go-redis&#x2F;redis”<br>)</p>
+<p>func main() {<br>client :&#x3D; redis.NewClient(&amp;redis.Options{<br>Addr: “localhost:6379”,<br>Password: “”,<br>DB: 0,<br> })</p>
+<pre><code class="hljs">pong, err := client.Ping().Result()
+fmt.Println(pong, err)
+</code></pre>
+<p>}</p>
+<p>ES（Elasticsearch）客户端<br>Elasticsearch 官方提供了 Go 语言的客户端库，名为 go-elasticsearch。</p>
+<p>示例代码：</p>
+<p>package main</p>
+<p>import (<br>“fmt”<br>“github.com&#x2F;elastic&#x2F;go-elasticsearch&#x2F;v7”<br>)</p>
+<p>func main() {<br>cfg :&#x3D; elasticsearch.Config{<br>Addresses: []string{<br>“<a target="_blank" rel="noopener" href="http://localhost:9200/">http://localhost:9200</a>“,<br>},<br>}</p>
+<pre><code class="hljs">es, err := elasticsearch.NewClient(cfg)
+if err != nil {
+	// Handle error
+	panic(err)
+}
+
+res, err := es.Info()
+if err != nil {
+	// Handle error
+	panic(err)
+}
+
+fmt.Println(res)
+</code></pre>
+<p>}</p>
+<p>对象存储 COS 客户端<br>腾讯云提供了 COS（Cloud Object Storage）的 Go 语言 SDK，可以在 Go 代码中直接调用。</p>
+<p>示例代码：<br>package main</p>
+<p>import (<br>“context”<br>“fmt”<br>“net&#x2F;http”<br>“net&#x2F;url”<br>“os”<br>“time”</p>
+<pre><code class="hljs">&quot;github.com/tencentyun/cos-go-sdk-v5&quot;
+</code></pre>
+<p>)</p>
+<p>func main() {<br>u, _ :&#x3D; url.Parse(“https:&#x2F;&#x2F;<bucket>.cos.<region>.myqcloud.com”)<br>b :&#x3D; &amp;cos.BaseURL{BucketURL: u}<br>c :&#x3D; cos.NewClient(b, &amp;http.Client{<br>Transport: &amp;cos.AuthorizationTransport{<br>SecretID: os.Getenv(“COS_SECRETID”),<br>SecretKey: os.Getenv(“COS_SECRETKEY”),<br>},<br>})</p>
+<pre><code class="hljs">_, err := c.Bucket.Put(context.Background(), nil)
+if err != nil {
+	panic(err)
+}
+</code></pre>
+<p>}</p>
+<p>Kafka 客户端<br>Go 语言中有多个 Kafka 客户端库，如 sarama 和 confluent-kafka-go。sarama 是一个纯 Go 语言实现的 Kafka 客户端库，功能丰富，使用广泛。</p>
+<p>示例代码：<br>package main</p>
+<p>import (<br>“fmt”<br>“github.com&#x2F;Shopify&#x2F;sarama”<br>)</p>
+<p>func main() {<br>config :&#x3D; sarama.NewConfig()<br>config.Producer.Return.Successes &#x3D; true<br>producer, err :&#x3D; sarama.NewSyncProducer([]string{“localhost:9092”}, config)<br>if err !&#x3D; nil {<br>&#x2F;&#x2F; handle error<br>}<br>defer func() {<br>if err :&#x3D; producer.Close(); err !&#x3D; nil {<br>&#x2F;&#x2F; handle error<br>}<br>}()</p>
+<pre><code class="hljs">msg := &amp;sarama.ProducerMessage{
+	Topic: &quot;test&quot;,
+	Value: sarama.StringEncoder(&quot;Hello World&quot;),
+}
+
+partition, offset, err := producer.SendMessage(msg)
+if err != nil {
+	// handle error
+}
+
+fmt.Printf(&quot;Message is stored in topic(%s)/partition(%d)/offset(%d)\n&quot;, &quot;test&quot;, partition, offset)
+</code></pre>
+<p>}</p>
+<p>Faiss 客户端<br>Faiss 是一个 C++ 库，因此在 Go 语言中调用 Faiss 需要借助 cgo。目前没有官方的 Faiss Go 客户端，但有一些第三方库封装了 Faiss 的 C++ 接口，例如 go-faiss。以下是一个简单的 go-faiss 使用示例：<br>首先，确保已经安装了 Faiss 和 go-faiss。安装 Faiss 的说明可以在官方文档中找到：<a target="_blank" rel="noopener" href="https://github.com/facebookresearch/faiss/blob/main/INSTALL.md">https://github.com/facebookresearch/faiss/blob/main/INSTALL.md</a><br>然后，安装 go-faiss：<br>go get -u github.com&#x2F;ondralukes&#x2F;go-faiss</p>
+<p>简单的 Go 代码示例：</p>
+<p>package main</p>
+<p>import (<br>“fmt”<br>“github.com&#x2F;ondralukes&#x2F;go-faiss”<br>)</p>
+<p>func main() {<br>&#x2F;&#x2F; 创建一个 2D 向量的索引<br>index :&#x3D; faiss.NewIndexFlatL2(2)</p>
+<pre><code class="hljs">// 添加一些向量到索引
+vectors := []float32{
+	1.0, 1.0,
+	2.0, 2.0,
+	3.0, 3.0,
+}
+index.Add(vectors)
+
+// 查询最近的向量
+query := []float32{1.1, 1.1}
+ids, dists := index.Search(query, 1)
+
+// 输出查询结果
+fmt.Printf(&quot;Nearest vector id: %d, distance: %f\n&quot;, ids[0], dists[0])
+</code></pre>
+<p>}</p>
+<p>注，这个示例仅用于演示 go-faiss 的基本用法。在实际项目中，你可能需要根据具体需求对 Faiss 的参数和功能进行更详细的配置。更多关于 go-faiss 的信息和示例可以在其 GitHub 仓库中找到：<a target="_blank" rel="noopener" href="https://github.com/ondralukes/go-faiss">https://github.com/ondralukes/go-faiss</a></p>
+<p>Chroma 客户端<br>Chroma 是一个高维向量相似性搜索引擎，它可以对大量高维向量进行快速、准确的相似性检索。然而，Chroma 并没有提供官方的 Go 语言客户端。但是在官方文档：中给出了开源的解决方案：<a target="_blank" rel="noopener" href="https://github.com/amikos-tech/chroma-go">https://github.com/amikos-tech/chroma-go</a></p>
+<p>使用方式：<br>安装：<br>go get github.com&#x2F;amikos-tech&#x2F;chroma-go</p>
+<p>引用：<br>import (<br>chroma “github.com&#x2F;amikos-tech&#x2F;chroma-go”<br>)</p>
+<p>示例代码：<br>package main</p>
+<p>import (<br>“fmt”<br>“log”<br>“os”</p>
+<pre><code class="hljs">chroma &quot;github.com/amikos-tech/chroma-go&quot;
+openai &quot;github.com/amikos-tech/chroma-go/openai&quot;
+godotenv &quot;github.com/joho/godotenv&quot;
+</code></pre>
+<p>)</p>
+<p>func main() {<br>client :&#x3D; chroma.NewClient(“<a target="_blank" rel="noopener" href="http://localhost:8000/">http://localhost:8000</a>“)<br>collectionName :&#x3D; “test-collection”<br>metadata :&#x3D; map[string]interface{}{}<br>err :&#x3D; godotenv.Load(“.env”)<br>if err !&#x3D; nil {<br>fmt.Printf(“Error loading .env file: %s”, err)<br>return<br>}<br>embeddingFunction :&#x3D; openai.NewOpenAIEmbeddingFunction(os.Getenv(“OPENAI*API_KEY”)) &#x2F;&#x2F;create a new OpenAI Embedding function<br>distanceFunction :&#x3D; chroma.L2<br>*, errRest :&#x3D; client.Reset() &#x2F;&#x2F;reset the database<br>if errRest !&#x3D; nil {<br>log.Fatalf(“Error resetting database: %s \n”, errRest.Error())<br>}<br>col, err :&#x3D; client.CreateCollection(collectionName, metadata, true, embeddingFunction, distanceFunction)<br>if err !&#x3D; nil {<br>fmt.Printf(“Error create collection: %s \n”, err.Error())<br>return<br>}<br>documents :&#x3D; []string{<br>“This is a document about cats. Cats are great.”,<br>“this is a document about dogs. Dogs are great.”,<br>}<br>ids :&#x3D; []string{<br>“ID1”,<br>“ID2”,<br>}</p>
+<pre><code class="hljs">metadatas := []map[string]interface{}{
+	{&quot;key1&quot;: &quot;value1&quot;},
+	{&quot;key2&quot;: &quot;value2&quot;},
+}
+_, addError := col.Add(nil, metadatas, documents, ids)
+if addError != nil {
+	log.Fatalf(&quot;Error adding documents: %s \n&quot;, addError)
+}
+countDocs, qrerr := col.Count()
+if qrerr != nil {
+	log.Fatalf(&quot;Error counting documents: %s \n&quot;, qrerr)
+}
+fmt.Printf(&quot;countDocs: %v\n&quot;, countDocs) //this should result in 2
+qr, qrerr := col.Query([]string{&quot;I love dogs&quot;}, 5, nil, nil, nil)
+if qrerr != nil {
+	log.Fatalf(&quot;Error querying documents: %s \n&quot;, qrerr)
+}
+fmt.Printf(&quot;qr: %v\n&quot;, qr.Documents[0][0]) //this should result in the document about dogs
+</code></pre>
+<p>}</p>
+<p>LLM 客户端（大语言模型客户端）</p>
+<p>不同大模型的接入方式可能会有区别，所以需要参考大模型提供的官方文档。不过一般都是提供的 http api。具体模型的使用参考下面的例子。</p>
+<p>清华大学 ChatGLM2-6B 模型<br><a target="_blank" rel="noopener" href="https://github.com/THUDM/ChatGLM2-6B">https://github.com/THUDM/ChatGLM2-6B</a><br>参考官方文档部署好模型后，用 api 的模式运行<br>python api.py</p>
+<p>使用 api 的方式调用大模型：<br>curl -X POST “<a target="_blank" rel="noopener" href="http://127.0.0.1:8000/">http://127.0.0.1:8000</a>“ <br> -H ‘Content-Type: application&#x2F;json’ <br> -d ‘{“prompt”: “你好”, “history”: []}’</p>
+<p>返回为：<br>{<br>“response”:”你好 👋！我是人工智能助手 ChatGLM2-6B，很高兴见到你，欢迎问我任何问题。”,<br>“history”:[[“你好”,”你好👋！我是人工智能助手 ChatGLM2-6B，很高兴见到你，欢迎问我任何问题。”]],<br>“status”:200,<br>“time”:”2023-03-23 21:38:40”<br>}</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%B7%A5%E7%A8%8B%E5%8C%96/" class="category-chain-item">工程化</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>2025-03-03- 开发相关工具调研</div>
+      <div>http://example.com/2025/03/03/2025-03-03- 开发相关工具调研/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年3月3日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/03/18/2025-03-18-%20%E3%80%90%E5%A4%A7%E6%A8%A1%E5%9E%8B%E3%80%91n8n%E5%B7%A5%E4%BD%9C%E6%B5%81/" title="2025-03-18- 【大模型】n8n工作流">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">2025-03-18- 【大模型】n8n工作流</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/11/18/2023-11-18%20%E3%80%90%E6%9E%B6%E6%9E%84%E3%80%91lerna%E5%BC%80%E5%8F%91README/" title="2023-11-18 【架构】lerna开发README">
+                        <span class="hidden-mobile">2023-11-18 【架构】lerna开发README</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

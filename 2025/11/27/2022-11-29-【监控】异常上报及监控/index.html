@@ -1,0 +1,680 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/favicon.ico">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="腾讯云RUM产品，专注于 Web 和小程序等大前端领域，提供前端性能监控（Real User Monitoring，RUM）一站式解决方案。主要关注用户页面性能（页面测速、接口测速、CDN 测速等）和质量（JS 错误、Ajax 错误等），并且联动腾讯云应用性能观测实现前后端一体化监控。用户只需要安装 SDK 到自己的项目中，通过简单配置化，即可实现对用户页面质量的全方位守护，真正做到了低成本使用和">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2022-11-29【监控】前端性能监控">
+<meta property="og:url" content="http://example.com/2025/11/27/2022-11-29-%E3%80%90%E7%9B%91%E6%8E%A7%E3%80%91%E5%BC%82%E5%B8%B8%E4%B8%8A%E6%8A%A5%E5%8F%8A%E7%9B%91%E6%8E%A7/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="腾讯云RUM产品，专注于 Web 和小程序等大前端领域，提供前端性能监控（Real User Monitoring，RUM）一站式解决方案。主要关注用户页面性能（页面测速、接口测速、CDN 测速等）和质量（JS 错误、Ajax 错误等），并且联动腾讯云应用性能观测实现前后端一体化监控。用户只需要安装 SDK 到自己的项目中，通过简单配置化，即可实现对用户页面质量的全方位守护，真正做到了低成本使用和">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-11-27T09:21:08.165Z">
+<meta property="article:modified_time" content="2025-11-27T09:21:08.165Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>2022-11-29【监控】前端性能监控 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Blowsysun</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="2022-11-29【监控】前端性能监控"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-11-27 09:21" pubdate>
+          2025年11月27日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          837 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          7 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">2022-11-29【监控】前端性能监控</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="onerror"><a href="#onerror" class="headerlink" title="onerror"></a>onerror</h1><p>window.onerror 是一个全局变量，默认值为 null。当有 js 运行时错误触发时，window 会触发 error 事件，并执行 window.onerror()。onerror 可以接受多个参数。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">window</span>.<span class="hljs-property">onerror</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">message, source, lineno, colno, error</span>) &#123; ... &#125;<br><br>函数参数：<br><br>*   message：错误信息（字符串）。可用于<span class="hljs-variable constant_">HTML</span> onerror=<span class="hljs-string">&quot;&quot;</span>处理程序中的event。<br>*   source：发生错误的脚本<span class="hljs-variable constant_">URL</span>（字符串）<br>*   lineno：发生错误的行号（数字）<br>*   colno：发生错误的列号（数字）<br>*   error：<span class="hljs-title class_">Error</span>对象<br><br>若该函数返回<span class="hljs-literal">true</span>，则阻止执行默认事件处理函数，如异常信息不会在<span class="hljs-variable language_">console</span>中打印。没有返回值或者返回值为<span class="hljs-literal">false</span>的时候，异常信息会在<span class="hljs-variable language_">console</span>中打印<br></code></pre></td></tr></table></figure>
+
+<h1 id="addEventListener-‘error’"><a href="#addEventListener-‘error’" class="headerlink" title="addEventListener(‘error’)"></a>addEventListener(‘error’)</h1><p>监听 js 运行时错误事件，会比 window.onerror 先触发，与 onerror 的功能大体类似，不过事件回调函数传参只有一个保存所有错误信息的参数，不能阻止默认事件处理函数的执行，但可以全局捕获资源加载异常的错误</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">window</span>.<span class="hljs-property">onerror</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">message, source, lineno, colno, error</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(<span class="hljs-string">&quot;onerror============ %s&quot;</span>, error);<br>  <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>&#125;;<br><span class="hljs-variable language_">window</span>.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&quot;error&quot;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">event</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(<span class="hljs-string">&quot;onerror============ %s&quot;</span>, event);<br>  <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<h1 id="vue-异常-钩子"><a href="#vue-异常-钩子" class="headerlink" title="vue 异常 钩子"></a>vue 异常 钩子</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">Vue</span>.<span class="hljs-property">config</span>.<span class="hljs-property">errorHandler</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">err, vm, info</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Error: <span class="hljs-subst">$&#123;err.toString()&#125;</span>\nInfo: <span class="hljs-subst">$&#123;info&#125;</span>`</span>);<br>  aegis.<span class="hljs-title function_">error</span>(<span class="hljs-string">`Error: <span class="hljs-subst">$&#123;err.toString()&#125;</span>\nInfo: <span class="hljs-subst">$&#123;info&#125;</span>`</span>);<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h1 id="vue-路由-异常钩子"><a href="#vue-路由-异常钩子" class="headerlink" title="vue 路由 异常钩子"></a>vue 路由 异常钩子</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs js">router.<span class="hljs-title function_">onError</span>(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> &#123;<br>  <span class="hljs-keyword">const</span> jsPattern = <span class="hljs-regexp">/Loading chunk (\S)+ failed/g</span>;<br>  <span class="hljs-keyword">const</span> cssPattern = <span class="hljs-regexp">/Loading CSS chunk (\S)+ failed/g</span>;<br>  <span class="hljs-keyword">const</span> isChunkLoadFailed = error.<span class="hljs-property">message</span>.<span class="hljs-title function_">match</span>(jsPattern || cssPattern);<br>  <span class="hljs-keyword">const</span> targetPath = router.<span class="hljs-property">history</span>.<span class="hljs-property">pending</span>.<span class="hljs-property">fullPath</span>;<br>  <span class="hljs-keyword">if</span> (isChunkLoadFailed) &#123;<br>    <span class="hljs-variable language_">localStorage</span>.<span class="hljs-title function_">setItem</span>(<span class="hljs-string">&quot;targetPath&quot;</span>, targetPath);<br>    <span class="hljs-variable language_">window</span>.<span class="hljs-property">location</span>.<span class="hljs-title function_">reload</span>();<br>  &#125;<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>如果想通过 onerror 函数收集不同域的 js 错误，我们需要做两件事：</li>
+</ul>
+<ol>
+<li>相关的 js 文件上加上 Access-Control-Allow-Origin:*的 response header</li>
+<li>引用相关的 js 文件时加上 crossorigin 属性</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;script type=<span class="hljs-string">&quot;text/javascript&quot;</span> src=<span class="hljs-string">&quot;http://b.com/b.js&quot;</span> crossorigin&gt;&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+<h1 id="异常上报工具"><a href="#异常上报工具" class="headerlink" title="异常上报工具"></a>异常上报工具</h1><!-- sentry -->
+<!-- aegis -->
+
+<h2 id="系统发版，用户跳转页面-404-问题"><a href="#系统发版，用户跳转页面-404-问题" class="headerlink" title="系统发版，用户跳转页面 404 问题"></a>系统发版，用户跳转页面 404 问题</h2><p>通过 window.addEventListener 监听资源加载报错</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// index.html head顶部</span><br><span class="hljs-variable language_">window</span>.<span class="hljs-title function_">addEventListener</span>(<br>  <span class="hljs-string">&quot;error&quot;</span>,<br>  <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> &#123;<br>    <span class="hljs-comment">// 防止刷新过后资源依然404导致页面无限刷新， 在router.afterEach里删除</span><br>    <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">sessionStorage</span>.<span class="hljs-property">staticReload</span>) &#123;<br>      <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-keyword">let</span> localName = e.<span class="hljs-property">target</span>.<span class="hljs-property">localName</span>;<br>    <span class="hljs-keyword">if</span> (localName === <span class="hljs-string">&quot;script&quot;</span> || localName === <span class="hljs-string">&quot;link&quot;</span>) &#123;<br>      <span class="hljs-comment">// 只刷新一次 用 staticReload 标记一下</span><br>      <span class="hljs-variable language_">window</span>.<span class="hljs-property">sessionStorage</span>.<span class="hljs-title function_">setItem</span>(<span class="hljs-string">&quot;staticReload&quot;</span>, <span class="hljs-string">&quot;1&quot;</span>);<br>      <span class="hljs-comment">// reload里一定要加 true</span><br>      <span class="hljs-variable language_">window</span>.<span class="hljs-property">location</span>.<span class="hljs-title function_">reload</span>(<span class="hljs-literal">true</span>);<br>    &#125;<br>    <span class="hljs-comment">// 这个true一定要加，否则监听不到</span><br>  &#125;,<br>  <span class="hljs-literal">true</span><br>);<br><br><span class="hljs-comment">// 或</span><br><span class="hljs-variable language_">window</span>.<span class="hljs-title function_">addEventListener</span>(<br>  <span class="hljs-string">&quot;error&quot;</span>,<br>  <span class="hljs-keyword">function</span> (<span class="hljs-params">event</span>) &#123;<br>    <span class="hljs-keyword">try</span> &#123;<br>      <span class="hljs-keyword">const</span> target = event.<span class="hljs-property">target</span> || event.<span class="hljs-property">srcElement</span>;<br>      <span class="hljs-keyword">if</span> (<br>        target <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">HTMLElement</span> &amp;&amp;<br>        [<span class="hljs-string">&quot;LINK&quot;</span>, <span class="hljs-string">&quot;SCRIPT&quot;</span>, <span class="hljs-string">&quot;IMG&quot;</span>].<span class="hljs-title function_">indexOf</span>(target.<span class="hljs-property">nodeName</span>) !== -<span class="hljs-number">1</span><br>      ) &#123;<br>        <span class="hljs-comment">// 下载资源失败</span><br>        <span class="hljs-comment">// @ts-ignore</span><br>        <span class="hljs-keyword">const</span> src = target.<span class="hljs-property">src</span> || target.<span class="hljs-property">href</span>;<br>        <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">window</span>.<span class="hljs-property">location</span>.<span class="hljs-property">href</span>.<span class="hljs-title function_">indexOf</span>(src) !== <span class="hljs-number">0</span>) &#123;<br>          <span class="hljs-title function_">reportResourceFail</span>(&#123;<br>            <span class="hljs-attr">detail</span>: src,<br>          &#125;);<br>        &#125;<br>      &#125;<br>    &#125; <span class="hljs-keyword">catch</span> (err) &#123;&#125;<br>  &#125;,<br>  <span class="hljs-literal">true</span><br>);<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// router.js</span><br><span class="hljs-comment">// 跳转成功，说明css js资源加载成功，则去掉 staticReload 标记</span><br>router.<span class="hljs-title function_">afterEach</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-variable language_">sessionStorage</span>.<span class="hljs-title function_">removeItem</span>(<span class="hljs-string">&quot;staticReload&quot;</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<h3 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h3><ol>
+<li>window.addEventListener 的第三个参数 一定要是 true，表示用事件捕获。</li>
+<li>window.location.reload(true) 里一定要用 true, 表示直接从服务器取资源。</li>
+<li>加一个标记，只刷新一次就够了，因为如果是因为某个资源本身不存在导致刷新完又 404，会让页面无限刷新。我们解决的只是能保证刷新页面就能获取到的正常打包资源。</li>
+</ol>
+<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>这样一旦用户停留页面的时间正好跨越了发版时间，资源加载 404 的情况下，会直接在当前页面强行刷新一下，然后就能正常使用了。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/linux/" class="category-chain-item">linux</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/linux/" class="print-no-link">#linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>2022-11-29【监控】前端性能监控</div>
+      <div>http://example.com/2025/11/27/2022-11-29-【监控】异常上报及监控/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年11月27日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/11/27/2022-11-29-%E3%80%90%E5%A4%9A%E7%BA%BF%E7%A8%8B%E3%80%91web%20worker/" title="2022-11-29-【多线程】web worker">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">2022-11-29-【多线程】web worker</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/11/27/2022-12-03-%E3%80%90%E4%BC%98%E5%8C%96%E3%80%91%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7/" title="2022-12-03-【优化】前端性能测试工具">
+                        <span class="hidden-mobile">2022-12-03-【优化】前端性能测试工具</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,703 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/favicon.ico">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、背景由于原有前端 web 基础镜像由外部 cenos+openresty 制作而来，不符合 tkex 业务上云标准规范，现需使用基于腾讯云内部系统 tlinux 系统重新制作 web 基础镜像。 二、web 基础镜像制作项目地址 nginx_fed 2.1 dockerfile 方式创建 dockerfile 说明：基于 tlinux2.2-bridge-tcloud-underlay-min">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2025-07-24 【docker】tkex基础镜像制作">
+<meta property="og:url" content="http://example.com/2025/11/27/2025-07-24%20%E3%80%90docker%E3%80%91tkex%E5%9F%BA%E7%A1%80%E9%95%9C%E5%83%8F%E5%88%B6%E4%BD%9C/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、背景由于原有前端 web 基础镜像由外部 cenos+openresty 制作而来，不符合 tkex 业务上云标准规范，现需使用基于腾讯云内部系统 tlinux 系统重新制作 web 基础镜像。 二、web 基础镜像制作项目地址 nginx_fed 2.1 dockerfile 方式创建 dockerfile 说明：基于 tlinux2.2-bridge-tcloud-underlay-min">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-11-27T09:21:08.168Z">
+<meta property="article:modified_time" content="2025-11-27T09:21:08.168Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="nginx">
+<meta property="article:tag" content="tlinux">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>2025-07-24 【docker】tkex基础镜像制作 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Blowsysun</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="2025-07-24 【docker】tkex基础镜像制作"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-11-27 09:21" pubdate>
+          2025年11月27日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          851 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          8 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">2025-07-24 【docker】tkex基础镜像制作</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="一、背景"><a href="#一、背景" class="headerlink" title="一、背景"></a>一、背景</h1><p>由于原有前端 web 基础镜像由外部 cenos+openresty 制作而来，不符合 tkex 业务上云标准规范，现需使用基于腾讯云内部系统 tlinux 系统重新制作 web 基础镜像。</p>
+<h1 id="二、web-基础镜像制作"><a href="#二、web-基础镜像制作" class="headerlink" title="二、web 基础镜像制作"></a>二、web 基础镜像制作</h1><p><a target="_blank" rel="noopener" href="https://git.woa.com/tax_delivery/base_images/nginx_fed">项目地址 nginx_fed</a></p>
+<h2 id="2-1-dockerfile-方式创建"><a href="#2-1-dockerfile-方式创建" class="headerlink" title="2.1 dockerfile 方式创建"></a>2.1 dockerfile 方式创建</h2><blockquote>
+<p>dockerfile 说明：<br>基于 tlinux2.2-bridge-tcloud-underlay-mini 系统镜像<br>安装 nginx-1.20.1-10.el7<br>安装 logrotate-3.8.6-14.tl2 用于 nginx 日志分割</p>
+</blockquote>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs dockerfile"><span class="hljs-keyword">FROM</span> csighub.tencentyun.com/tkex/tlinux2.<span class="hljs-number">2</span>-bridge-tcloud-underlay-mini:latest<br><br><span class="hljs-keyword">LABEL</span><span class="language-bash"> maintainer=<span class="hljs-string">&quot;yxuanzhang@tencent.com&quot;</span></span><br><br><span class="hljs-comment"># 注意使用&amp;来减少镜像的层级</span><br><span class="hljs-keyword">RUN</span><span class="language-bash"> <span class="hljs-built_in">mkdir</span> -p /data/conf &amp;&amp; \</span><br><span class="language-bash">    <span class="hljs-built_in">mkdir</span> -p /data/logs &amp;&amp; \</span><br><span class="language-bash">    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;set encoding=utf-8&quot;</span> &gt;&gt; ~/.vimrc &amp;&amp; \</span><br><span class="language-bash">    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;set fileencodings=utf-8,gb2312,gbk,gb18030&quot;</span> &gt;&gt; ~/.vimrc &amp;&amp; \</span><br><span class="language-bash">    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;set termencoding=utf-8&quot;</span> &gt;&gt; ~/.vimrc</span><br><br><span class="hljs-keyword">ADD</span><span class="language-bash"> ./tkex_start.sh /etc/kickStart.d/</span><br><span class="hljs-keyword">ADD</span><span class="language-bash"> ./conf/nginx/nginx.conf /data/conf/</span><br><span class="hljs-keyword">ADD</span><span class="language-bash"> ./conf/logrotate/nginx.logrotate /data/conf/</span><br><br><span class="hljs-keyword">RUN</span><span class="language-bash"> <span class="hljs-built_in">chmod</span> u+x /etc/kickStart.d/tkex_start.sh &amp;&amp; \</span><br><span class="language-bash">    yum install -y nginx-1.20.1-10.el7 &amp;&amp; \</span><br><span class="language-bash">    yum install -y logrotate-3.8.6-14.tl2</span><br><br><span class="hljs-comment"># http</span><br><span class="hljs-keyword">EXPOSE</span> <span class="hljs-number">80</span><br><span class="hljs-keyword">EXPOSE</span> <span class="hljs-number">8080</span><br><br><span class="hljs-comment"># https</span><br><span class="hljs-keyword">EXPOSE</span> <span class="hljs-number">443</span><br><br><span class="hljs-comment"># 注意 不要使用 CMD/ENTRYPOINT 命令设置自己的 Docker 启动命令，因为tlinux基础镜像启动需要CMD [&quot;/usr/sbin/initStart&quot;]，即systemd作为1号守护进程。</span><br><span class="hljs-comment"># 用户再写 CMD/ENTRYPOINT 会导致原CMD命令覆盖，导致 systemd 无法启动。导致相关依赖 agent 无法启动。</span><br><span class="hljs-comment"># 另外，由于织云安装脚本默认有来源IP限制，因此需要在 IDC 环境构建镜像。建议通过Coding、蓝盾、OCI 等平台构建</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>tLinux 织云包 mini 镜像组成说明（非必读）<br>tlinux Base 镜像来源于 tLinux 提供的 mini 镜像，由 TKEx-CSIG 和 腾讯会议团队共同维护，大小仅为 259.0 MB，基础环境安装包含：</p>
+<ul>
+<li>网管 agent 、洋葱 onion、 sng 初始化(参考 iaas)、铁将军安装、织云包安装；</li>
+<li>常见系统软件包：wget、gcc、gcc-c++、make、strace、iputils、initscripts 等</li>
+<li>修改 systemd init 执行方式，目的是为保存 1 号进程环境变量含用户自定义环境变量;</li>
+<li>设定开机启动脚本&#x2F;etc&#x2F;rc.d&#x2F;rc.config:</li>
+</ul>
+</blockquote>
+<pre><code class="hljs">- 导入 1 号进程环境变量
+- iptables 初始化
+- 启动网管 agent
+- 统一扫描拉起织云包服务
+- 修改tsc配置为当前机器 ip /usr/local/TsysAgent/etc/proxy_ctrl.conf
+- 为用户设定自定义启动脚本的目录 /etc/kickStart.d，该目录下的所有 .sh 脚本都会执行，启动日志输出到 /etc/kickStart.d/startApp.log
+</code></pre>
+<h5 id="注：tLinux-织云包-mini-镜像包含以下运维工具"><a href="#注：tLinux-织云包-mini-镜像包含以下运维工具" class="headerlink" title="注：tLinux 织云包 mini 镜像包含以下运维工具"></a>注：tLinux 织云包 mini 镜像包含以下运维工具</h5><ul>
+<li>netstat</li>
+<li>vmstat</li>
+<li>telnet</li>
+<li>top</li>
+<li>iostat</li>
+</ul>
+<h2 id="2-2-nginx-配置（nginx-conf）"><a href="#2-2-nginx-配置（nginx-conf）" class="headerlink" title="2.2 nginx 配置（nginx.conf）"></a>2.2 nginx 配置（nginx.conf）</h2><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">user</span> nginx;<br><span class="hljs-attribute">worker_processes</span> auto;<br><span class="hljs-attribute">worker_rlimit_nofile</span> <span class="hljs-number">65535</span>;<br><span class="hljs-attribute">error_log</span> /data/logs/<span class="hljs-literal">error</span>.log;<br><span class="hljs-attribute">pid</span> /run/nginx.pid;<br><span class="hljs-attribute">daemon</span> <span class="hljs-literal">off</span>;<br><br><span class="hljs-section">events</span> &#123;<br>    <span class="hljs-attribute">worker_connections</span> <span class="hljs-number">2048</span>;<br>&#125;<br><br><span class="hljs-section">http</span> &#123;<br>    <span class="hljs-attribute">log_format</span>  main  <span class="hljs-string">&#x27;<span class="hljs-variable">$remote_addr</span> - <span class="hljs-variable">$remote_user</span> [<span class="hljs-variable">$time_local</span>] &quot;<span class="hljs-variable">$request</span>&quot; &#x27;</span><br>                      <span class="hljs-string">&#x27;<span class="hljs-variable">$status</span> <span class="hljs-variable">$body_bytes_sent</span> &quot;<span class="hljs-variable">$http_referer</span>&quot; &#x27;</span><br>                      <span class="hljs-string">&#x27;&quot;<span class="hljs-variable">$http_user_agent</span>&quot; &quot;<span class="hljs-variable">$http_x_forwarded_for</span>&quot; &quot;<span class="hljs-variable">$http_referer</span>&quot;&#x27;</span>;<br><br>    <span class="hljs-attribute">access_log</span>  /data/logs/access.log  main;<br>    <span class="hljs-attribute">client_max_body_size</span>    <span class="hljs-number">100m</span>;<br>    <span class="hljs-attribute">sendfile</span>            <span class="hljs-literal">on</span>;<br>    <span class="hljs-attribute">tcp_nopush</span>          <span class="hljs-literal">on</span>;<br>    <span class="hljs-attribute">tcp_nodelay</span>         <span class="hljs-literal">on</span>;<br>    <span class="hljs-attribute">keepalive_timeout</span>   <span class="hljs-number">65</span>;<br>    <span class="hljs-attribute">types_hash_max_size</span> <span class="hljs-number">4096</span>;<br><br>    <span class="hljs-attribute">gzip</span> <span class="hljs-literal">on</span>;<br>    <span class="hljs-attribute">gzip_disable</span> <span class="hljs-string">&quot;msie6&quot;</span>;<br>    <span class="hljs-attribute">gzip_vary</span> <span class="hljs-literal">on</span>;<br>    <span class="hljs-attribute">gzip_proxied</span> any;<br>    <span class="hljs-attribute">gzip_comp_level</span> <span class="hljs-number">6</span>;<br>    <span class="hljs-attribute">gzip_buffers</span> <span class="hljs-number">16</span> <span class="hljs-number">8k</span>;<br>    <span class="hljs-attribute">gzip_http_version</span> <span class="hljs-number">1</span>.<span class="hljs-number">1</span>;<br>    <span class="hljs-attribute">gzip_min_length</span> <span class="hljs-number">256</span>;<br>    <span class="hljs-attribute">gzip_types</span> text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss application/javascript text/javascript application/vnd.ms-fontobject application/x-font-ttf font/opentype image/svg+xml image/x-icon;<br><br>    <span class="hljs-attribute">proxy_connect_timeout</span> <span class="hljs-number">300s</span>;<br>    <span class="hljs-attribute">proxy_send_timeout</span> <span class="hljs-number">300s</span>;<br>    <span class="hljs-attribute">proxy_read_timeout</span> <span class="hljs-number">300s</span>;<br>    <span class="hljs-attribute">send_timeout</span> <span class="hljs-number">300s</span>;<br>    <span class="hljs-attribute">fastcgi_connect_timeout</span> <span class="hljs-number">300</span>;<br>    <span class="hljs-attribute">fastcgi_send_timeout</span> <span class="hljs-number">300</span>;<br>    <span class="hljs-attribute">fastcgi_read_timeout</span> <span class="hljs-number">300</span>;<br><br>    <span class="hljs-attribute">include</span>             /etc/nginx/mime.types;<br>    <span class="hljs-attribute">default_type</span>        application/octet-stream;<br><br>    <span class="hljs-comment"># Load modular configuration files from the /etc/nginx/conf.d directory.</span><br>    <span class="hljs-comment"># See http://nginx.org/en/docs/ngx_core_module.html#include</span><br>    <span class="hljs-comment"># for more information.</span><br>    <span class="hljs-comment"># include servers/*.conf;</span><br>    <span class="hljs-comment"># include /etc/nginx/conf.d/*.conf;</span><br>    <span class="hljs-section">server</span> &#123;<br>        <span class="hljs-attribute">listen</span>       <span class="hljs-number">80</span>;<br>        <span class="hljs-attribute">listen</span>       [::]:<span class="hljs-number">80</span>;<br>        <span class="hljs-attribute">server_name</span>  _;<br>        <span class="hljs-attribute">root</span>         /usr/share/nginx/html;<br>    &#125;<br>    <span class="hljs-comment"># 自定义脚本可通过 /data/conf 目录挂载到容器中</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注：该配置仅包含 nginx 基础配置，其他 server 配置请前往七彩石配置，并挂载至&#x2F;data&#x2F;conf 路径中。</p>
+</blockquote>
+<h2 id="2-3-logrotate-配置"><a href="#2-3-logrotate-配置" class="headerlink" title="2.3 logrotate 配置"></a>2.3 logrotate 配置</h2><figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs puppet">/data/logs/*<span class="hljs-keyword">log</span> &#123;<br>    su <span class="hljs-literal">root</span> <span class="hljs-literal">root</span><br>    create <span class="hljs-number">0777</span> <span class="hljs-literal">root</span> <span class="hljs-literal">root</span><br>    daily<br>    rotate <span class="hljs-number">10</span><br>    missingok<br>    notifempty<br>    compress<br>    sharedscripts<br>    postrotate<br>        /usr/sbin/nginx -s reload -c /data/conf/nginx.conf<br>    endscript<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-4-镜像制作-上传"><a href="#2-4-镜像制作-上传" class="headerlink" title="2.4 镜像制作&amp;上传"></a>2.4 镜像制作&amp;上传</h2><blockquote>
+<p>建议在 devCloud 中制作镜像</p>
+</blockquote>
+<ol>
+<li><p>build<br><code>docker build -t nginx_fed:v1.0.0 --network=host  -f ./Dockerfile .</code></p>
+</li>
+<li><p>tag<br><code>docker tag nginx_fed:v1.0.0 csighub.tencentyun.com/wpe/nginx_fed:latest</code></p>
+</li>
+<li><p>login<br><code>docker login csighub.tencentyun.com</code></p>
+</li>
+<li><p>push<br><code>docker push csighub.tencentyun.com/wpe/nginx_fed:latest</code></p>
+</li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%B7%A5%E7%A8%8B%E5%8C%96/" class="category-chain-item">工程化</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/nginx/" class="print-no-link">#nginx</a>
+      
+        <a href="/tags/docker/" class="print-no-link">#docker</a>
+      
+        <a href="/tags/tlinux/" class="print-no-link">#tlinux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>2025-07-24 【docker】tkex基础镜像制作</div>
+      <div>http://example.com/2025/11/27/2025-07-24 【docker】tkex基础镜像制作/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年11月27日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/11/27/2025-04-02-%20%E3%80%90%E5%B7%A5%E5%85%B7%E3%80%91%E5%89%8D%E7%AB%AF%E5%B7%A5%E5%85%B7/" title="2024-10-28-【研发】nestjs微服务">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">2024-10-28-【研发】nestjs微服务</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/11/27/2025-04-21-%20%E3%80%90%E6%8F%92%E4%BB%B6%E3%80%91chrome%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91/" title="2025-04-21- 【插件】chrome插件开发">
+                        <span class="hidden-mobile">2025-04-21- 【插件】chrome插件开发</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
