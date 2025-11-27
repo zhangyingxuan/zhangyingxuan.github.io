@@ -2,7 +2,7 @@ name: Auto Deploy Hexo to GitHub Pages
 
 on: # 触发条件
   push:
-    branches: [main]
+    branches: [master]
   workflow_dispatch: # 手动按钮
 
 permissions: # 给 Actions 写 Pages 的权限
