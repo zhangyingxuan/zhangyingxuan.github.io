@@ -1,0 +1,681 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/favicon.ico">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="nestjs1. 安装涉及工具包  cross-env ^7.0.3 @nestjs&#x2F;config ^2.3.1   2.创建 env.dev 与 env.prod 文件 写入生产环境变量与开发环境变量  12345678910DDD_USER&#x3D;rootDDD_PD&#x3D;xxxDDD_HOST&#x3D;127.0.0.1DDD_PORT&#x3D;3306DDD_NAME&#x3D;&#x27;databaseName">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2024-10-28-【研发】nestjs微服务">
+<meta property="og:url" content="http://example.com/2025/11/28/2024-10-28-%E3%80%90%E7%A0%94%E5%8F%91%E3%80%91nestjs%E7%8E%AF%E5%A2%83%E5%8C%BA%E5%88%86/index.html">
+<meta property="og:site_name" content="张颖旋的个人博客">
+<meta property="og:description" content="nestjs1. 安装涉及工具包  cross-env ^7.0.3 @nestjs&#x2F;config ^2.3.1   2.创建 env.dev 与 env.prod 文件 写入生产环境变量与开发环境变量  12345678910DDD_USER&#x3D;rootDDD_PD&#x3D;xxxDDD_HOST&#x3D;127.0.0.1DDD_PORT&#x3D;3306DDD_NAME&#x3D;&#x27;databaseName">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-11-28T09:57:07.792Z">
+<meta property="article:modified_time" content="2025-11-28T09:57:07.792Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="nestjs">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>2024-10-28-【研发】nestjs微服务 - 张颖旋的个人博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Blowsysun</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="2024-10-28-【研发】nestjs微服务"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-11-28 09:57" pubdate>
+          2025年11月28日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          317 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          3 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">2024-10-28-【研发】nestjs微服务</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="nestjs"><a href="#nestjs" class="headerlink" title="nestjs"></a>nestjs</h2><h3 id="1-安装涉及工具包"><a href="#1-安装涉及工具包" class="headerlink" title="1. 安装涉及工具包"></a>1. 安装涉及工具包</h3><blockquote>
+<ol>
+<li>cross-env ^7.0.3</li>
+<li>@nestjs&#x2F;config ^2.3.1</li>
+</ol>
+</blockquote>
+<h3 id="2-创建-env-dev-与-env-prod-文件"><a href="#2-创建-env-dev-与-env-prod-文件" class="headerlink" title="2.创建 env.dev 与 env.prod 文件"></a>2.创建 env.dev 与 env.prod 文件</h3><blockquote>
+<p>写入生产环境变量与开发环境变量</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs 示例如下">DDD_USER=root<br>DDD_PD=xxx<br>DDD_HOST=127.0.0.1<br>DDD_PORT=3306<br>DDD_NAME=&#x27;databaseName&#x27;<br>CONSUL_HOST=xxx<br>CONSUL_PORT=8500<br>APP_PORT=3000<br>APP_NAME=microservice-name<br>APP_HOST=127.0.0.1<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-NODE-ENV-环境变量配置"><a href="#3-NODE-ENV-环境变量配置" class="headerlink" title="3. NODE_ENV 环境变量配置"></a>3. NODE_ENV 环境变量配置</h3><h4 id="3-1-开发时"><a href="#3-1-开发时" class="headerlink" title="3.1 开发时"></a>3.1 开发时</h4><blockquote>
+<p>在 package.json 中配置 “start:dev”: “cross-env NODE_ENV&#x3D;dev nest start –watch”</p>
+</blockquote>
+<h4 id="3-2-生产部署时"><a href="#3-2-生产部署时" class="headerlink" title="3.2 生产部署时"></a>3.2 生产部署时</h4><blockquote>
+<p>这里使用 pm2 创建 nodejs 守护进程</p>
+</blockquote>
+<ol>
+<li>创建 ecosystem.config.js 文件，执行<code>pm2 init simple</code></li>
+<li>写入配置如下</li>
+</ol>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs nix">m<span class="hljs-attr">odule.exports</span> <span class="hljs-operator">=</span> &#123;<br><span class="hljs-params">apps:</span> [<br>  &#123;<br>    <span class="hljs-params">name:</span> &#x27;projectName&#x27;,<br>    <span class="hljs-params">script:</span> &#x27;dist<span class="hljs-operator">/</span>main.js&#x27;,<br>    <span class="hljs-params">env:</span> &#123;<br>      <span class="hljs-params">NODE_ENV:</span> &#x27;prod&#x27;,<br>    &#125;,<br>    <span class="hljs-params">env_dev:</span> &#123;<br>      <span class="hljs-params">NODE_ENV:</span> &#x27;dev&#x27;,<br>    &#125;,<br>    <span class="hljs-params">env_prod:</span> &#123;<br>      <span class="hljs-params">NODE_ENV:</span> &#x27;prod&#x27;,<br>    &#125;,<br>  &#125;,<br>],<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>启动 pm2<br><code>pm2 start ecosystem.config.js --env prod --watch</code></li>
+</ol>
+<h3 id="2-全局注入-app-module-ts-中"><a href="#2-全局注入-app-module-ts-中" class="headerlink" title="2. 全局注入 app.module.ts 中"></a>2. 全局注入 app.module.ts 中</h3><blockquote>
+<p>设置 isGlobal: true 后，可在任意模块中使用 ConfigService</p>
+</blockquote>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">ConfigModule</span>, <span class="hljs-title class_">ConfigService</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@nestjs/config&#x27;</span>;<br><br><span class="hljs-keyword">const</span> envFilePath = <span class="hljs-string">`.env.<span class="hljs-subst">$&#123;process.env.NODE_ENV || <span class="hljs-string">&#x27;prod&#x27;</span>&#125;</span>`</span>;<br><br><span class="hljs-meta">@Module</span>(&#123;<br>  <span class="hljs-attr">imports</span>: [<br>    <span class="hljs-title class_">ConfigModule</span>.<span class="hljs-title function_">forRoot</span>(&#123;<br>      <span class="hljs-attr">isGlobal</span>: <span class="hljs-literal">true</span>,<br>      envFilePath,<br>    &#125;),<br>  ],&#125;)<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-使用时注入-ConfigService"><a href="#3-使用时注入-ConfigService" class="headerlink" title="3.使用时注入 ConfigService"></a>3.使用时注入 ConfigService</h3><h4 id="3-1-Controller-控制器中"><a href="#3-1-Controller-控制器中" class="headerlink" title="3.1 Controller 控制器中"></a>3.1 Controller 控制器中</h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">ConfigService</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@nestjs/config&quot;</span>;<br><br><span class="hljs-meta">@Controller</span>(<span class="hljs-string">&quot;cats&quot;</span>)<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CatsController</span> &#123;<br>  <span class="hljs-title function_">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> <span class="hljs-attr">config</span>: <span class="hljs-title class_">ConfigService</span></span>) &#123;<br>    <span class="hljs-keyword">const</span> config = <span class="hljs-variable language_">this</span>.<span class="hljs-property">config</span>;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<br>      config.<span class="hljs-title function_">get</span>(<span class="hljs-string">&quot;APP_NAME&quot;</span>),<br>      config.<span class="hljs-title function_">get</span>(<span class="hljs-string">&quot;APP_HOST&quot;</span>),<br>      config.<span class="hljs-title function_">get</span>(<span class="hljs-string">&quot;APP_PORT&quot;</span>)<br>    );<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-2-module-中"><a href="#3-2-module-中" class="headerlink" title="3.2 module 中"></a>3.2 module 中</h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">Module</span>, <span class="hljs-title class_">OnModuleInit</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@nestjs/common&quot;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">ConfigService</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@nestjs/config&quot;</span>;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AppModule</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">OnModuleInit</span> &#123;<br>  <span class="hljs-title function_">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> <span class="hljs-attr">config</span>: <span class="hljs-title class_">ConfigService</span></span>) &#123;&#125;<br><br>  <span class="hljs-keyword">async</span> <span class="hljs-title function_">onModuleInit</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">const</span> config = <span class="hljs-variable language_">this</span>.<span class="hljs-property">config</span>;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<br>      config.<span class="hljs-title function_">get</span>(<span class="hljs-string">&quot;APP_NAME&quot;</span>),<br>      config.<span class="hljs-title function_">get</span>(<span class="hljs-string">&quot;APP_HOST&quot;</span>),<br>      config.<span class="hljs-title function_">get</span>(<span class="hljs-string">&quot;APP_PORT&quot;</span>)<br>    );<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%B7%A5%E7%A8%8B%E5%8C%96/" class="category-chain-item">工程化</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/nestjs/" class="print-no-link">#nestjs</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>2024-10-28-【研发】nestjs微服务</div>
+      <div>http://example.com/2025/11/28/2024-10-28-【研发】nestjs环境区分/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年11月28日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/11/28/2024-10-28-%E3%80%90%E7%A0%94%E5%8F%91%E3%80%91nestjs%E5%A4%9A%E8%8A%82%E7%82%B9%E9%83%A8%E7%BD%B2%E5%BE%AE%E6%9C%8D%E5%8A%A1/" title="2024-10-28-【研发】nestjs微服务">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">2024-10-28-【研发】nestjs微服务</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/11/28/2024-11-20-%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%91%E5%B0%8F%E7%A8%8B%E5%BA%8Fminiprogram-ci/" title="2024-11-20-【小程序】小程序自动化测试">
+                        <span class="hidden-mobile">2024-11-20-【小程序】小程序自动化测试</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

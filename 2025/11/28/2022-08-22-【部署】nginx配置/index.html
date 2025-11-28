@@ -1,0 +1,739 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/favicon.ico">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="nginx配置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2022-08-22-nginx配置">
+<meta property="og:url" content="http://example.com/2025/11/28/2022-08-22-%E3%80%90%E9%83%A8%E7%BD%B2%E3%80%91nginx%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:site_name" content="张颖旋的个人博客">
+<meta property="og:description" content="nginx配置">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-11-28T09:57:07.789Z">
+<meta property="article:modified_time" content="2025-11-28T09:57:07.789Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="nginx">
+<meta property="article:tag" content="前端工程化">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>2022-08-22-nginx配置 - 张颖旋的个人博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Blowsysun</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="2022-08-22-nginx配置"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-11-28 09:57" pubdate>
+          2025年11月28日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          27 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">2022-08-22-nginx配置</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="1-root"><a href="#1-root" class="headerlink" title="1. root"></a>1. root</h3><p>语法：root path<br>配置段：<code>http、server、location、if</code></p>
+<p>root的处理结果是：root路径＋location路径</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">location <span class="hljs-regexp">/t/</span> &#123;<br>     root <span class="hljs-regexp">/www/</span>root<span class="hljs-regexp">/html/</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>请求的URI是&#x2F;t&#x2F;a.html时，web服务器将会返回服务器上的&#x2F;www&#x2F;root&#x2F;html&#x2F;t&#x2F;a.html的文件。</p>
+<h3 id="2-alias"><a href="#2-alias" class="headerlink" title="2.alias"></a>2.alias</h3><p>语法：alias path<br>配置段：location</p>
+<p>alias的处理结果是：使用alias路径替换location路径<br>alias后面必须要用“&#x2F;”结束，否则会找不到文件的。。。而root则可有可无</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">location <span class="hljs-regexp">/t/</span> &#123;<br> alias <span class="hljs-regexp">/www/</span>root<span class="hljs-regexp">/html/</span>new_t/;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>请求的URI是&#x2F;t&#x2F;a.html时，web服务器将会返回服务器上的&#x2F;www&#x2F;root&#x2F;html&#x2F;new_t&#x2F;a.html的文件。</p>
+<h3 id="3-try-files"><a href="#3-try-files" class="headerlink" title="3.try_files"></a>3.try_files</h3><p>语法：try_files 文件路径… 重写的uri<br>配置段：server location</p>
+<p>try_files后面至少要有一个文件路径一个重写uri。<br>查找路径是按照给定的root或alias为根路径来查找的；<br>如果给出的file都没有匹配到，则会进行一个内部重定向到最后一个参数给定的uri，就是新的location匹配；<br>最后一个参数是回退URI且必须存在，否则会出现内部500错误；</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-section">location</span> / &#123;<br>  <span class="hljs-attribute">root</span> /data/dist;<br>  <span class="hljs-attribute">try_files</span> <span class="hljs-variable">$uri</span> <span class="hljs-variable">$uri</span>/ /index.html<br>  expires <span class="hljs-number">7d</span>; <span class="hljs-comment"># expires 是nginx控制缓存的一种方式，7d=7天。</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>访问<a target="_blank" rel="noopener" href="http://localhost/example?a=1%E6%97%B6$uri%E4%B8%BA/example%EF%BC%8C$request_uri%E5%8C%85%E6%8B%ACURI%E5%8F%82%E6%95%B0%E4%B8%BA/example?a=1%EF%BC%8C%E5%A4%84%E7%90%86%E9%A1%BA%E5%BA%8F%E6%98%AF%EF%BC%9A">http://localhost/example?a=1时$uri为/example，$request_uri包括URI参数为/example?a=1，处理顺序是：</a></p>
+<p>$uri是指&#x2F;example文件, 会先找root目录&#x2F;data&#x2F;dist下的&#x2F;example文件，也就是&#x2F;data&#x2F;dist&#x2F;example这个文件，找到直接返回。<br>$uri&#x2F;也就是&#x2F;example&#x2F;目录，找不到再尝试找&#x2F;data&#x2F;dist&#x2F;example&#x2F;目录下的index开头的文件，找到直接返回。<br>如果前面文件都没匹配找到，就会 fallback 到 try_files 的最后一个选项 &#x2F;index.html，发起一个内部 “子请求”，也就是相当于 nginx 发起一个 HTTP 请求到 <a target="_blank" rel="noopener" href="http://localhost/index.html%E3%80%82%E9%87%8D%E6%96%B0%E5%8C%B9%E9%85%8Dlocation%E3%80%82">http://localhost/index.html。重新匹配location。</a></p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-section">location</span> / &#123;<br>  <span class="hljs-attribute">try_files</span> /app/cache/ <span class="hljs-variable">$uri</span> <span class="hljs-variable">@fallback</span>;<br>  <span class="hljs-attribute">index</span> index.php index.html;<br>&#125;<br><br><span class="hljs-section">location</span> <span class="hljs-variable">@fallback</span> &#123;<br>  <span class="hljs-attribute">rewrite</span><span class="hljs-regexp"> ^/(.*)$</span> http://www.baidu.com <span class="hljs-comment"># 跳转到百度，和try_files最后一个参数作用相同。</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h1 id="sub-filter-过滤及替换响应内容"><a href="#sub-filter-过滤及替换响应内容" class="headerlink" title="sub_filter 过滤及替换响应内容"></a>sub_filter 过滤及替换响应内容</h1><p>Accept-Encoding 设为空值，以禁用压缩，是因为 sub_filter 只能处理未经压缩的内容；又 sub_filter 一般只替换 text&#x2F;html 且仅工作一次，不符合需求，故对配置稍做微调。</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs lasso">location / &#123;<br>    <span class="hljs-params">...</span> <br>    proxy_set_header Accept<span class="hljs-params">-Encoding</span> <span class="hljs-string">&#x27;&#x27;</span>;<br>    sub_filter_types *;<br>    sub_filter_once off;<br>    sub_filter <span class="hljs-string">&#x27;查找内容：源站域名&#x27;</span> <span class="hljs-string">&#x27;替换为：反代站域名&#x27;</span>;<br>    <span class="hljs-params">...</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="rewrite-和-location"><a href="#rewrite-和-location" class="headerlink" title="rewrite 和 location"></a>rewrite 和 location</h3><p>表面看 rewrite 和 location 功能有点像，都能实现跳转，主要区别在于 rewrite 是在同一域名内更改获取资源的路径，而 location 是对一类路径做控制访问或反向代理，可以 proxy_pass 到其他机器。很多情况下 rewrite 也会写在 location 里，它们的执行顺序是：</p>
+<p>执行 server 块的 rewrite 指令（这里的块指的是 server 关键字后{}包围的区域，其它 xx 块类似）<br>执行location匹配<br>执行选定的location中的rewrite指令<br>如果其中某步 URI 被重写，则重新循环执行1-3，直到找到真实存在的文件；<br>如果循环超过 10 次，则返回 500 Internal Server Error 错误。</p>
+<p>匹配不到的话，重定向到 @fallback，然后重写到百度。</p>
+<h4 id="location-优先级介绍"><a href="#location-优先级介绍" class="headerlink" title="location 优先级介绍"></a>location 优先级介绍</h4><p>location 匹配方式有以下几种</p>
+<ol>
+<li>location &#x3D; &#x2F;path&#x2F;a&#x2F;exact.png {}: 精确匹配</li>
+<li>location ^~ &#x2F;path&#x2F;a&#x2F; {}: 优先前缀匹配（符合最长匹配原则）</li>
+<li>location ~ &#x2F;Path?&#x2F; {} ： 区分大小写正则匹配（首次匹配原则）</li>
+<li>location ~* &#x2F;path?&#x2F; {} : 不区分大小写正则匹配（首次匹配原则）</li>
+<li>location &#x2F;path&#x2F;a&#x2F;test.png {} : 前缀匹配（符合最长匹配原则）</li>
+<li>location 优先级匹配与配置的先后顺序无关，优先级排列顺序如下</li>
+</ol>
+<p>精确匹配 &gt; 优先前缀匹配 &gt; 区分大小写正则匹配&#x3D;不区分大小写正则匹配 &gt; 前缀匹配</p>
+<h3 id="rewrite-指令"><a href="#rewrite-指令" class="headerlink" title="rewrite 指令"></a>rewrite 指令</h3><p>语法：rewrite regex replacement [flag];<br>作用域：server 、location、if<br>功能：如果一个URI匹配指定的正则表达式regex，URI就按照 replacement 重写。</p>
+<p>rewrite 按配置文件中出现的顺序执行。可以使用 flag 标志来终止指令的进一步处理。</p>
+<p>如果 replacement 以 http:&#x2F;&#x2F; 、 https:&#x2F;&#x2F; 或 $ scheme 开始，将不再继续处理，这个重定向将返回给客户端。<br>示例：第一种情况，重写的字符串带 http:&#x2F;&#x2F;</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-section">location</span><span class="hljs-regexp"> ^~</span> /redirect &#123;<br>    <span class="hljs-comment"># 当匹配前缀表达式 /redirect/(.*)时 请求将被临时重定向到 http://www.$1.com</span><br>    <span class="hljs-comment"># 相当于 flag 写为 redirect</span><br>    <span class="hljs-attribute">rewrite</span><span class="hljs-regexp"> ^/(.*)$</span> http://www.<span class="hljs-variable">$1</span>.com;<br>    <span class="hljs-attribute">return</span> <span class="hljs-number">200</span> <span class="hljs-string">&quot;ok&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>在浏览器中输入 127.0.0.1:8080&#x2F;redirect&#x2F;baidu ，则临时重定向到 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 后面的 return 指令将没有机会执行了。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-section">location</span><span class="hljs-regexp"> ^~</span> /redirect &#123;<br>    <span class="hljs-attribute">rewrite</span><span class="hljs-regexp"> ^/(.*)$</span> www.<span class="hljs-variable">$1</span>.com;<br>    <span class="hljs-attribute">return</span> <span class="hljs-number">200</span> <span class="hljs-string">&quot;ok&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h1 id="发送请求如下"><a href="#发送请求如下" class="headerlink" title="发送请求如下"></a>发送请求如下</h1><h1 id="curl-127-0-0-1-8080-redirect-baidu"><a href="#curl-127-0-0-1-8080-redirect-baidu" class="headerlink" title="curl 127.0.0.1:8080&#x2F;redirect&#x2F;baidu"></a>curl 127.0.0.1:8080&#x2F;redirect&#x2F;baidu</h1><h1 id="ok"><a href="#ok" class="headerlink" title="ok"></a>ok</h1><p>此处没有带 http:&#x2F;&#x2F; 所以只是简单的重写。请求的 URI 由 &#x2F;test1&#x2F;baidu 重写为 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 因为会顺序执行 rewrite 指令，所以 下一步执行 return 指令，响应后返回 ok</p>
+<p>flag 有四种参数可以选择：</p>
+<p>last 停止处理后续 rewrite 指令集，然后对当前重写的新 URI 在 rewrite 指令集上重新查找。<br>break 停止处理后续 rewrite 指令集，并不再重新查找，但是当前location 内剩余非 rewrite 语句和 location 外的 非rewrite 语句可以执行。<br>redirect 如果 replacement 不是以 http:&#x2F;&#x2F; 或 https:&#x2F;&#x2F; 开始，返回 302 临时重定向<br>permanent 返回 301 永久重定向<br>示例 1：</p>
+<h1 id="rewrite-后面没有任何-flag-时就顺序执行"><a href="#rewrite-后面没有任何-flag-时就顺序执行" class="headerlink" title="rewrite 后面没有任何 flag 时就顺序执行"></a>rewrite 后面没有任何 flag 时就顺序执行</h1><h1 id="当-location-中没有-rewrite-模块指令可被执行时-就重写发起新一轮location-匹配"><a href="#当-location-中没有-rewrite-模块指令可被执行时-就重写发起新一轮location-匹配" class="headerlink" title="当 location 中没有 rewrite 模块指令可被执行时 就重写发起新一轮location 匹配"></a>当 location 中没有 rewrite 模块指令可被执行时 就重写发起新一轮location 匹配</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash">location / &#123;<br>    <span class="hljs-comment"># 顺序执行如下两条rewrite指令 </span><br>    rewrite ^/test1 /test2;<br>    rewrite ^/test2 /test3;  <span class="hljs-comment"># 此处发起新一轮 location 匹配 URI为/test3</span><br>&#125;<br><br>location = /test2 &#123;<br>    <span class="hljs-built_in">return</span> 200 “/test2”;<br>&#125;  <br><br>location = /test3 &#123;<br>    <span class="hljs-built_in">return</span> 200 “/test3”;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h1 id="发送如下请求"><a href="#发送如下请求" class="headerlink" title="发送如下请求"></a>发送如下请求</h1><h1 id="curl-127-0-0-1-8080-test1"><a href="#curl-127-0-0-1-8080-test1" class="headerlink" title="curl 127.0.0.1:8080&#x2F;test1"></a>curl 127.0.0.1:8080&#x2F;test1</h1><h1 id="test3"><a href="#test3" class="headerlink" title="&#x2F;test3"></a>&#x2F;test3</h1><p>如果正则表达regex式中包含 “}” 或 “;”，那么整个表达式需要用双引号或单引号包围。</p>
+<p>示例 2：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-section">location</span> / &#123;<br>    <span class="hljs-attribute">rewrite</span><span class="hljs-regexp"> ^/test1</span> /test2;<br>    <span class="hljs-attribute">rewrite</span><span class="hljs-regexp"> ^/test2</span> /test3 <span class="hljs-literal">last</span>;  <span class="hljs-comment"># 此处发起新一轮location匹配 uri为/test3</span><br>    <span class="hljs-attribute">rewrite</span><span class="hljs-regexp"> ^/test3</span> /test4;<br>    <span class="hljs-attribute">proxy_pass</span> http://www.baidu.com;<br>&#125;<br><br><span class="hljs-section">location</span> = /test2 &#123;<br>    <span class="hljs-attribute">return</span> <span class="hljs-number">200</span> <span class="hljs-string">&quot;/test2&quot;</span>;<br>&#125;  <br><br><span class="hljs-section">location</span> = /test3 &#123;<br>    <span class="hljs-attribute">return</span> <span class="hljs-number">200</span> <span class="hljs-string">&quot;/test3&quot;</span>;<br>&#125;<br><span class="hljs-section">location</span> = /test4 &#123;<br>    <span class="hljs-attribute">return</span> <span class="hljs-number">200</span> <span class="hljs-string">&quot;/test4&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>发送如下请求 curl 127.0.0.1:8080&#x2F;test1 返回 &#x2F;test3</p>
+<p>当如果将上面的 location &#x2F; 改成如下代码</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-section">location</span> / &#123;<br>    <span class="hljs-attribute">rewrite</span><span class="hljs-regexp"> ^/test1</span> /test2;<br>    <span class="hljs-comment"># 此处不会发起新一轮location匹配；当是会终止执行后续rewrite模块指令重写后的 URI 为 /more/index.html</span><br>    <span class="hljs-attribute">rewrite</span><span class="hljs-regexp"> ^/test2</span> /more/index.html <span class="hljs-literal">break</span>;  <br>    <span class="hljs-attribute">rewrite</span> /more/index\.html /test4; <span class="hljs-comment"># 这条指令会被忽略</span><br><br>    <span class="hljs-comment"># 因为 proxy_pass 不是rewrite模块的指令 所以它不会被 break终止</span><br>    <span class="hljs-attribute">proxy_pass</span> https://www.baidu.com;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>发送请求 127.0.0.1:8080&#x2F;test1<br>代理到 <a target="_blank" rel="noopener" href="https://www.baidu.com/">https://www.baidu.com</a></p>
+<p>rewrite 后的请求参数：<br>如果替换字符串 replacement 包含新的请求参数，则在它们之后附加先前的请求参数。如果你不想要之前的参数，则在替换字符串 replacement 的末尾放置一个问号，避免附加它们。</p>
+<h1 id="由于最后加了个-，原来的请求参数将不会被追加到-rewrite-之后的-URI-后面"><a href="#由于最后加了个-，原来的请求参数将不会被追加到-rewrite-之后的-URI-后面" class="headerlink" title="由于最后加了个 ?，原来的请求参数将不会被追加到 rewrite 之后的 URI 后面*"></a>由于最后加了个 ?，原来的请求参数将不会被追加到 rewrite 之后的 URI 后面*</h1><p>rewrite ^&#x2F;users&#x2F;(.*)$ &#x2F;show?user&#x3D;$1? last;</p>
+<h1 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h1><ul>
+<li>1、&#x3D; 开头</li>
+<li>精确匹配</li>
+</ul>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crmsh"><span class="hljs-keyword">location</span> <span class="hljs-title">= /login</span> &#123; ... &#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>2、^~ 开头</li>
+<li>表示 URL 以某个常规字符串开头，不区分大小写，并关闭正则匹配，当搜索到这个普通匹配模式后，将不再继续搜索正则匹配模式。</li>
+</ul>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crmsh"><span class="hljs-keyword">location</span> <span class="hljs-title">^~ /static</span>/ &#123; ... &#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>3、~ 开头</li>
+<li>表示区分大小写的正则匹配，以gif、jpg、js、css结尾</li>
+</ul>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs coq">location ~ \.(gif|<span class="hljs-type">jpg</span>|<span class="hljs-type">png</span>|<span class="hljs-type">js</span>|<span class="hljs-type">css</span>)$ &#123; ... &#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>4、~* 开头</li>
+<li>表示不区分大小写的正则匹配，以 .png 结尾</li>
+</ul>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crmsh"><span class="hljs-keyword">location</span> <span class="hljs-title">~* \.png</span>$ &#123; ... &#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>5、&#x2F; 开头</li>
+<li>通用匹配，任何请求都会匹配到。</li>
+</ul>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crmsh"><span class="hljs-keyword">location</span> <span class="hljs-title">/ &#123; ... &#125;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>各符号优先级：</li>
+<li>&#x3D; &gt; ^~ &gt; <del>|</del>* &gt; &#x2F;</li>
+<li>.表示除\n之外的任意字符</li>
+<li>*表示匹配0-无穷</li>
+<li>+表示匹配1-无穷</li>
+</ul>
+<h3 id="墙代理-nginx图片服务"><a href="#墙代理-nginx图片服务" class="headerlink" title="墙代理+nginx图片服务"></a>墙代理+nginx图片服务</h3><figure class="highlight nsis"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><code class="hljs nsis">server &#123;<br>    listen <span class="hljs-number">80</span><span class="hljs-comment">;</span><br>    listen [::]:<span class="hljs-number">80</span><span class="hljs-comment">;</span><br>    server_name blowsysun.<span class="hljs-literal">top</span><span class="hljs-comment">;</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">301</span> https://<span class="hljs-variable">$server_name</span>:<span class="hljs-number">443</span><span class="hljs-variable">$request_uri</span><span class="hljs-comment">;</span><br>&#125;<br><br>server &#123;<br>    listen       <span class="hljs-number">443</span> ssl http2<span class="hljs-comment">;</span><br>    listen       [::]:<span class="hljs-number">443</span> ssl http2<span class="hljs-comment">;</span><br>    server_name blowsysun.<span class="hljs-literal">top</span><span class="hljs-comment">;</span><br>    charset utf-<span class="hljs-number">8</span><span class="hljs-comment">;</span><br><br>    <span class="hljs-comment"># ssl配置</span><br>    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4<span class="hljs-comment">;</span><br>    ssl_ecdh_curve secp384r1<span class="hljs-comment">;</span><br>    ssl_prefer_server_ciphers <span class="hljs-literal">on</span><span class="hljs-comment">;</span><br>    ssl_session_cache shared:SSL:<span class="hljs-number">10</span>m<span class="hljs-comment">;</span><br>    ssl_session_timeout <span class="hljs-number">10</span>m<span class="hljs-comment">;</span><br>    ssl_session_tickets <span class="hljs-literal">off</span><span class="hljs-comment">;</span><br>    ssl_certificate /etc/v2ray/blowsysun.<span class="hljs-literal">top</span>.pem<span class="hljs-comment">;</span><br>    ssl_certificate_key /etc/v2ray/blowsysun.<span class="hljs-literal">top</span>.key<span class="hljs-comment">;</span><br><br>    <span class="hljs-comment"># root /usr/share/nginx/html;</span><br>    location / &#123;<br>        root /usr/share/nginx/html<span class="hljs-comment">;</span><br>        proxy_ssl_server_name <span class="hljs-literal">on</span><span class="hljs-comment">;</span><br>        proxy_pass https://<span class="hljs-number">86817</span>.com/<span class="hljs-comment">;</span><br>        proxy_set_header Accept-Encoding <span class="hljs-string">&#x27;&#x27;</span><span class="hljs-comment">;</span><br>        sub_filter <span class="hljs-string">&quot;86817.com&quot;</span> <span class="hljs-string">&quot;blowsysun.top&quot;</span><span class="hljs-comment">;</span><br>        sub_filter_once <span class="hljs-literal">off</span><span class="hljs-comment">;</span><br>    &#125;<br><br>    location = /robots.txt &#123;&#125;<br><br>    location /images/ &#123;<br>      root /usr/share/nginx/<span class="hljs-comment">;</span><br>      autoindex <span class="hljs-literal">on</span><span class="hljs-comment">; # 打开目录浏览功能</span><br>      <span class="hljs-comment">#autoindex_exact_size off; #默认为on，显示出文件的确切大小，单位是bytes。改为off后，显示出文件的大概大小，单位是kB或者MB或者GB</span><br>      <span class="hljs-comment">#autoindex_localtime on; #默认为off，显示的文件时间为GMT时间。</span><br>改为<span class="hljs-literal">on</span>后，显示的文件时间为文件的服务器时间<br>      <span class="hljs-comment">#charset utf-8;</span><br>    &#125;<br><br>    location /nEmeUFJM0hbD &#123;<br>      proxy_redirect <span class="hljs-literal">off</span><span class="hljs-comment">;</span><br>      proxy_pass http://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">22768</span><span class="hljs-comment">;</span><br>      proxy_http_version <span class="hljs-number">1.1</span><span class="hljs-comment">;</span><br>      proxy_set_header Upgrade <span class="hljs-variable">$http_upgrade</span><span class="hljs-comment">;</span><br>      proxy_set_header Connection <span class="hljs-string">&quot;upgrade&quot;</span><span class="hljs-comment">;</span><br>      proxy_set_header Host <span class="hljs-variable">$host</span><span class="hljs-comment">;</span><br>      <span class="hljs-comment"># Show real IP in v2ray access.log</span><br>      proxy_set_header X-Real-IP <span class="hljs-variable">$remote_addr</span><span class="hljs-comment">;</span><br>      proxy_set_header X-Forwarded-For <span class="hljs-variable">$proxy_add_x_forwarded_for</span><span class="hljs-comment">;</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="项目1"><a href="#项目1" class="headerlink" title="项目1"></a>项目1</h3><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">worker_processes</span> auto;<br><span class="hljs-attribute">worker_rlimit_nofile</span> <span class="hljs-number">65535</span>;<br><span class="hljs-attribute">error_log</span> logs/<span class="hljs-literal">error</span>.log;<br><span class="hljs-attribute">pid</span> /var/run/nginx.pid;<br><span class="hljs-attribute">daemon</span> <span class="hljs-literal">off</span>;<br><br><span class="hljs-section">events</span> &#123;<br>    <span class="hljs-attribute">worker_connections</span> <span class="hljs-number">2048</span>;<br>&#125;<br><br><span class="hljs-section">http</span> &#123;<br>    <span class="hljs-attribute">log_format</span>  main  <span class="hljs-string">&#x27;<span class="hljs-variable">$remote_addr</span> - <span class="hljs-variable">$remote_user</span> [<span class="hljs-variable">$time_local</span>] &quot;<span class="hljs-variable">$request</span>&quot; &#x27;</span><br>                      <span class="hljs-string">&#x27;<span class="hljs-variable">$status</span> <span class="hljs-variable">$body_bytes_sent</span> &quot;<span class="hljs-variable">$http_referer</span>&quot; &#x27;</span><br>                      <span class="hljs-string">&#x27;&quot;<span class="hljs-variable">$http_user_agent</span>&quot; &quot;<span class="hljs-variable">$http_x_forwarded_for</span>&quot; &quot;<span class="hljs-variable">$http_referer</span>&quot;&#x27;</span>;<br><br>    <span class="hljs-attribute">access_log</span>  logs/access.log  main;<br>    <span class="hljs-attribute">client_max_body_size</span>    <span class="hljs-number">100m</span>;<br>    <span class="hljs-attribute">sendfile</span>            <span class="hljs-literal">on</span>;<br>    <span class="hljs-attribute">tcp_nopush</span>          <span class="hljs-literal">on</span>;<br>    <span class="hljs-attribute">tcp_nodelay</span>         <span class="hljs-literal">on</span>;<br>    <span class="hljs-attribute">keepalive_timeout</span>   <span class="hljs-number">65</span>;<br>    <span class="hljs-attribute">types_hash_max_size</span> <span class="hljs-number">2048</span>;<br><br>    <span class="hljs-attribute">gzip</span> <span class="hljs-literal">on</span>;<br>    <span class="hljs-attribute">gzip_disable</span> <span class="hljs-string">&quot;msie6&quot;</span>;<br>    <span class="hljs-attribute">gzip_vary</span> <span class="hljs-literal">on</span>;<br>    <span class="hljs-attribute">gzip_proxied</span> any;<br>    <span class="hljs-attribute">gzip_comp_level</span> <span class="hljs-number">6</span>;<br>    <span class="hljs-attribute">gzip_buffers</span> <span class="hljs-number">16</span> <span class="hljs-number">8k</span>;<br>    <span class="hljs-attribute">gzip_http_version</span> <span class="hljs-number">1</span>.<span class="hljs-number">1</span>;<br>    <span class="hljs-attribute">gzip_min_length</span> <span class="hljs-number">256</span>;<br>    <span class="hljs-attribute">gzip_types</span> text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss application/javascript text/javascript application/vnd.ms-fontobject application/x-font-ttf font/opentype image/svg+xml image/x-icon;<br><br>    <span class="hljs-attribute">proxy_connect_timeout</span> <span class="hljs-number">300s</span>;<br>    <span class="hljs-attribute">proxy_send_timeout</span> <span class="hljs-number">300s</span>;<br>    <span class="hljs-attribute">proxy_read_timeout</span> <span class="hljs-number">300s</span>;<br>    <span class="hljs-attribute">send_timeout</span> <span class="hljs-number">300s</span>;<br>    <span class="hljs-attribute">fastcgi_connect_timeout</span> <span class="hljs-number">300</span>;<br>    <span class="hljs-attribute">fastcgi_send_timeout</span> <span class="hljs-number">300</span>;<br>    <span class="hljs-attribute">fastcgi_read_timeout</span> <span class="hljs-number">300</span>;<br><br>    <span class="hljs-attribute">include</span>             /usr/local/openresty/nginx/mime.types;<br>    <span class="hljs-attribute">default_type</span>        application/octet-stream;<br><br>    <span class="hljs-comment"># Load modular configuration files from the /etc/nginx/conf.d directory.</span><br>    <span class="hljs-comment"># See http://nginx.org/en/docs/ngx_core_module.html#include</span><br>    <span class="hljs-comment"># for more information.</span><br>    <span class="hljs-attribute">include</span> servers/<span class="hljs-regexp">*.conf</span>;<br><br>    <span class="hljs-section">server</span> &#123;<br>        <span class="hljs-attribute">listen</span>       <span class="hljs-number">80</span> default_server;<br>	    	<span class="hljs-attribute">listen</span>       [::]:<span class="hljs-number">80</span> default_server;<br>        <span class="hljs-attribute">server_name</span>  _;<br>        <span class="hljs-comment">#root         /usr/local/openresty/nginx/html/;</span><br><br>        <span class="hljs-comment"># 重写env.config.js路径</span><br>        <span class="hljs-section">location</span> <span class="hljs-regexp">~ .+/env.config.js$</span>  &#123;<br>           <span class="hljs-attribute">rewrite</span><span class="hljs-regexp"> ^(.*)$</span> /env.config.js <span class="hljs-literal">break</span>;<br>           <span class="hljs-attribute">root</span>  /usr/local/openresty/nginx/html;<br>        &#125;<br><br>        <span class="hljs-comment"># 重写/static_res资源路径</span><br>        <span class="hljs-section">location</span> <span class="hljs-regexp">~ .+/static_res/</span>  &#123;<br>           <span class="hljs-attribute">rewrite</span><span class="hljs-regexp"> ^.*(\/static_res\/.*)$</span> <span class="hljs-variable">$1</span> <span class="hljs-literal">break</span>;<br>           <span class="hljs-attribute">root</span>  /usr/local/openresty/nginx/html;<br>        &#125;<br><br>        <span class="hljs-comment"># 重写/assets/img/中图片资源路径</span><br>        <span class="hljs-section">location</span> <span class="hljs-regexp">~ .+/assets_res/</span>  &#123;<br>           <span class="hljs-attribute">rewrite</span><span class="hljs-regexp"> ^.*(\/assets_res\/.*)$</span> <span class="hljs-variable">$1</span> <span class="hljs-literal">break</span>;<br>           <span class="hljs-attribute">root</span>  /usr/local/openresty/nginx/html;<br>        &#125;<br><br>        <span class="hljs-comment"># 重写/assets/img/中图片资源路径</span><br>        <span class="hljs-section">location</span> <span class="hljs-regexp">~ .+/assets/</span>  &#123;<br>           <span class="hljs-attribute">rewrite</span><span class="hljs-regexp"> ^.*(\/assets\/.*)$</span> <span class="hljs-variable">$1</span> <span class="hljs-literal">break</span>;<br>           <span class="hljs-attribute">root</span>  /usr/local/openresty/nginx/html;<br>        &#125;<br><br>        <span class="hljs-comment"># 主入口配置</span><br>        <span class="hljs-section">location</span> / &#123;<br>            <span class="hljs-attribute">add_header</span> Cache-Control <span class="hljs-string">&#x27;no-cache, must-revalidate, proxy-revalidate, max-age=0&#x27;</span>;<br>            <span class="hljs-attribute">alias</span> /usr/local/openresty/nginx/html/;<br>            <span class="hljs-attribute">index</span> index.html;<br>            <span class="hljs-attribute">try_files</span> <span class="hljs-variable">$uri</span> <span class="hljs-variable">$uri</span>/ /index.html;<br><br>            <span class="hljs-attribute">if</span> (<span class="hljs-variable">$request_filename</span> <span class="hljs-regexp">~* .*.(html|htm)$)</span><br>            &#123;<br>                <span class="hljs-attribute">expires</span> -<span class="hljs-number">1s</span>;<br>            &#125;<br><br>            <span class="hljs-attribute">if</span> (<span class="hljs-variable">$request_filename</span> <span class="hljs-regexp">~* .*.(gif|jpg|jpeg|png|svg)$)</span><br>            &#123;<br>                <span class="hljs-attribute">expires</span> <span class="hljs-number">30d</span>;<br>            &#125;<br><br>            <span class="hljs-attribute">if</span> (<span class="hljs-variable">$request_filename</span> <span class="hljs-regexp">~ .*.(js|css)$)</span><br>            &#123;<br>                <span class="hljs-attribute">expires</span> <span class="hljs-number">12h</span>;<br>            &#125;<br>        &#125;<br><br>        <span class="hljs-comment"># 接口</span><br>        <span class="hljs-section">location</span> /xadmin/ &#123;<br>            <span class="hljs-attribute">proxy_pass</span> http://xxx-backend:8090;<br>            <span class="hljs-attribute">rewrite</span><span class="hljs-regexp"> ^/xadmin/(.*)$</span> /xadmin/<span class="hljs-variable">$1</span> <span class="hljs-literal">break</span>;<br>        &#125;<br>        <span class="hljs-section">location</span> /platform/ &#123;<br>            <span class="hljs-attribute">proxy_pass</span> http://xxx-backend:8080;<br>            <span class="hljs-attribute">rewrite</span><span class="hljs-regexp"> ^/platform/(.*)$</span> /platform/<span class="hljs-variable">$1</span> <span class="hljs-literal">break</span>;<br>        &#125;<br>        <br>        <span class="hljs-section">location</span> /ping &#123;<br>            <span class="hljs-attribute">return</span> <span class="hljs-number">200</span> <span class="hljs-string">&quot;oK&quot;</span>;<br>        &#125;<br><br>        <span class="hljs-attribute">error_page</span> <span class="hljs-number">404</span> /<span class="hljs-number">404</span>.html;<br>            <span class="hljs-section">location</span> = /40x.html &#123;<br>        &#125;<br><br>        <span class="hljs-attribute">error_page</span> <span class="hljs-number">500</span> <span class="hljs-number">502</span> <span class="hljs-number">503</span> <span class="hljs-number">504</span> /50x.html;<br>            <span class="hljs-section">location</span> = /50x.html &#123;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="项目2-微前端-独立部署"><a href="#项目2-微前端-独立部署" class="headerlink" title="项目2 - 微前端 独立部署"></a>项目2 - 微前端 独立部署</h3><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">user</span>  root;<br><span class="hljs-attribute">worker_processes</span>  auto;<br><br><span class="hljs-comment">#error_log  logs/error.log;</span><br><span class="hljs-comment">#error_log  logs/error.log  notice;</span><br><span class="hljs-comment">#error_log  logs/error.log  info;</span><br><br><span class="hljs-comment">#pid        logs/nginx.pid;</span><br><br><br><span class="hljs-section">events</span> &#123;<br>    <span class="hljs-attribute">worker_connections</span>  <span class="hljs-number">1024</span>;<br>&#125;<br><br><br><span class="hljs-section">http</span> &#123;<br>    <span class="hljs-attribute">include</span>       mime.types;<br>    <span class="hljs-attribute">default_type</span>  application/octet-stream;<br><br>    <span class="hljs-comment">#log_format  main  &#x27;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &#x27;</span><br>    <span class="hljs-comment">#                  &#x27;$status $body_bytes_sent &quot;$http_referer&quot; &#x27;</span><br>    <span class="hljs-comment">#                  &#x27;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&#x27;;</span><br><br>    <span class="hljs-comment">#access_log  logs/access.log  main;</span><br><br>    <span class="hljs-attribute">sendfile</span>            <span class="hljs-literal">on</span>;<br>    <span class="hljs-attribute">tcp_nopush</span>          <span class="hljs-literal">on</span>;<br>    <span class="hljs-attribute">tcp_nodelay</span>         <span class="hljs-literal">on</span>;<br>    <span class="hljs-attribute">keepalive_timeout</span>   <span class="hljs-number">65</span>;<br>    <span class="hljs-attribute">types_hash_max_size</span> <span class="hljs-number">2048</span>;<br><br>    <span class="hljs-section">server</span> &#123;<br>        <span class="hljs-attribute">listen</span>       <span class="hljs-number">80</span> default_server;<br>        <span class="hljs-attribute">listen</span>       [::]:<span class="hljs-number">80</span> default_server;<br>        <span class="hljs-attribute">server_name</span>  _;<br>        <span class="hljs-attribute">root</span>         /usr/share/nginx/html;<br><br>        <span class="hljs-comment"># 资源下载</span><br>        <span class="hljs-section">location</span><span class="hljs-regexp"> ^~</span> /zyx/portal/doc/ &#123;<br>           <span class="hljs-comment">#需要下载的文件存放的目录</span><br>           <span class="hljs-attribute">alias</span>  /data/zyx_web/;<br>           <span class="hljs-attribute">sendfile</span> <span class="hljs-literal">on</span>;<br>           <span class="hljs-attribute">autoindex</span> <span class="hljs-literal">on</span>;  <span class="hljs-comment"># 开启目录文件列表</span><br>           <span class="hljs-attribute">autoindex_exact_size</span> <span class="hljs-literal">on</span>;  <span class="hljs-comment"># 显示出文件的确切大小，单位是bytes</span><br>           <span class="hljs-attribute">autoindex_localtime</span> <span class="hljs-literal">on</span>;  <span class="hljs-comment"># 显示的文件时间为文件的服务器时间</span><br>           <span class="hljs-attribute">charset</span> utf-<span class="hljs-number">8</span>,gbk;  <span class="hljs-comment"># 避免中文乱码</span><br>       &#125;<br><br>        <span class="hljs-comment"># 主应用</span><br>        <span class="hljs-section">location</span><span class="hljs-regexp"> ^~/zyx</span> &#123;<br>              <span class="hljs-attribute">alias</span> /data/zyx_web/zyx-web-main;<br>              <span class="hljs-attribute">index</span> index.html;<br>              <span class="hljs-attribute">try_files</span> <span class="hljs-variable">$uri</span> <span class="hljs-variable">$uri</span>/ /zyx/index.html;<br>        &#125;<br><br>        <span class="hljs-comment"># 政企通</span><br>        <span class="hljs-section">location</span><span class="hljs-regexp"> ^~/zyx/sub/enterprise</span> &#123;<br>              <span class="hljs-attribute">add_header</span> Cache-Control <span class="hljs-string">&#x27;no-cache, must-revalidate, proxy-revalidate, max-age=0&#x27;</span>;<br>              <span class="hljs-attribute">alias</span> /data/zyx_web/zyx-web-government-enterprise-through;<br>              <span class="hljs-attribute">index</span> index.html;<br>              <span class="hljs-attribute">try_files</span> <span class="hljs-variable">$uri</span> <span class="hljs-variable">$uri</span>/ /zyx/sub/enterprise/index.html;<br>        &#125;<br><br>        <span class="hljs-comment"># 统一门户</span><br>        <span class="hljs-section">location</span><span class="hljs-regexp"> ^~/zyx/sub/portal</span> &#123;<br>              <span class="hljs-attribute">add_header</span> Cache-Control <span class="hljs-string">&#x27;no-cache, must-revalidate, proxy-revalidate, max-age=0&#x27;</span>;<br>              <span class="hljs-attribute">alias</span> /data/zyx_web/zyx-web-portal;<br>              <span class="hljs-attribute">index</span> index.html;<br>              <span class="hljs-attribute">try_files</span> <span class="hljs-variable">$uri</span> <span class="hljs-variable">$uri</span>/ /zyx/sub/portal/index.html;<br>        &#125;<br>        <span class="hljs-comment"># 标签系统</span><br>        <span class="hljs-section">location</span><span class="hljs-regexp"> ^~/zyx/sub/tag</span> &#123;<br>                <span class="hljs-attribute">add_header</span> Cache-Control <span class="hljs-string">&#x27;no-cache, must-revalidate, proxy-revalidate, max-age=0&#x27;</span>;<br>                <span class="hljs-attribute">alias</span> /data/zyx_web/zyx-web-tag;<br>                <span class="hljs-attribute">index</span> index.html;<br>                <span class="hljs-attribute">try_files</span> <span class="hljs-variable">$uri</span> <span class="hljs-variable">$uri</span>/ /zyx/sub/tag/index.html;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="项目3-微前端-合并部署"><a href="#项目3-微前端-合并部署" class="headerlink" title="项目3 - 微前端 合并部署"></a>项目3 - 微前端 合并部署</h3><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">user</span>  root;<br><span class="hljs-attribute">worker_processes</span> auto;<br><span class="hljs-attribute">worker_rlimit_nofile</span> <span class="hljs-number">65535</span>;<br><span class="hljs-attribute">error_log</span> logs/<span class="hljs-literal">error</span>.log;<br><span class="hljs-attribute">pid</span> /var/run/nginx.pid;<br><span class="hljs-attribute">daemon</span> <span class="hljs-literal">off</span>;<br><br><span class="hljs-section">events</span> &#123;<br>    <span class="hljs-attribute">worker_connections</span> <span class="hljs-number">2048</span>;<br>&#125;<br><br><span class="hljs-section">http</span> &#123;<br>    <span class="hljs-attribute">log_format</span>  main  <span class="hljs-string">&#x27;<span class="hljs-variable">$remote_addr</span> - <span class="hljs-variable">$remote_user</span> [<span class="hljs-variable">$time_local</span>] &quot;<span class="hljs-variable">$request</span>&quot; &#x27;</span><br>                      <span class="hljs-string">&#x27;<span class="hljs-variable">$status</span> <span class="hljs-variable">$body_bytes_sent</span> &quot;<span class="hljs-variable">$http_referer</span>&quot; &#x27;</span><br>                      <span class="hljs-string">&#x27;&quot;<span class="hljs-variable">$http_user_agent</span>&quot; &quot;<span class="hljs-variable">$http_x_forwarded_for</span>&quot; &quot;<span class="hljs-variable">$http_referer</span>&quot;&#x27;</span>;<br><br>    <span class="hljs-attribute">access_log</span>  logs/access.log  main;<br>    <span class="hljs-attribute">client_max_body_size</span>    <span class="hljs-number">100m</span>;<br>    <span class="hljs-attribute">sendfile</span>            <span class="hljs-literal">on</span>;<br>    <span class="hljs-attribute">tcp_nopush</span>          <span class="hljs-literal">on</span>;<br>    <span class="hljs-attribute">tcp_nodelay</span>         <span class="hljs-literal">on</span>;<br>    <span class="hljs-attribute">keepalive_timeout</span>   <span class="hljs-number">65</span>;<br>    <span class="hljs-attribute">types_hash_max_size</span> <span class="hljs-number">2048</span>;<br>    <br>    <span class="hljs-attribute">gzip</span> <span class="hljs-literal">on</span>;<br>    <span class="hljs-attribute">gzip_static</span> <span class="hljs-literal">on</span>;<br>    <span class="hljs-attribute">gzip_disable</span> <span class="hljs-string">&quot;msie6&quot;</span>;<br>    <span class="hljs-attribute">gzip_vary</span> <span class="hljs-literal">on</span>;<br>    <span class="hljs-attribute">gzip_proxied</span> any;<br>    <span class="hljs-attribute">gzip_comp_level</span> <span class="hljs-number">6</span>;<br>    <span class="hljs-attribute">gzip_buffers</span> <span class="hljs-number">16</span> <span class="hljs-number">8k</span>;<br>    <span class="hljs-attribute">gzip_http_version</span> <span class="hljs-number">1</span>.<span class="hljs-number">0</span>;<br>    <span class="hljs-attribute">gzip_min_length</span> <span class="hljs-number">20</span>;<br>    <span class="hljs-attribute">gzip_types</span> text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss application/javascript text/javascript application/vnd.ms-fontobject application/x-font-ttf font/opentype image/svg+xml image/x-icon;<br><br><br>    <span class="hljs-attribute">proxy_connect_timeout</span> <span class="hljs-number">300s</span>;<br>    <span class="hljs-attribute">proxy_send_timeout</span> <span class="hljs-number">300s</span>;   <br>    <span class="hljs-attribute">proxy_read_timeout</span> <span class="hljs-number">300s</span>;   <br>    <span class="hljs-attribute">send_timeout</span> <span class="hljs-number">300s</span>;    <br>    <span class="hljs-attribute">fastcgi_connect_timeout</span> <span class="hljs-number">300</span>;    <br>    <span class="hljs-attribute">fastcgi_send_timeout</span> <span class="hljs-number">300</span>;   <br>    <span class="hljs-attribute">fastcgi_read_timeout</span> <span class="hljs-number">300</span>;     <br><br>    <span class="hljs-attribute">include</span>             /usr/local/openresty/nginx/mime.types;<br>    <span class="hljs-attribute">default_type</span>        application/octet-stream;<br><br>    <span class="hljs-attribute">include</span> servers/<span class="hljs-regexp">*.conf</span>;<br>  <br>    <span class="hljs-section">server</span> &#123;<br>        <span class="hljs-attribute">listen</span>       <span class="hljs-number">80</span> default_server;<br>        <span class="hljs-attribute">listen</span>       [::]:<span class="hljs-number">80</span> default_server;<br>        <span class="hljs-attribute">server_name</span>  _;<br>        <span class="hljs-comment"># 重写env.config.js路径</span><br>        <span class="hljs-section">location</span> <span class="hljs-regexp">~ .+/env.config.js$</span>  &#123;<br>           <span class="hljs-attribute">rewrite</span><span class="hljs-regexp"> ^(.*)$</span> /env.config.js <span class="hljs-literal">break</span>;<br>           <span class="hljs-attribute">root</span>  /usr/local/openresty/nginx/html;<br>        &#125;<br>        <br>        <span class="hljs-section">location</span><span class="hljs-regexp"> ^~</span> /zyx_dev &#123;<br>            <span class="hljs-attribute">add_header</span> Cache-Control <span class="hljs-string">&#x27;no-cache, must-revalidate, proxy-revalidate, max-age=0&#x27;</span>;<br>            <span class="hljs-attribute">proxy_hide_header</span> Host;<br>            <span class="hljs-attribute">alias</span> /usr/local/openresty/nginx/html/zyx-web-main;<br>            <span class="hljs-attribute">index</span> index.html;<br>            <span class="hljs-attribute">try_files</span> <span class="hljs-variable">$uri</span> <span class="hljs-variable">$uri</span>/ /index.html;<br><br>            <span class="hljs-attribute">if</span> (<span class="hljs-variable">$request_filename</span> <span class="hljs-regexp">~* .*.(html|htm)$)</span><br>            &#123;<br>                <span class="hljs-attribute">expires</span> -<span class="hljs-number">1s</span>;<br>            &#125;<br><br>            <span class="hljs-attribute">if</span> (<span class="hljs-variable">$request_filename</span> <span class="hljs-regexp">~* .*.(gif|jpg|jpeg|png|svg)$)</span><br>            &#123;<br>                <span class="hljs-attribute">expires</span> <span class="hljs-number">30d</span>;<br>            &#125;<br><br>            <span class="hljs-attribute">if</span> (<span class="hljs-variable">$request_filename</span> <span class="hljs-regexp">~ .*.(js|css)$)</span><br>            &#123;       <br>                <span class="hljs-attribute">expires</span> <span class="hljs-number">12h</span>;<br>            &#125;<br>        &#125;<br>        <span class="hljs-section">location</span> /zyx_dev/sub/portal &#123;<br>            <span class="hljs-attribute">add_header</span> Cache-Control <span class="hljs-string">&#x27;no-cache, must-revalidate, proxy-revalidate, max-age=0&#x27;</span>;<br>            <span class="hljs-attribute">alias</span> /usr/local/openresty/nginx/html/zyx-web-portal;<br>            <span class="hljs-attribute">index</span> index.html;<br>            <span class="hljs-attribute">try_files</span> <span class="hljs-variable">$uri</span> <span class="hljs-variable">$uri</span>/ /zyx/sub/portal/index.html;<br>        &#125;<br>        <span class="hljs-section">location</span> /zyx_dev/sub/enterprise &#123;<br>            <span class="hljs-attribute">add_header</span> Cache-Control <span class="hljs-string">&#x27;no-cache, must-revalidate, proxy-revalidate, max-age=0&#x27;</span>;<br>            <span class="hljs-attribute">alias</span> /usr/local/openresty/nginx/html/zyx-web-government-enterprise-through;<br>            <span class="hljs-attribute">index</span> index.html;<br>            <span class="hljs-attribute">try_files</span> <span class="hljs-variable">$uri</span> <span class="hljs-variable">$uri</span>/ /zyx/sub/enterprise/index.html;<br>        &#125;<br>        <span class="hljs-section">location</span> /zyx_dev/sub/tag &#123;<br>            <span class="hljs-attribute">add_header</span> Cache-Control <span class="hljs-string">&#x27;no-cache, must-revalidate, proxy-revalidate, max-age=0&#x27;</span>;<br>            <span class="hljs-attribute">alias</span> /usr/local/openresty/nginx/html/zyx-web-tag;<br>            <span class="hljs-attribute">index</span> index.html;<br>            <span class="hljs-attribute">try_files</span> <span class="hljs-variable">$uri</span> <span class="hljs-variable">$uri</span>/ /zyx/sub/tag/index.html;<br>        &#125;<br>        <span class="hljs-attribute">error_page</span> <span class="hljs-number">404</span> /<span class="hljs-number">404</span>.html;<br>            <span class="hljs-section">location</span> = /40x.html &#123;<br>        &#125;<br><br>        <span class="hljs-attribute">error_page</span> <span class="hljs-number">500</span> <span class="hljs-number">502</span> <span class="hljs-number">503</span> <span class="hljs-number">504</span> /50x.html;<br>            <span class="hljs-section">location</span> = /50x.html &#123;<br>        &#125; <br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%83%A8%E7%BD%B2/" class="category-chain-item">部署</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/nginx/" class="print-no-link">#nginx</a>
+      
+        <a href="/tags/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/" class="print-no-link">#前端工程化</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>2022-08-22-nginx配置</div>
+      <div>http://example.com/2025/11/28/2022-08-22-【部署】nginx配置/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年11月28日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/11/28/2022-10-24-%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" title="2022-10-24 项目管理">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">2022-10-24 项目管理</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/11/28/2022-11-23-%E3%80%90%E9%83%A8%E7%BD%B2%E3%80%91%E7%99%BB%E5%BD%95%E9%A1%B5%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%8B%86%E5%88%86/" title="2022-11-23-【部署】登录页微服务拆分">
+                        <span class="hidden-mobile">2022-11-23-【部署】登录页微服务拆分</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

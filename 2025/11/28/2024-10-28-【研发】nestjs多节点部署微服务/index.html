@@ -1,0 +1,701 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/favicon.ico">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="背景在 nestjs 微服务开发过程中，本地开发机启动一个主服务，以及多个微服务时，是能够直接访问主服务的端口访问到各个微服务的接口；但我们将微服务部署到多台服务器上后，微服务的注册地址即使改为公网 ip 仍然无法直接访问到各个微服务的接口，这时就需要使用 Consul 来进行服务发现与注册，实现高效的微服务节点管理。 示例中，假定一个主服务 MAIN_SERVER，一个微服务 PUSH_SERV">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2024-10-28-【研发】nestjs微服务">
+<meta property="og:url" content="http://example.com/2025/11/28/2024-10-28-%E3%80%90%E7%A0%94%E5%8F%91%E3%80%91nestjs%E5%A4%9A%E8%8A%82%E7%82%B9%E9%83%A8%E7%BD%B2%E5%BE%AE%E6%9C%8D%E5%8A%A1/index.html">
+<meta property="og:site_name" content="张颖旋的个人博客">
+<meta property="og:description" content="背景在 nestjs 微服务开发过程中，本地开发机启动一个主服务，以及多个微服务时，是能够直接访问主服务的端口访问到各个微服务的接口；但我们将微服务部署到多台服务器上后，微服务的注册地址即使改为公网 ip 仍然无法直接访问到各个微服务的接口，这时就需要使用 Consul 来进行服务发现与注册，实现高效的微服务节点管理。 示例中，假定一个主服务 MAIN_SERVER，一个微服务 PUSH_SERV">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-11-28T09:57:07.792Z">
+<meta property="article:modified_time" content="2025-11-28T09:57:07.792Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="nestjs">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>2024-10-28-【研发】nestjs微服务 - 张颖旋的个人博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Blowsysun</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="2024-10-28-【研发】nestjs微服务"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-11-28 09:57" pubdate>
+          2025年11月28日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          9 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">2024-10-28-【研发】nestjs微服务</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在 nestjs 微服务开发过程中，本地开发机启动一个主服务，以及多个微服务时，是能够直接访问主服务的端口访问到各个微服务的接口；但我们将微服务部署到多台服务器上后，微服务的注册地址即使改为公网 ip 仍然无法直接访问到各个微服务的接口，这时就需要使用 Consul 来进行服务发现与注册，实现高效的微服务节点管理。</p>
+<p>示例中，假定一个主服务 MAIN_SERVER，一个微服务 PUSH_SERVER 部署在两台服务器上，分别为 SERVER1 和 SERVER2。consul 服务部署在另一台服务器 SERVER3 上。</p>
+<h2 id="第一步-consul-服务搭建"><a href="#第一步-consul-服务搭建" class="headerlink" title="第一步 consul 服务搭建"></a>第一步 consul 服务搭建</h2><h3 id="安装-consul-1-x（服务器中安装）"><a href="#安装-consul-1-x（服务器中安装）" class="headerlink" title="安装 consul 1.x（服务器中安装）"></a>安装 consul 1.x（服务器中安装）</h3><p>1.1 通过 docker-compose 安装 consul <code>curl -L &quot;https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)&quot; -o /usr/local/bin/docker-compose</code><br>1.2 设置 docker-compose 执行权限 <code>sudo chmod +x /usr/local/bin/docker-compose</code><br>1.3 创建 docker-compose.yml 文件 <code>vi docker-compose.yml</code><br>1.4 写入以下内容：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">version:</span> <span class="hljs-string">&quot;3&quot;</span><br><br><span class="hljs-attr">services:</span><br>  <span class="hljs-attr">consul:</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">consul:1.10.1</span><br>    <span class="hljs-attr">container_name:</span> <span class="hljs-string">consul_dev</span><br>    <span class="hljs-attr">command:</span> <span class="hljs-string">agent</span> <span class="hljs-string">-server</span> <span class="hljs-string">-node=consul_dev</span> <span class="hljs-string">-bootstrap-expect=1</span> <span class="hljs-string">-bind=127.0.0.1</span> <span class="hljs-string">-client=0.0.0.0</span> <span class="hljs-string">-datacenter=dc1</span> <span class="hljs-string">-ui</span><br>    <span class="hljs-attr">ports:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;18500:8500&quot;</span><br>    <span class="hljs-attr">network_mode:</span> <span class="hljs-string">bridge</span><br></code></pre></td></tr></table></figure>
+
+<p>2.5 启动 consul <code>docker-compose up -d</code><br>2.6 验证 consul 运行状态 <code>docker ps</code></p>
+<h2 id="第二步-创建-consul-module"><a href="#第二步-创建-consul-module" class="headerlink" title="第二步 创建 consul module"></a>第二步 创建 consul module</h2><ul>
+<li><ol>
+<li>创建 <code>consul/consul.service.ts</code> 文件，内容如下：</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">Inject</span>, <span class="hljs-title class_">Injectable</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@nestjs/common&quot;</span>;<br><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> <span class="hljs-title class_">Consul</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;consul&quot;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">ConsulServiceNode</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./consul.interface&quot;</span>;<br><br><span class="hljs-meta">@Injectable</span>()<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ConsulService</span> &#123;<br>  <span class="hljs-title function_">constructor</span>(<span class="hljs-params"><span class="hljs-meta">@Inject</span>(<span class="hljs-string">&quot;CONSUL&quot;</span>) <span class="hljs-keyword">private</span> <span class="hljs-attr">consul</span>: <span class="hljs-title class_">Consul</span>.<span class="hljs-title class_">Consul</span></span>) &#123;&#125;<br><br>  <span class="hljs-keyword">async</span> <span class="hljs-title function_">register</span>(<span class="hljs-params"><span class="hljs-attr">options</span>: <span class="hljs-title class_">Consul</span>.<span class="hljs-title class_">Agent</span>.<span class="hljs-title class_">Service</span>.<span class="hljs-title class_">RegisterOptions</span></span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">consul</span>.<span class="hljs-property">agent</span>.<span class="hljs-property">service</span>.<span class="hljs-title function_">register</span>(options);<br>  &#125;<br><br>  <span class="hljs-keyword">async</span> <span class="hljs-title function_">deregister</span>(<span class="hljs-params"><span class="hljs-attr">id</span>: <span class="hljs-built_in">string</span></span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">consul</span>.<span class="hljs-property">agent</span>.<span class="hljs-property">service</span>.<span class="hljs-title function_">deregister</span>(id);<br>  &#125;<br><br>  <span class="hljs-keyword">async</span> <span class="hljs-title function_">maintenance</span>(<span class="hljs-params"><span class="hljs-attr">options</span>: <span class="hljs-title class_">Consul</span>.<span class="hljs-title class_">Agent</span>.<span class="hljs-title class_">Service</span>.<span class="hljs-title class_">MaintenanceOptions</span></span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">consul</span>.<span class="hljs-property">agent</span>.<span class="hljs-property">service</span>.<span class="hljs-title function_">maintenance</span>(options);<br>  &#125;<br><br>  <span class="hljs-keyword">async</span> <span class="hljs-title function_">findService</span>(<br>    <span class="hljs-attr">serviceName</span>: <span class="hljs-built_in">string</span><br>  ): <span class="hljs-title class_">Promise</span>&lt;&#123; <span class="hljs-attr">host</span>: <span class="hljs-built_in">string</span>; <span class="hljs-attr">port</span>: <span class="hljs-built_in">number</span> &#125;&gt; &#123;<br>    <span class="hljs-keyword">const</span> services = <span class="hljs-keyword">await</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">consul</span>.<span class="hljs-property">catalog</span>.<span class="hljs-property">service</span>.<span class="hljs-property">nodes</span>&lt;<br>      <span class="hljs-title class_">ConsulServiceNode</span>[]<br>    &gt;(serviceName);<br>    <span class="hljs-keyword">if</span> (!services.<span class="hljs-property">length</span>) &#123;<br>      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">`Service <span class="hljs-subst">$&#123;serviceName&#125;</span> not found`</span>);<br>    &#125;<br>    <span class="hljs-keyword">const</span> service = services[<span class="hljs-number">0</span>];<br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">host</span>: service.<span class="hljs-property">ServiceAddress</span>,<br>      <span class="hljs-attr">port</span>: service.<span class="hljs-property">ServicePort</span>,<br>    &#125;;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>创建 <code>consul/consul.module.ts</code> 文件，内容如下：</li>
+</ol>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">Global</span>, <span class="hljs-title class_">Module</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@nestjs/common&quot;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">ConsulService</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./consul.service&quot;</span>;<br><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> <span class="hljs-title class_">Consul</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;consul&quot;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">ConfigService</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@nestjs/config&quot;</span>;<br><br><span class="hljs-meta">@Global</span>()<br><span class="hljs-meta">@Module</span>(&#123;&#125;)<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ConsulModule</span> &#123;<br>  <span class="hljs-keyword">static</span> <span class="hljs-title function_">forRoot</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">const</span> provider = &#123;<br>      <span class="hljs-attr">provide</span>: <span class="hljs-string">&quot;CONSUL&quot;</span>,<br>      <span class="hljs-attr">inject</span>: [<span class="hljs-title class_">ConfigService</span>],<br>      <span class="hljs-attr">useFactory</span>: <span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">config</span>: <span class="hljs-title class_">ConfigService</span></span>) =&gt;</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Consul</span>(&#123;<br>          <span class="hljs-comment">// 也可以直接写死 consul 地址</span><br>          <span class="hljs-attr">host</span>: config.<span class="hljs-title function_">get</span>(<span class="hljs-string">&quot;CONSUL_HOST&quot;</span>),<br>          <span class="hljs-attr">port</span>: config.<span class="hljs-title function_">get</span>(<span class="hljs-string">&quot;CONSUL_PORT&quot;</span>),<br>          <span class="hljs-attr">promisify</span>: <span class="hljs-literal">true</span>,<br>        &#125;);<br>      &#125;,<br>    &#125;;<br><br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">module</span>: <span class="hljs-title class_">ConsulModule</span>,<br>      <span class="hljs-attr">providers</span>: [provider, <span class="hljs-title class_">ConsulService</span>],<br>      <span class="hljs-attr">exports</span>: [provider, <span class="hljs-title class_">ConsulService</span>],<br>    &#125;;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="第三步：nestjs-微服务注册"><a href="#第三步：nestjs-微服务注册" class="headerlink" title="第三步：nestjs 微服务注册"></a>第三步：nestjs 微服务注册</h2><blockquote>
+<p>借助 onModuleInit 生命周期，在主服务启动时，注册微服务到 consul<br>在 app.module.ts 中注入微服务</p>
+</blockquote>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">Module</span>, <span class="hljs-title class_">OnModuleInit</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@nestjs/common&quot;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">AppController</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./app.controller&quot;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">AppService</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./app.service&quot;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">NewsModule</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./news/news.module&quot;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">ConsulModule</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./consul/consul.module&quot;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">ConsulService</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./consul/consul.service&quot;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">ConfigModule</span>, <span class="hljs-title class_">ConfigService</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@nestjs/config&quot;</span>;<br><br><span class="hljs-keyword">const</span> envFilePath = <span class="hljs-string">`.env.<span class="hljs-subst">$&#123;process.env.NODE_ENV || <span class="hljs-string">&quot;prod&quot;</span>&#125;</span>`</span>;<br><br><span class="hljs-meta">@Module</span>(&#123;<br>  <span class="hljs-attr">imports</span>: [<br>    <span class="hljs-title class_">ConfigModule</span>.<span class="hljs-title function_">forRoot</span>(&#123;<br>      <span class="hljs-attr">isGlobal</span>: <span class="hljs-literal">true</span>,<br>      envFilePath,<br>    &#125;),<br>    <span class="hljs-title class_">NewsModule</span>,<br>    <span class="hljs-title class_">ConsulModule</span>.<span class="hljs-title function_">forRoot</span>(),<br>  ],<br>  <span class="hljs-attr">controllers</span>: [<span class="hljs-title class_">AppController</span>],<br>  <span class="hljs-attr">providers</span>: [<span class="hljs-title class_">AppService</span>],<br>&#125;)<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AppModule</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">OnModuleInit</span> &#123;<br>  <span class="hljs-title function_">constructor</span>(<span class="hljs-params"></span><br><span class="hljs-params">    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> <span class="hljs-attr">consulService</span>: <span class="hljs-title class_">ConsulService</span>,</span><br><span class="hljs-params">    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> <span class="hljs-attr">config</span>: <span class="hljs-title class_">ConfigService</span></span><br><span class="hljs-params">  </span>) &#123;&#125;<br><br>  <span class="hljs-keyword">async</span> <span class="hljs-title function_">onModuleInit</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">const</span> config = <span class="hljs-variable language_">this</span>.<span class="hljs-property">config</span>;<br>    <span class="hljs-keyword">await</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">consulService</span>.<span class="hljs-title function_">register</span>(&#123;<br>      <span class="hljs-comment">// 可以直接写死ip；如果服务器间组网可内网 ip 互联则写内网 ip，否则写公网 ip</span><br>      <span class="hljs-attr">name</span>: config.<span class="hljs-title function_">get</span>(<span class="hljs-string">&quot;APP_NAME&quot;</span>),<br>      <span class="hljs-attr">address</span>: config.<span class="hljs-title function_">get</span>(<span class="hljs-string">&quot;APP_HOST&quot;</span>),<br>      <span class="hljs-attr">port</span>: <span class="hljs-title class_">Number</span>(config.<span class="hljs-title function_">get</span>(<span class="hljs-string">&quot;APP_PORT&quot;</span>) || <span class="hljs-number">3001</span>),<br>    &#125;);<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="第四步-nestjs-主服务-网关-微服务发现"><a href="#第四步-nestjs-主服务-网关-微服务发现" class="headerlink" title="第四步 nestjs 主服务(网关)微服务发现"></a>第四步 nestjs 主服务(网关)微服务发现</h2><blockquote>
+<p><code>app.module.ts</code> 中注入微服务</p>
+</blockquote>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-comment">// 全局注册</span><br><span class="hljs-meta">@Global</span>()<br><span class="hljs-meta">@Module</span>(&#123;<br>  <span class="hljs-attr">imports</span>: [<br>    <span class="hljs-title class_">ClientsModule</span>.<span class="hljs-title function_">registerAsync</span>([<br>      &#123;<br>        <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;PUSH_SERVER&#x27;</span>,<br>        <span class="hljs-attr">useFactory</span>: <span class="hljs-title function_">async</span> (<span class="hljs-attr">consulService</span>: <span class="hljs-title class_">ConsulService</span>) =&gt; &#123;<br>          <span class="hljs-keyword">const</span> serverName = <span class="hljs-string">&#x27;pushServer_&#x27;</span> + process.<span class="hljs-property">env</span>.<span class="hljs-property">NODE_ENV</span> || <span class="hljs-string">&#x27;prod&#x27;</span>;<br>          <span class="hljs-keyword">const</span> &#123; host, port &#125; = <span class="hljs-keyword">await</span> consulService.<span class="hljs-title function_">findService</span>(serverName);<br>          <span class="hljs-keyword">return</span> &#123;<br>            <span class="hljs-attr">transport</span>: <span class="hljs-title class_">Transport</span>.<span class="hljs-property">TCP</span>,<br>            <span class="hljs-attr">options</span>: &#123;<br>              host,<br>              port,<br>            &#125;,<br>          &#125;;<br>        &#125;,<br>        <span class="hljs-attr">inject</span>: [<span class="hljs-title class_">ConsulService</span>],<br>      &#125;,<br>    ]),<br>  ],<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<h2 id="第五步-主服务-网关-微服务调用"><a href="#第五步-主服务-网关-微服务调用" class="headerlink" title="第五步 主服务(网关)微服务调用"></a>第五步 主服务(网关)微服务调用</h2><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">ClientProxy</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@nestjs/microservices&quot;</span>;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AppController</span> &#123;<br>  <span class="hljs-comment">// 注入微服务</span><br>  <span class="hljs-title function_">constructor</span>(<span class="hljs-params"><span class="hljs-meta">@Inject</span>(<span class="hljs-string">&quot;PUSH_SERVER&quot;</span>) <span class="hljs-keyword">private</span> <span class="hljs-attr">pushServer</span>: <span class="hljs-title class_">ClientProxy</span></span>) &#123;&#125;<br><br>  <span class="hljs-comment">// 调用方 - 主服务（网关）send</span><br>  <span class="hljs-meta">@Get</span>(<span class="hljs-string">&quot;fetchLatestNews&quot;</span>)<br>  <span class="hljs-keyword">async</span> <span class="hljs-title function_">fetchLatestNews</span>(<span class="hljs-params"><span class="hljs-meta">@Query</span>() query</span>) &#123;<br>    <span class="hljs-keyword">const</span> latestTime = query.<span class="hljs-property">latestTime</span> || <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">getTime</span>();<br>    <span class="hljs-comment">// this.pushServer.emit(&#x27;fetchNewsTask&#x27;, &#123;&#125;);</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">pushServer</span>.<span class="hljs-title function_">send</span>(<span class="hljs-string">&quot;fetchLatestNews&quot;</span>, latestTime);<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><ol>
+<li>无法连接微服务<blockquote>
+<p>自检防火墙是否放开端口<br>检查微服务是否正常启动</p>
+</blockquote>
+</li>
+</ol>
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs subunit">[Nest] 356351  - 2024<span class="hljs-string">-11</span><span class="hljs-string">-09</span> 21:20:11 AM   ERROR [ExceptionsHandler] connect ECONNREFUSED xx.xx.xx.xx:3001<br><span class="hljs-keyword">Error: </span>connect ECONNREFUSED xx.xx.xx.xx:3001<br> at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1278:16)<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>1.1 微服务自检端口</p>
+</li>
+<li><p>lsof -i:3001 （如果为 TCP localhost:3001 则需要将微服务启动监听 0.0.0.0）</p>
+</li>
+<li><p>node\x20&#x2F; 158029 root 19u IPv4 901314 0t0 TCP *:3001 (LISTEN)</p>
+</li>
+<li><p>1.2 主服务访问微服务端口</p>
+</li>
+<li><p>nmap -p 3001 10.0.0.4</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs 失败示例">PORT     STATE SERVICE<br>3001/tcp closed  nessus<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs 成功示例"><br>PORT     STATE SERVICE<br>3001/tcp open  nessus<br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%B7%A5%E7%A8%8B%E5%8C%96/" class="category-chain-item">工程化</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/nestjs/" class="print-no-link">#nestjs</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>2024-10-28-【研发】nestjs微服务</div>
+      <div>http://example.com/2025/11/28/2024-10-28-【研发】nestjs多节点部署微服务/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年11月28日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/11/28/2024-10-28-%E3%80%90%E7%A0%94%E5%8F%91%E3%80%91nestjs%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91%E9%97%AE%E9%A2%98%E9%9B%86/" title="2024-10-28-【研发】nestjs微服务">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">2024-10-28-【研发】nestjs微服务</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/11/28/2024-10-28-%E3%80%90%E7%A0%94%E5%8F%91%E3%80%91nestjs%E7%8E%AF%E5%A2%83%E5%8C%BA%E5%88%86/" title="2024-10-28-【研发】nestjs微服务">
+                        <span class="hidden-mobile">2024-10-28-【研发】nestjs微服务</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
