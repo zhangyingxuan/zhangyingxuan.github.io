@@ -19,22 +19,22 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="小程序客服 使用腾讯云开发平台，ai+能力，基于 deepseek-r1 满血版或混元模型，提供 ai 智能客服能力，  方案一： 云开发平台，个人版 29&#x2F;月问题：转 人工 功能卡点（未找到合理转接人工方式） 云平台的云函数！  设置客服人员-微信账号 ai 客服指引文档 对接小程序客服   方案二：自建对话通道 + 混元模型 微信客服搭建过程大概分为四步骤：创建售前问答库、创建智能库">
+    <meta name="description" content="应用中枢代码基于 lerna 的 monorepo 开发模式管理目录介绍 packages&#x2F;tgac-web-common:一网通办公共组件仓库  环境依赖 node 12.16.3 yarn 1.22.4 gsm (https:&#x2F;&#x2F;www.npmjs.com&#x2F;package&#x2F;git-submodule-management)  项目仓库本地初始化1234567891011# 从仓库cl">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2025-03-18- 【大模型】ai客服">
-<meta property="og:url" content="http://example.com/2025/03/18/2025-03-18-%20%E3%80%90%E5%A4%A7%E6%A8%A1%E5%9E%8B%E3%80%91ai%E5%AE%A2%E6%9C%8D/index.html">
+<meta property="og:title" content="2023-11-18 【架构】lerna开发README">
+<meta property="og:url" content="http://example.com/2023/11/18/2023-11-18-%E3%80%90%E6%9E%B6%E6%9E%84%E3%80%91lerna%E5%BC%80%E5%8F%91README/index.html">
 <meta property="og:site_name" content="张颖旋的个人博客">
-<meta property="og:description" content="小程序客服 使用腾讯云开发平台，ai+能力，基于 deepseek-r1 满血版或混元模型，提供 ai 智能客服能力，  方案一： 云开发平台，个人版 29&#x2F;月问题：转 人工 功能卡点（未找到合理转接人工方式） 云平台的云函数！  设置客服人员-微信账号 ai 客服指引文档 对接小程序客服   方案二：自建对话通道 + 混元模型 微信客服搭建过程大概分为四步骤：创建售前问答库、创建智能库">
+<meta property="og:description" content="应用中枢代码基于 lerna 的 monorepo 开发模式管理目录介绍 packages&#x2F;tgac-web-common:一网通办公共组件仓库  环境依赖 node 12.16.3 yarn 1.22.4 gsm (https:&#x2F;&#x2F;www.npmjs.com&#x2F;package&#x2F;git-submodule-management)  项目仓库本地初始化1234567891011# 从仓库cl">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-03-18T21:49:00.000Z">
-<meta property="article:modified_time" content="2025-11-28T15:01:41.306Z">
+<meta property="article:published_time" content="2023-11-18T00:14:39.000Z">
+<meta property="article:modified_time" content="2025-11-28T15:18:14.770Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="AI">
+<meta property="article:tag" content="lerna">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>2025-03-18- 【大模型】ai客服 - 张颖旋的个人博客</title>
+  <title>2023-11-18 【架构】lerna开发README - 张颖旋的个人博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -200,7 +200,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="2025-03-18- 【大模型】ai客服"></span>
+            <span id="subtitle" data-typed-text="2023-11-18 【架构】lerna开发README"></span>
           
         </div>
 
@@ -211,8 +211,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-03-18 21:49" pubdate>
-          2025年3月18日 晚上
+        <time datetime="2023-11-18 00:14" pubdate>
+          2023年11月18日 凌晨
         </time>
       </span>
     
@@ -223,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          312 字
+          385 字
         
       </span>
     
@@ -234,7 +234,7 @@
         
         
         
-          3 分钟
+          4 分钟
         
       </span>
     
@@ -271,33 +271,32 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">2025-03-18- 【大模型】ai客服</h1>
+            <h1 id="seo-header">2023-11-18 【架构】lerna开发README</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="小程序客服"><a href="#小程序客服" class="headerlink" title="小程序客服"></a>小程序客服</h2><blockquote>
-<p>使用腾讯云开发平台，ai+能力，基于 deepseek-r1 满血版或混元模型，提供 ai 智能客服能力，</p>
-</blockquote>
-<p>方案一： 云开发平台，个人版 29&#x2F;月<br>问题：转 人工 功能卡点（未找到合理转接人工方式） 云平台的云函数！</p>
-<ol>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/wxamp/wakf?token=1233368754&lang=zh_CN">设置客服人员-微信账号</a></li>
-<li>ai 客服<a target="_blank" rel="noopener" href="https://ccnk05wgo092.feishu.cn/wiki/CQEvwEqFMivOSwkZUtJcv31HnzM">指引文档</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.cloudbase.net/ai/agent/integration-mp">对接小程序客服</a></li>
-<li></li>
-</ol>
-<p>方案二：自建对话通道 + 混元模型</p>
-<h2 id="微信客服"><a href="#微信客服" class="headerlink" title="微信客服"></a>微信客服</h2><p>搭建过程大概分为四步骤：创建售前问答库、创建智能库、创建智能体、调试智能体；</p>
-<ol>
-<li>创建售前问答库</li>
-</ol>
-<p>首先，通过 deepseek.com 生成一份 SaaS 软件售前问答 30 条，表格展示，表头包含问题、答案、关键词，然后复制到 excel 上备用；</p>
-<p><a target="_blank" rel="noopener" href="https://www.deepseek.com/">https://www.deepseek.com/</a></p>
-<ol start="2">
-<li>创建智能体<br>在创建智能体后，选择单 Agent 的工作流模式，工作流模式是由多个节点构成的标准化步骤，用来完成特定的任务和达到预期的目标。</li>
-</ol>
-<p>通过将复杂的任务拆成多个子任务，可以避免单个模型能力的限制，确保内容输出的准确性，同时整个流程会更加可控。</p>
+                <h1 id="应用中枢代码基于-lerna-的-monorepo-开发模式管理"><a href="#应用中枢代码基于-lerna-的-monorepo-开发模式管理" class="headerlink" title="应用中枢代码基于 lerna 的 monorepo 开发模式管理"></a>应用中枢代码基于 lerna 的 monorepo 开发模式管理</h1><h2 id="目录介绍"><a href="#目录介绍" class="headerlink" title="目录介绍"></a>目录介绍</h2><ul>
+<li>packages&#x2F;tgac-web-common:一网通办公共组件仓库</li>
+</ul>
+<h2 id="环境依赖"><a href="#环境依赖" class="headerlink" title="环境依赖"></a>环境依赖</h2><ul>
+<li>node 12.16.3</li>
+<li>yarn 1.22.4</li>
+<li>gsm (<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/git-submodule-management">https://www.npmjs.com/package/git-submodule-management</a>)</li>
+</ul>
+<h2 id="项目仓库本地初始化"><a href="#项目仓库本地初始化" class="headerlink" title="项目仓库本地初始化"></a>项目仓库本地初始化</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 从仓库clone最新代码</span><br>git <span class="hljs-built_in">clone</span> git@git.code.tencent.com:gasc/tgac-web-lerna.git<br><br><span class="hljs-comment"># 进入项目根目录</span><br><span class="hljs-built_in">cd</span> tgac-web-lerna<br><br><span class="hljs-comment"># 对子模块进行初始化操作</span><br>git submodule init<br><br><span class="hljs-comment"># 更新子模块最新代码</span><br>git submodule update<br></code></pre></td></tr></table></figure>
 
+<h2 id="本地开发前准备"><a href="#本地开发前准备" class="headerlink" title="本地开发前准备"></a>本地开发前准备</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 进入项目根目录</span><br><span class="hljs-built_in">cd</span> tgac-web-lerna<br><br><span class="hljs-comment"># 切换到目标分支</span><br>git checkout <span class="hljs-variable">$TARGET_BRANCH</span><br><br><span class="hljs-comment"># 检查子模块是否与当前分支的submodule记录一致</span><br>git status<br><br><span class="hljs-comment"># 如果发现有差异，则需执行</span><br>git submodule update<br></code></pre></td></tr></table></figure>
+
+<h2 id="本地开发流程"><a href="#本地开发流程" class="headerlink" title="本地开发流程"></a>本地开发流程</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 进入项目根目录</span><br><span class="hljs-built_in">cd</span> tgac-web-lerna<br><br><span class="hljs-comment"># 构建依赖包</span><br>yarn bootstrap<br><br><span class="hljs-comment"># 新增某个子应用所需的依赖</span><br>lerna add &lt;package_name&gt; --scope=&lt;package_name&gt;<br><br><span class="hljs-comment"># 给所有子应用新增依赖</span><br>lerna add &lt;package_name&gt;<br><br><span class="hljs-comment"># 新增公用开发工具，比如eslint</span><br>yarn add -W -D eslint<br><br><span class="hljs-comment"># 清除所有依赖</span><br>yarn clean<br></code></pre></td></tr></table></figure>
+
+<h2 id="公用包发布流程（一般先发布-next-版本验证后没问题再发布-latest-版本）"><a href="#公用包发布流程（一般先发布-next-版本验证后没问题再发布-latest-版本）" class="headerlink" title="公用包发布流程（一般先发布 next 版本验证后没问题再发布 latest 版本）"></a>公用包发布流程（一般先发布 next 版本验证后没问题再发布 latest 版本）</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 进入项目根目录</span><br><span class="hljs-built_in">cd</span> tgac-web-lerna<br><br><span class="hljs-comment"># 构建公用包</span><br>yarn build<br><br><span class="hljs-comment"># 发布公用包（预览版）</span><br>yarn publish:next<br><br><span class="hljs-comment"># 发布公用包（正式版）</span><br>yarn publish:latest<br><br><span class="hljs-comment"># 统一更新git提交记录</span><br>gsm ac <span class="hljs-string">&#x27;feat: publish common&#x27;</span><br><br><span class="hljs-comment"># 统一推送git仓库到当前分支</span><br>gsm push<br></code></pre></td></tr></table></figure>
+
+<h2 id="lerna-yarn-workspaces-模式下，子应用开发注意点"><a href="#lerna-yarn-workspaces-模式下，子应用开发注意点" class="headerlink" title="lerna + yarn workspaces 模式下，子应用开发注意点"></a>lerna + yarn workspaces 模式下，子应用开发注意点</h2><ul>
+<li>别直接在子应用中通过<code>npm</code>或者<code>yarn</code>进行新增包操作</li>
+<li>不需要发布到<code>gnpm</code>的包，必须在<code>package.json</code>加<code>&quot;private&quot;: true</code></li>
+</ul>
+<h2 id="其他，待完善"><a href="#其他，待完善" class="headerlink" title="其他，待完善"></a>其他，待完善</h2>
                 
               </div>
             
@@ -315,7 +314,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/" class="category-chain-item">大模型</a>
+  <a href="/categories/%E6%9E%B6%E6%9E%84/" class="category-chain-item">架构</a>
   
   
 
@@ -330,7 +329,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/AI/" class="print-no-link">#AI</a>
+        <a href="/tags/lerna/" class="print-no-link">#lerna</a>
       
     </div>
   
@@ -342,8 +341,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>2025-03-18- 【大模型】ai客服</div>
-      <div>http://example.com/2025/03/18/2025-03-18- 【大模型】ai客服/</div>
+      <div>2023-11-18 【架构】lerna开发README</div>
+      <div>http://example.com/2023/11/18/2023-11-18-【架构】lerna开发README/</div>
     </div>
     <div class="license-meta">
       
@@ -355,7 +354,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年3月18日</div>
+          <div>2023年11月18日</div>
         </div>
       
       
@@ -387,9 +386,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/04/02/2025-04-02-%E3%80%90%E5%A4%A7%E6%A8%A1%E5%9E%8B%E3%80%91%E5%88%9B%E5%BB%BA%E5%92%8C%E7%BC%96%E6%8E%92AI%E6%99%BA%E8%83%BD%E4%BD%93%E5%B7%A5%E4%BD%9C%E6%B5%81/" title="2025-04-02- 【大模型】创建和编排AI智能体工作流">
+                      <a href="/2024/06/23/2024-06-23-%E3%80%90%E6%9E%B6%E6%9E%84%E3%80%91Axios%E8%AF%B7%E6%B1%82&amp;%E8%BF%94%E5%9B%9E%E5%A4%A7%E5%B0%8F%E5%86%99%E8%BD%AC%E6%8D%A2/" title="2024-06-23 【架构】Axios请求&amp;返回大小写转换">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">2025-04-02- 【大模型】创建和编排AI智能体工作流</span>
+                        <span class="hidden-mobile">2024-06-23 【架构】Axios请求&amp;返回大小写转换</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -397,8 +396,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/03/18/2025-03-18-%20%E3%80%90%E5%A4%A7%E6%A8%A1%E5%9E%8B%E3%80%91%E5%B7%A5%E5%85%B7%E5%BD%92%E9%9B%86/" title="2025-03-18- 【大模型】工具归集">
-                        <span class="hidden-mobile">2025-03-18- 【大模型】工具归集</span>
+                      <a href="/2018/04/08/%E5%91%A8%E6%8A%A5/2018-4-8%E5%91%A8%E6%8A%A5/" title="2018-4-8周报">
+                        <span class="hidden-mobile">2018-4-8周报</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
