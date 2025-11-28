@@ -1,10 +1,11 @@
 ---
-title: 2024-10-28-【研发】nestjs微服务
+title: 2024-11-12-【网络】fetch、axios取消请求实现
 description:
 categories:
   - 工程化
 tags:
-  - nestjs
+  - fetch
+  - axios
 ---
 
 ## Axios 请求通过 CancelToken 来取消请求
