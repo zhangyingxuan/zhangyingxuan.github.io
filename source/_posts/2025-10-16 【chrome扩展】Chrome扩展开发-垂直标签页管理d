@@ -1,0 +1,589 @@
+---
+title: 2025-10-16 【chrome扩展】Chrome扩展开发-垂直标签页管理d
+date: 2025-10-16 19:18:27
+description:
+categories:
+  - chrome扩展
+tags:
+---
+
+# Chrome 垂直标签页管理扩展开发指南
+
+## 背景介绍
+
+在现代 Web 开发中，浏览器标签页管理已成为提升工作效率的重要环节。传统的水平标签页布局在打开大量标签页时存在明显缺陷：标签页宽度压缩、难以快速定位、缺乏有效的组织方式。Chrome 垂直标签页管理扩展应运而生，通过侧边栏垂直布局和智能分组功能，为用户提供更直观、高效的标签页管理体验。
+
+### 问题痛点
+
+1. **标签页过多时难以管理**：水平标签页在数量增多时宽度被压缩，标题显示不全
+2. **缺乏有效的组织方式**：相关标签页分散在不同位置，难以快速定位
+3. **切换效率低下**：需要频繁在多个标签页间来回切换
+4. **视觉混乱**：大量标签页堆叠导致视觉疲劳
+
+### 解决方案价值
+
+- **垂直布局**：充分利用屏幕垂直空间，显示更多标签页信息
+- **智能分组**：按域名自动分组或手动自定义分组，提高组织效率
+- **拖拽操作**：直观的拖拽分配和排序功能
+- **搜索过滤**：快速定位目标标签页
+- **状态持久化**：用户偏好自动保存
+
+## 方案对比
+
+### 现有方案分析
+
+#### 1. 原生 Chrome 标签页管理
+
+- **优点**：系统原生支持，无需额外安装
+- **缺点**：功能简单，缺乏高级分组和排序功能
+
+#### 2. 第三方标签页管理扩展
+
+- **优点**：功能丰富，提供多种管理方式
+- **缺点**：部分扩展性能开销大，界面复杂
+
+#### 3. 垂直标签页扩展对比
+
+| 特性         | 本扩展                | 其他垂直标签页扩展   |
+| ------------ | --------------------- | -------------------- |
+| 分组模式     | 域名分组 + 自定义分组 | 通常只有一种分组方式 |
+| 排序算法     | 智能排序 + 拖拽优先   | 固定排序规则         |
+| 新标签页处理 | 自动定位到相同域名旁  | 通常添加到末尾       |
+| 界面交互     | Vue 3 + 现代 UI 设计  | 传统界面设计         |
+
+### 技术方案选择
+
+基于对现有方案的对比分析，我们选择了以下技术栈：
+
+- **前端框架**：Vue 3 + TypeScript
+- **构建工具**：Vite
+- **样式预处理器**：Less
+- **图标库**：TDesign Icons
+- **浏览器 API**：Chrome Extension API
+
+选择理由：
+
+1. Vue 3 的响应式系统适合标签页状态管理
+2. TypeScript 提供类型安全，减少运行时错误
+3. Vite 构建速度快，开发体验优秀
+4. Chrome Extension API 功能完善，稳定性高
+
+## 实现步骤
+
+### 1. 项目初始化
+
+#### 技术栈配置
+
+```json
+{
+  "dependencies": {
+    "vue": "^3.4.21",
+    "tdesign-icons-vue-next": "^0.4.1"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.320",
+    "typescript": "^5.4.4",
+    "vite": "^5.2.8"
+  }
+}
+```
+
+#### 构建配置 (vite.config.ts)
+
+```typescript
+export default defineConfig({
+  plugins: [vue(), vueJsx()],
+  build: {
+    outDir: "dist",
+    rollupOptions: {
+      input: { main: "index.html" },
+      output: {
+        entryFileNames: "assets/[name]-[hash].js",
+        chunkFileNames: "assets/[name]-[hash].js",
+        assetFileNames: "assets/[name]-[hash].[ext]",
+      },
+    },
+  },
+});
+```
+
+### 2. 扩展清单配置 (manifest.json)
+
+核心权限和配置：
+
+```json
+{
+  "manifest_version": 3,
+  "permissions": ["tabs", "tabGroups", "storage", "sidePanel"],
+  "side_panel": { "default_path": "index.html" },
+  "background": { "service_worker": "background.js" }
+}
+```
+
+### 3. 核心架构设计
+
+#### 组件结构
+
+```
+src/
+├── App.vue                 # 主应用组件
+├── components/            # 组件目录
+│   ├── CustomGroupView.vue # 自定义分组视图
+│   ├── DomainGroupView.vue # 域名分组视图
+│   ├── FooterBar.vue      # 底部工具栏
+│   └── ContextMenu.vue    # 右键菜单
+├── utils/                # 工具函数
+│   └── tabManager.ts     # 标签页管理核心逻辑
+└── type.ts              # TypeScript类型定义
+```
+
+#### 状态管理设计
+
+采用 Vue 3 的响应式系统管理应用状态：
+
+```typescript
+// 核心状态
+const groupType = ref<"domain" | "custom">("custom");
+const activeTabId = ref<number>(0);
+const customTabGroups = ref<ICustomTabGroup[]>([]);
+const ungroupedTabs = ref<chrome.tabs.Tab[]>([]);
+
+// 搜索状态
+const searchData = reactive({
+  keywords: "",
+});
+```
+
+### 4. 标签页管理核心实现
+
+#### 域名分组算法
+
+```typescript
+export async function getAllDomainTabs(): Promise<ITabGroup[]> {
+  const resp = await chrome.tabs.query({ currentWindow: true });
+  const listMap: { [domain: string]: chrome.tabs.Tab[] } = {};
+
+  resp?.forEach((tab) => {
+    if (tab.url) {
+      const domain = getDomainOfUrl(tab.url);
+      if (listMap[domain]) {
+        listMap[domain].push(tab);
+      } else {
+        listMap[domain] = [tab];
+      }
+    }
+  });
+
+  return Object.keys(listMap).map((domain) => ({
+    domain,
+    tabs: listMap[domain],
+  }));
+}
+```
+
+#### 自定义分组管理
+
+```typescript
+export async function getAllCustomTabs() {
+  const respTab = await chrome.tabs.query({ currentWindow: true });
+  const respTabGroup = await chrome.tabGroups.query({});
+
+  // 处理分组数据
+  const groupsMap: Map<number, ICustomTabGroup> = new Map();
+
+  respTabGroup.forEach((group) => {
+    groupsMap.set(group.id, {
+      id: group.id,
+      title: group.title || `分组 ${group.id}`,
+      color: group.color || "grey",
+      tabs: [],
+      collapsed: group.collapsed || false,
+    });
+  });
+
+  // 分配标签页到分组
+  respTab.forEach((tab) => {
+    if (tab.groupId !== -1 && groupsMap.has(tab.groupId)) {
+      const group = groupsMap.get(tab.groupId);
+      if (group) group.tabs.push(tab);
+    } else {
+      ungroupedTabs.push(tab);
+    }
+  });
+
+  return {
+    groups: Array.from(groupsMap.values()),
+    ungroupedTabs,
+    activeGroupId,
+  };
+}
+```
+
+### 5. 智能排序系统
+
+#### 排序优先级规则
+
+1. **拖拽排序优先**：用户手动拖拽的排序优先级最高
+2. **域名排序**：按域名字母顺序排序
+3. **默认排序**：恢复系统默认排序
+
+#### 新标签页自动排序算法
+
+```typescript
+export async function moveNewTabToSameDomain(newTab: chrome.tabs.Tab) {
+  if (!newTab.id || !newTab.url) return;
+
+  const newTabDomain = getDomainOfUrl(newTab.url);
+  const allTabs = await chrome.tabs.query({ currentWindow: true });
+
+  // 找到相同域名的标签页
+  const sameDomainTabs = allTabs.filter((tab) => {
+    if (!tab.url || tab.id === newTab.id) return false;
+    return getDomainOfUrl(tab.url) === newTabDomain;
+  });
+
+  if (sameDomainTabs.length === 0) {
+    // 移动到末尾
+    await chrome.tabs.move(newTab.id, { index: allTabs.length - 1 });
+    return;
+  }
+
+  // 移动到相同域名标签页之后
+  const lastSameDomainTab = sameDomainTabs.reduce(
+    (last, tab) => (tab.index > last.index ? tab : last),
+    sameDomainTabs[0]
+  );
+
+  await chrome.tabs.move(newTab.id, { index: lastSameDomainTab.index + 1 });
+}
+```
+
+### 6. 拖拽系统实现
+
+#### 拖拽事件处理
+
+```typescript
+const handleDragStart = (
+  event: DragEvent,
+  tab: chrome.tabs.Tab,
+  group: ICustomTabGroup | null
+) => {
+  if (!tab.id) return;
+
+  dragData.value = { tab, sourceGroup: group };
+  event.dataTransfer?.setData("text/plain", tab.id.toString());
+  event.dataTransfer!.effectAllowed = "move";
+
+  // 设置拖拽图像
+  if (event.dataTransfer && event.target) {
+    const dragElement = event.target as HTMLElement;
+    const rect = dragElement.getBoundingClientRect();
+    event.dataTransfer.setDragImage(
+      dragElement,
+      rect.width / 2,
+      rect.height / 2
+    );
+  }
+};
+```
+
+#### 拖拽放置处理
+
+```typescript
+const handleDrop = async (
+  event: DragEvent,
+  targetGroup: ICustomTabGroup | null
+) => {
+  event.preventDefault();
+
+  if (!dragData.value) return;
+
+  const { tab, sourceGroup } = dragData.value;
+  const targetGroupId = targetGroup ? targetGroup.id : -1;
+
+  // 分组内排序
+  if (sourceGroup?.id === targetGroupId) {
+    await handleGroupInternalSort(event, tab, sourceGroup);
+    return;
+  }
+
+  // 执行拖拽操作
+  await handleDropOperation(dragData.value, targetGroup);
+  await refreshAllTabsData();
+};
+```
+
+### 7. 搜索功能实现
+
+#### 搜索算法优化
+
+```typescript
+const showTabList = computed<ITabGroup[]>(() => {
+  const keywords = searchData.keywords.toLowerCase();
+  let filteredList = tabList.value;
+
+  if (keywords) {
+    filteredList = tabList.value.filter((item) => {
+      const domainMatch = item.domain.toLowerCase().includes(keywords);
+      const tabMatch = item.tabs?.some((tab) => {
+        const title = tab?.title?.toLowerCase() || "";
+        const url = tab?.url?.toLowerCase() || "";
+        return title.includes(keywords) || url.includes(keywords);
+      });
+      return domainMatch || tabMatch;
+    });
+  }
+
+  // 应用排序逻辑
+  return applySorting(filteredList);
+});
+```
+
+## 技术细节深入
+
+### 1. 性能优化策略
+
+#### 虚拟滚动
+
+对于大量标签页的场景，实现虚拟滚动避免 DOM 节点过多：
+
+```typescript
+// 计算可见区域标签页
+const visibleTabs = computed(() => {
+  const startIndex = Math.floor(scrollTop.value / itemHeight);
+  const endIndex = Math.min(startIndex + visibleCount, allTabs.value.length);
+  return allTabs.value.slice(startIndex, endIndex);
+});
+```
+
+#### 防抖搜索
+
+搜索输入框添加防抖处理，避免频繁搜索：
+
+```typescript
+const debouncedSearch = useDebounce((keywords: string) => {
+  searchData.keywords = keywords;
+}, 300);
+```
+
+### 2. 错误处理机制
+
+#### Chrome API 调用异常处理
+
+```typescript
+try {
+  await chrome.tabs.move(tabId, { index: targetIndex });
+} catch (error) {
+  console.error(`移动标签页 ${tabId} 失败:`, error);
+  // 回滚本地状态
+  rollbackLocalState();
+}
+```
+
+#### 网络异常处理
+
+对于网络请求相关的标签页，添加加载状态和重试机制：
+
+```typescript
+const tabLoadingStates = ref<Set<number>>(new Set());
+
+const retryLoadTab = async (tabId: number) => {
+  if (tabLoadingStates.value.has(tabId)) return;
+
+  tabLoadingStates.value.add(tabId);
+  try {
+    await chrome.tabs.reload(tabId);
+  } catch (error) {
+    console.error(`重载标签页 ${tabId} 失败:`, error);
+  } finally {
+    tabLoadingStates.value.delete(tabId);
+  }
+};
+```
+
+### 3. 用户体验优化
+
+#### 视觉反馈系统
+
+拖拽操作提供实时视觉反馈：
+
+```typescript
+const showDragSuccessFeedback = (targetGroupId: number) => {
+  const targetElement =
+    targetGroupId === -1
+      ? document.querySelector(".ungrouped-panel")
+      : document.querySelector(`[data-group-id="${targetGroupId}"]`);
+
+  if (targetElement) {
+    targetElement.classList.add("drag-success");
+    setTimeout(() => {
+      targetElement.classList.remove("drag-success");
+    }, 500);
+  }
+};
+```
+
+#### 动画过渡效果
+
+使用 CSS 过渡动画提升交互体验：
+
+```less
+.tab-item {
+  transition: all 0.2s ease-in-out;
+
+  &.dragging {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  &.drag-success {
+    animation: pulse 0.5s ease-in-out;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: var(--success-color);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+```
+
+## 部署与发布
+
+### 1. 构建流程
+
+```bash
+# 安装依赖
+pnpm install
+
+# 开发模式
+pnpm dev
+
+# 生产构建
+pnpm build
+
+# 监听模式构建
+pnpm watch
+```
+
+### 2. Chrome 商店发布
+
+1. 准备应用截图和描述
+2. 生成发布包
+3. 提交到 Chrome Web Store
+4. 等待审核通过
+
+### 3. 更新策略
+
+- 版本号遵循语义化版本规范
+- 重大更新前提供迁移指南
+- 保持向后兼容性
+
+## 测试方案
+
+### 1. 单元测试
+
+使用 Vitest 进行核心逻辑测试：
+
+```typescript
+describe("tabManager", () => {
+  test("should group tabs by domain correctly", () => {
+    const tabs = mockTabsWithDifferentDomains();
+    const groups = getAllDomainTabs(tabs);
+    expect(groups).toHaveLength(3);
+  });
+});
+```
+
+### 2. 集成测试
+
+测试 Chrome API 集成：
+
+```typescript
+describe("Chrome API integration", () => {
+  test("should move tab to correct position", async () => {
+    await moveNewTabToSameDomain(mockNewTab);
+    expect(chrome.tabs.move).toHaveBeenCalledWith(expectedParams);
+  });
+});
+```
+
+### 3. 端到端测试
+
+使用 Playwright 进行完整流程测试：
+
+```typescript
+test("should create custom group and assign tabs", async ({ page }) => {
+  await page.click('[data-testid="create-group"]');
+  await page.dragAndDrop(".tab-item", ".group-area");
+  expect(await page.textContent(".group-title")).toBe("新分组");
+});
+```
+
+## 性能监控
+
+### 1. 性能指标
+
+- 扩展加载时间
+- 标签页渲染性能
+- 内存使用情况
+- 响应时间
+
+### 2. 错误监控
+
+- JavaScript 错误捕获
+- Chrome API 调用异常
+- 用户操作异常
+
+## 未来规划
+
+### 1. 功能扩展
+
+- **跨窗口管理**：支持多窗口标签页统一管理
+- **会话保存**：保存和恢复标签页会话
+- **智能推荐**：基于使用习惯推荐分组策略
+- **快捷键支持**：丰富的键盘快捷键
+
+### 2. 技术优化
+
+- **Web Workers**：将复杂计算移至后台线程
+- **IndexedDB**：优化大量数据存储性能
+- **Service Worker**：实现离线功能
+
+### 3. 生态建设
+
+- **插件系统**：支持第三方功能扩展
+- **主题市场**：提供多种界面主题
+- **数据导出**：支持标签页数据导出
+
+## 总结
+
+Chrome 垂直标签页管理扩展通过创新的垂直布局和智能分组功能，有效解决了传统标签页管理的痛点。项目采用现代前端技术栈，实现了高性能、高可用的标签页管理解决方案。
+
+关键技术亮点：
+
+1. **智能分组算法**：支持域名分组和自定义分组
+2. **拖拽优先排序**：用户交互优先级最高
+3. **新标签页自动定位**：智能归位到相关标签页旁
+4. **响应式设计**：适配不同屏幕尺寸
+5. **状态持久化**：用户偏好自动保存
+
+该项目不仅提供了实用的标签页管理功能，也为浏览器扩展开发提供了优秀的技术实践参考。
+
+## 参考文献
+
+1. Chrome Extensions Documentation - https://developer.chrome.com/docs/extensions/
+2. Vue 3 Composition API Guide - https://vuejs.org/guide/introduction.html
+3. TypeScript Handbook - https://www.typescriptlang.org/docs/
+4. Vite Build Tool - https://vitejs.dev/guide/
+5. Chrome Tab Groups API - https://developer.chrome.com/docs/extensions/reference/tabGroups/
+
+---
+
+_本文详细介绍了 Chrome 垂直标签页管理扩展的开发全过程，从背景分析到技术实现，为类似项目开发提供了完整的技术参考。_
