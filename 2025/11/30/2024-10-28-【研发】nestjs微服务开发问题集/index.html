@@ -1,0 +1,698 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/favicon.ico">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="如何区分开发和生产环境https:&#x2F;&#x2F;blog.csdn.net&#x2F;m0_37890289&#x2F;article&#x2F;details&#x2F;135419842 1. 服务调用为何没响应？ send 调用方需要 return await 才能正常返回微服务响应结果  123456&lt;!-- 事件响应 --&gt;&#x2F;&#x2F; 提供方 - 微服务 @EventPattern(&#x27;fetchNewsTask&amp;#x27">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2024-10-28-【研发】nestjs微服务开发问题集">
+<meta property="og:url" content="http://example.com/2025/11/30/2024-10-28-%E3%80%90%E7%A0%94%E5%8F%91%E3%80%91nestjs%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91%E9%97%AE%E9%A2%98%E9%9B%86/index.html">
+<meta property="og:site_name" content="张颖旋的个人博客">
+<meta property="og:description" content="如何区分开发和生产环境https:&#x2F;&#x2F;blog.csdn.net&#x2F;m0_37890289&#x2F;article&#x2F;details&#x2F;135419842 1. 服务调用为何没响应？ send 调用方需要 return await 才能正常返回微服务响应结果  123456&lt;!-- 事件响应 --&gt;&#x2F;&#x2F; 提供方 - 微服务 @EventPattern(&#x27;fetchNewsTask&amp;#x27">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-11-30T14:24:14.184Z">
+<meta property="article:modified_time" content="2025-11-30T14:24:14.184Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="nestjs">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>2024-10-28-【研发】nestjs微服务开发问题集 - 张颖旋的个人博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Blowsysun</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="2024-10-28-【研发】nestjs微服务开发问题集"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-11-30 14:24" pubdate>
+          2025年11月30日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          569 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          5 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">2024-10-28-【研发】nestjs微服务开发问题集</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="如何区分开发和生产环境"><a href="#如何区分开发和生产环境" class="headerlink" title="如何区分开发和生产环境"></a>如何区分开发和生产环境</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_37890289/article/details/135419842">https://blog.csdn.net/m0_37890289/article/details/135419842</a></p>
+<h2 id="1-服务调用为何没响应？"><a href="#1-服务调用为何没响应？" class="headerlink" title="1. 服务调用为何没响应？"></a>1. 服务调用为何没响应？</h2><ul>
+<li>send 调用方需要 return await 才能正常返回微服务响应结果</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs typescript">&lt;!-- 事件响应 --&gt;<br><span class="hljs-comment">// 提供方 - 微服务</span><br> <span class="hljs-meta">@EventPattern</span>(<span class="hljs-string">&#x27;fetchNewsTask&#x27;</span>)<br>  <span class="hljs-keyword">async</span> <span class="hljs-title function_">fetchNewsTask</span>(<span class="hljs-params"></span>) &#123;&#125;<br><span class="hljs-comment">// 调用方 - 主服务（网关） emit</span><br><span class="hljs-variable language_">this</span>.<span class="hljs-property">pushServer</span>.<span class="hljs-title function_">emit</span>(<span class="hljs-string">&#x27;fetchNewsTask&#x27;</span>, &#123;&#125;);<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-comment">// 提供方 - 微服务</span><br><span class="hljs-meta">@MessagePattern</span>(<span class="hljs-string">&#x27;fetchLatestNews&#x27;</span>)<br><span class="hljs-keyword">async</span> <span class="hljs-title function_">fetchLatestNews</span>(<span class="hljs-params"><span class="hljs-meta">@Payload</span>() <span class="hljs-attr">payload</span>: <span class="hljs-built_in">any</span></span>) &#123;<br>  <span class="hljs-keyword">const</span> <span class="hljs-attr">newsData</span>: <span class="hljs-built_in">any</span> = <span class="hljs-keyword">await</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">newsService</span>.<span class="hljs-title function_">fetchLatestNews</span>(payload);<br>  <span class="hljs-keyword">return</span> &#123;<br>    <span class="hljs-attr">code</span>: <span class="hljs-number">0</span>,<br>    <span class="hljs-attr">data</span>: newsData,<br>  &#125;;<br>&#125;<br><br><span class="hljs-comment">// 调用方 - 主服务（网关）send</span><br>  <span class="hljs-meta">@Get</span>(<span class="hljs-string">&#x27;fetchLatestNews&#x27;</span>)<br>  <span class="hljs-keyword">async</span> <span class="hljs-title function_">fetchLatestNews</span>(<span class="hljs-params"><span class="hljs-meta">@Query</span>() query</span>) &#123;<br>    <span class="hljs-keyword">const</span> latestTime = query.<span class="hljs-property">latestTime</span> || <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">getTime</span>();<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">pushServer</span>.<span class="hljs-title function_">send</span>(<span class="hljs-string">&#x27;fetchLatestNews&#x27;</span>, latestTime);<br>  &#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-微服务部署，consul-网关服务发现"><a href="#2-微服务部署，consul-网关服务发现" class="headerlink" title="2. 微服务部署，consul 网关服务发现"></a>2. 微服务部署，consul 网关服务发现</h2><h3 id="第一步-安装-consul-1-x（服务器中安装）"><a href="#第一步-安装-consul-1-x（服务器中安装）" class="headerlink" title="第一步 安装 consul 1.x（服务器中安装）"></a>第一步 安装 consul 1.x（服务器中安装）</h3><p>2.1 通过 docker-compose 安装 consul <code>curl -L &quot;https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)&quot; -o /usr/local/bin/docker-compose</code><br>2.2 设置 docker-compose 执行权限 <code>sudo chmod +x /usr/local/bin/docker-compose</code><br>2.3 创建 docker-compose.yml 文件 <code>vi docker-compose.yml</code><br>2.4 写入以下内容：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">version:</span> <span class="hljs-string">&quot;3&quot;</span><br><br><span class="hljs-attr">services:</span><br>  <span class="hljs-attr">consul:</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">consul:1.10.1</span><br>    <span class="hljs-attr">container_name:</span> <span class="hljs-string">consul_dev</span><br>    <span class="hljs-attr">command:</span> <span class="hljs-string">agent</span> <span class="hljs-string">-server</span> <span class="hljs-string">-node=consul_dev</span> <span class="hljs-string">-bootstrap-expect=1</span> <span class="hljs-string">-bind=127.0.0.1</span> <span class="hljs-string">-client=0.0.0.0</span> <span class="hljs-string">-datacenter=dc1</span> <span class="hljs-string">-ui</span><br>    <span class="hljs-attr">ports:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;18500:8500&quot;</span><br>    <span class="hljs-attr">network_mode:</span> <span class="hljs-string">bridge</span><br></code></pre></td></tr></table></figure>
+
+<p>2.5 启动 consul <code>docker-compose up -d</code><br>2.6 验证 consul 运行状态 <code>docker ps</code></p>
+<h3 id="第二步-nestjs-微服务注册"><a href="#第二步-nestjs-微服务注册" class="headerlink" title="第二步 nestjs 微服务注册"></a>第二步 nestjs 微服务注册</h3><ol>
+<li></li>
+</ol>
+<h3 id="第三步-nestjs-网关发现微服务"><a href="#第三步-nestjs-网关发现微服务" class="headerlink" title="第三步 nestjs 网关发现微服务"></a>第三步 nestjs 网关发现微服务</h3><h3 id="第四步-pm2-部署服务"><a href="#第四步-pm2-部署服务" class="headerlink" title="第四步 pm2 部署服务"></a>第四步 pm2 部署服务</h3><ol>
+<li>为了区分开发环境和生产环境，创建<code>ecosystem.config.js</code></li>
+<li>写入配置，启动 pm2 后可写入环境变量</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = &#123;<br>  <span class="hljs-attr">apps</span>: [<br>    &#123;<br>      <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;payBack&quot;</span>,<br>      <span class="hljs-attr">script</span>: <span class="hljs-string">&quot;dist/main.js&quot;</span>,<br>      <span class="hljs-attr">env</span>: &#123;<br>        <span class="hljs-attr">NODE_ENV</span>: <span class="hljs-string">&quot;prod&quot;</span>,<br>      &#125;,<br>      <span class="hljs-attr">env_dev</span>: &#123;<br>        <span class="hljs-attr">NODE_ENV</span>: <span class="hljs-string">&quot;dev&quot;</span>,<br>      &#125;,<br>      <span class="hljs-attr">env_prod</span>: &#123;<br>        <span class="hljs-attr">NODE_ENV</span>: <span class="hljs-string">&quot;prod&quot;</span>,<br>      &#125;,<br>    &#125;,<br>  ],<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>启动生产服务 <code>pm2 start ecosystem.config.js --env prod --watch</code></li>
+</ol>
+<h2 id="3-网络安全"><a href="#3-网络安全" class="headerlink" title="3. 网络安全"></a>3. 网络安全</h2><p>consul 服务发现与注册使用内网 iP 互联</p>
+<ul>
+<li>[注意]微服务启动 0.0.0.0 监听外网</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">await</span> NestFactory.createMicroservice&lt;MicroserviceOptions&gt;(<br>  AppModule,<br>  &#123;<br>    transport: Transport.TCP,<br>    options: &#123;<br>      <span class="hljs-comment">// 很重要</span><br>      host: <span class="hljs-string">&#x27;0.0.0.0&#x27;</span>,<br>      port,<br>    &#125;,<br>  &#125;,<br>);<br></code></pre></td></tr></table></figure>
+
+<p>腾讯云轻量服务器支持同地域内网 ip 互联<br>防火墙端口，仅需开通内网 ip 访问</p>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><ol>
+<li>无法连接微服务</li>
+</ol>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs coq"><span class="hljs-number">0</span>|<span class="hljs-type">payBack</span>  | <span class="hljs-type">[Nest</span>] <span class="hljs-number">356351</span>  - <span class="hljs-number">2024</span><span class="hljs-number">-11</span><span class="hljs-number">-09</span> <span class="hljs-number">12</span>:<span class="hljs-number">20</span>:<span class="hljs-number">11</span> AM   ERROR [ExceptionsHandler] connect ECONNREFUSED <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.4</span>:<span class="hljs-number">3001</span><br><span class="hljs-number">0</span>|<span class="hljs-type">payBack</span>  | <span class="hljs-type">Error</span>: connect ECONNREFUSED <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.4</span>:<span class="hljs-number">3001</span><br><span class="hljs-number">0</span>|<span class="hljs-type">payBack</span>  |     <span class="hljs-type">at</span> TCPConnectWrap.afterConnect [<span class="hljs-built_in">as</span> oncomplete] (node:net:<span class="hljs-number">1278</span>:<span class="hljs-number">16</span>)<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>1.1 微服务自检端口</p>
+</li>
+<li><p>lsof -i:3001 （如果为 TCP localhost:3001 则需要将微服务启动监听 0.0.0.0）</p>
+</li>
+<li><p>node\x20&#x2F; 158029 root 19u IPv4 901314 0t0 TCP *:3001 (LISTEN)</p>
+</li>
+<li><p>1.2 主服务访问微服务端口</p>
+</li>
+<li><p>nmap -p 3001 10.0.0.4</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs 失败示例">PORT     STATE SERVICE<br>3001/tcp closed  nessus<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs 成功示例"><br>PORT     STATE SERVICE<br>3001/tcp open  nessus<br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%B7%A5%E7%A8%8B%E5%8C%96/" class="category-chain-item">工程化</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/nestjs/" class="print-no-link">#nestjs</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>2024-10-28-【研发】nestjs微服务开发问题集</div>
+      <div>http://example.com/2025/11/30/2024-10-28-【研发】nestjs微服务开发问题集/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年11月30日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/11/30/2024-10-28-%E3%80%90%E7%A0%94%E5%8F%91%E3%80%91nestjs%E7%8E%AF%E5%A2%83%E5%8C%BA%E5%88%86/" title="2024-10-28-【研发】nestjs环境区分">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">2024-10-28-【研发】nestjs环境区分</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/11/30/2024-11-12-%E3%80%90%E5%B7%A5%E7%A8%8B%E5%8C%96%E3%80%91fetch%E3%80%81axios%E5%8F%96%E6%B6%88%E8%AF%B7%E6%B1%82%E5%AE%9E%E7%8E%B0/" title="2024-11-12-【网络】fetch、axios取消请求实现">
+                        <span class="hidden-mobile">2024-11-12-【网络】fetch、axios取消请求实现</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

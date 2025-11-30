@@ -1,0 +1,710 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/favicon.ico">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="项目通过编码规范，统一开发者编码风格，提高代码质量。前端规范管理，借助eslint、stylelint等辅助管理。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2021-05-06-vue编码规范">
+<meta property="og:url" content="http://example.com/2025/11/30/2021-05-06-%E3%80%90%E8%A7%84%E8%8C%83%E3%80%91vue%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/index.html">
+<meta property="og:site_name" content="张颖旋的个人博客">
+<meta property="og:description" content="项目通过编码规范，统一开发者编码风格，提高代码质量。前端规范管理，借助eslint、stylelint等辅助管理。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-11-30T14:24:14.180Z">
+<meta property="article:modified_time" content="2025-11-30T14:24:14.180Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="EditorConfig">
+<meta property="article:tag" content="Prettier">
+<meta property="article:tag" content="eslint">
+<meta property="article:tag" content="jsconfig【vscode工作空间配置】">
+<meta property="article:tag" content="stylelint">
+<meta property="article:tag" content="vue">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>2021-05-06-vue编码规范 - 张颖旋的个人博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Blowsysun</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="2021-05-06-vue编码规范"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-11-30 14:24" pubdate>
+          2025年11月30日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          21 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">2021-05-06-vue编码规范</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+</blockquote>
+<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>前端规范管理，eslint、stylelint辅助管理。</p>
+<blockquote>
+<p>ESLint、Stylelint、Prettier、EditorConfig这些检测工具的工作原理都比较类似，不外乎对象实例化-编译Javascript-遍历AST检测-输出检测结果这四步流程</p>
+</blockquote>
+<ul>
+<li>ESLint：检测代码质量和代码风格;</li>
+<li>StyleLint：检测样式代码质量和代码风格;</li>
+<li>Prettier：检测代码风格;（ESLint、StyleLint调和剂，解决重复的规则【Error Loop】）</li>
+<li>EditorConfig：统一不同IDE之间的配置差异，例如一个编辑器行缩进使用的是Tab，另一个编辑器使用的则是空格Space;</li>
+</ul>
+<h2 id="规范配置步骤"><a href="#规范配置步骤" class="headerlink" title="规范配置步骤"></a>规范配置步骤</h2><ul>
+<li>vue项目完整的规范配置，分为以下四步：</li>
+</ul>
+<ol>
+<li>核心规则配置：各检测工具必要的规则配置文件，没有它们检测工具无法执行，如.eslintrc文件。</li>
+<li>命令行脚本配置：package.json的script属性配置执行脚本，开发人员手动执行命令，如npm run lint。</li>
+<li>开发环境配置：webpack开发环境构建配置中，添加开发环境运行时检测插件，类似于启动器，运行时自动执行各自的检测工具进行检测。</li>
+<li>编辑器配置：VSCode编辑器安装插件并配置属性，实时进行检测。</li>
+</ol>
+<h2 id="第一步："><a href="#第一步：" class="headerlink" title="第一步："></a>第一步：</h2><h3 id="1-eslint配置-eslintrc-js"><a href="#1-eslint配置-eslintrc-js" class="headerlink" title="1. eslint配置 - .eslintrc.js"></a>1. eslint配置 - .eslintrc.js</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = &#123;<br>  <span class="hljs-attr">root</span>: <span class="hljs-literal">true</span>,<br>  <span class="hljs-attr">env</span>: &#123;<br>    <span class="hljs-attr">node</span>: <span class="hljs-literal">true</span>,<br>    <span class="hljs-attr">browser</span>: <span class="hljs-literal">true</span>,<br>  &#125;,<br>  <span class="hljs-attr">extends</span>: [<span class="hljs-string">&#x27;plugin:vue/essential&#x27;</span>, <span class="hljs-string">&#x27;airbnb-base&#x27;</span>, <span class="hljs-string">&#x27;plugin:prettier/recommended&#x27;</span>],<br>  <span class="hljs-attr">parserOptions</span>: &#123;<br>    <span class="hljs-attr">parser</span>: <span class="hljs-string">&#x27;babel-eslint&#x27;</span>,<br>    <span class="hljs-attr">ecmaFeatures</span>: &#123;<br>      <span class="hljs-attr">jsx</span>: <span class="hljs-literal">true</span>,<br>    &#125;,<br>  &#125;,<br>  <span class="hljs-attr">plugins</span>: [<span class="hljs-string">&#x27;import&#x27;</span>],<br>  <span class="hljs-attr">settings</span>: &#123;<br>    <span class="hljs-comment">// 别名</span><br>    <span class="hljs-string">&#x27;import/resolver&#x27;</span>: &#123;<br>      <span class="hljs-attr">alias</span>: &#123;<br>        <span class="hljs-attr">map</span>: [[<span class="hljs-string">&#x27;@&#x27;</span>, <span class="hljs-string">&#x27;./src/&#x27;</span>]],<br>        <span class="hljs-attr">extensions</span>: [<span class="hljs-string">&#x27;.js&#x27;</span>, <span class="hljs-string">&#x27;.vue&#x27;</span>],<br>      &#125;,<br>    &#125;,<br>  &#125;,<br>  <span class="hljs-attr">rules</span>: &#123;<br>    <span class="hljs-string">&#x27;func-names&#x27;</span>: <span class="hljs-number">0</span>,<br>    <span class="hljs-string">&#x27;import/extensions&#x27;</span>: <span class="hljs-number">0</span>,<br>    <span class="hljs-string">&#x27;no-unused-expressions&#x27;</span>: <span class="hljs-number">0</span>,<br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 导入语句前不允许有任何非导入语句</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-string">&#x27;import/first&#x27;</span>: <span class="hljs-string">&#x27;error&#x27;</span>,<br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 禁止重复导入模块</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-string">&#x27;import/no-duplicates&#x27;</span>: <span class="hljs-string">&#x27;error&#x27;</span>,<br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 禁止使用 let 导出</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-string">&#x27;import/no-mutable-exports&#x27;</span>: <span class="hljs-string">&#x27;warn&#x27;</span>,<br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 禁用导入的模块时使用 webpack 特有的语法（感叹号）</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-string">&#x27;import/no-webpack-loader-syntax&#x27;</span>: <span class="hljs-string">&#x27;warn&#x27;</span>,<br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 当只有一个导出时，必须使用 export default 来导出</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-string">&#x27;import/prefer-default-export&#x27;</span>: <span class="hljs-string">&#x27;off&#x27;</span>,<br>    <span class="hljs-string">&#x27;import/no-extraneous-dependencies&#x27;</span>: [<br>      <span class="hljs-string">&#x27;error&#x27;</span>,<br>      &#123;<br>        <span class="hljs-attr">devDependencies</span>: <span class="hljs-literal">true</span>,<br>      &#125;,<br>    ],<br>    <span class="hljs-string">&#x27;no-plusplus&#x27;</span>: [<br>      <span class="hljs-string">&#x27;error&#x27;</span>,<br>      &#123;<br>        <span class="hljs-attr">allowForLoopAfterthoughts</span>: <span class="hljs-literal">true</span>,<br>      &#125;,<br>    ],<br>    <span class="hljs-string">&#x27;import/no-dynamic-require&#x27;</span>: <span class="hljs-number">0</span>,<br>    <span class="hljs-string">&#x27;global-require&#x27;</span>: <span class="hljs-number">0</span>,<br>    <span class="hljs-string">&#x27;no-console&#x27;</span>: process.<span class="hljs-property">env</span>.<span class="hljs-property">NODE_ENV</span> === <span class="hljs-string">&#x27;production&#x27;</span> ? <span class="hljs-string">&#x27;warn&#x27;</span> : <span class="hljs-string">&#x27;off&#x27;</span>,<br>    <span class="hljs-string">&#x27;no-debugger&#x27;</span>: process.<span class="hljs-property">env</span>.<span class="hljs-property">NODE_ENV</span> === <span class="hljs-string">&#x27;production&#x27;</span> ? <span class="hljs-string">&#x27;warn&#x27;</span> : <span class="hljs-string">&#x27;off&#x27;</span>,<br>  &#125;,<br>&#125;;<br><br></code></pre></td></tr></table></figure>
+
+<h4 id="1-1eslint忽略文件-eslintignore"><a href="#1-1eslint忽略文件-eslintignore" class="headerlink" title="1.1eslint忽略文件 .eslintignore"></a>1.1eslint忽略文件 .eslintignore</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript">dist<span class="hljs-comment">/**</span><br><span class="hljs-comment">es/**</span><br><span class="hljs-comment">lib/**</span><br><span class="hljs-comment">**/</span>node_modules<br></code></pre></td></tr></table></figure>
+<h3 id="2-stylelint配置"><a href="#2-stylelint配置" class="headerlink" title="2. stylelint配置"></a>2. stylelint配置</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = &#123;<br>  <span class="hljs-comment">// processors: [&#x27;stylelint-processor-html&#x27;],</span><br>  <span class="hljs-comment">// extends: [&#x27;stylelint-config-tx 替换tx&#x27;,&#x27;css-properties-sorting&#x27;, &#x27;stylelint-config-prettier&#x27;],</span><br>  <span class="hljs-attr">extends</span>: [<span class="hljs-string">&#x27;css-properties-sorting&#x27;</span>, <span class="hljs-string">&#x27;stylelint-config-prettier&#x27;</span>],<br>  <span class="hljs-attr">plugins</span>: [<span class="hljs-string">&#x27;stylelint-order&#x27;</span>], <span class="hljs-comment">// stylelint-order是CSS属性排序插件</span><br>  <span class="hljs-attr">rules</span>: &#123;<br>    <span class="hljs-comment">// &quot;color-hex-case&quot;: &quot;lower&quot;, // 颜色值为小写字母(stylelint-config-standard)</span><br>    <span class="hljs-comment">// &quot;color-no-invalid-hex&quot;: true, // 颜色值不能为无效值(stylelint-config-standard)</span><br>    <span class="hljs-string">&#x27;font-family-name-quotes&#x27;</span>: <span class="hljs-string">&#x27;always-where-recommended&#x27;</span>, <span class="hljs-comment">// 字体系列中命名时带引号</span><br>    <span class="hljs-string">&#x27;function-url-quotes&#x27;</span>: <span class="hljs-string">&#x27;always&#x27;</span>, <span class="hljs-comment">// 地址一定要写引号</span><br>    <span class="hljs-comment">// &#x27;number-leading-zero&#x27;: &#x27;never&#x27;, // 或分数低于1的数字是否需要前导零</span><br>    <span class="hljs-string">&#x27;number-no-trailing-zeros&#x27;</span>: <span class="hljs-literal">true</span>, <span class="hljs-comment">// 禁止在数量尾随零</span><br>    <span class="hljs-comment">// &#x27;string-quotes&#x27;: &#x27;double&#x27;, // 指定字串</span><br>    <span class="hljs-string">&#x27;length-zero-no-unit&#x27;</span>: <span class="hljs-literal">true</span>, <span class="hljs-comment">// 禁止单位零长度。</span><br>    <span class="hljs-string">&#x27;value-keyword-case&#x27;</span>: <span class="hljs-string">&#x27;lower&#x27;</span>, <span class="hljs-comment">// 指定小写关键字的值</span><br>    <span class="hljs-string">&#x27;value-list-comma-newline-after&#x27;</span>: <span class="hljs-string">&#x27;always-multi-line&#x27;</span>, <span class="hljs-comment">// 在值列表的逗号后指定一个换行符或禁止留有空格</span><br>    <span class="hljs-string">&#x27;shorthand-property-no-redundant-values&#x27;</span>: <span class="hljs-literal">true</span>, <span class="hljs-comment">// 不允许在简写属性冗余值</span><br>    <span class="hljs-comment">// &quot;property-case&quot;: &quot;lower&quot;, // 为属性指定小写(stylelint-config-standard)</span><br>    <span class="hljs-string">&#x27;keyframe-declaration-no-important&#x27;</span>: <span class="hljs-literal">true</span>, <span class="hljs-comment">// 不允许!important在关键帧声明</span><br>    <span class="hljs-comment">// &quot;block-closing-brace-empty-line-before&quot;: &quot;never&quot;, // 不允许关闭括号前空一行(stylelint-config-standard)</span><br>    <span class="hljs-comment">// &quot;block-closing-brace-newline-after&quot;: &quot;always&quot;, // 需要一个换行符关闭括号后的空白(stylelint-config-standard)</span><br>    <span class="hljs-comment">// &quot;block-opening-brace-newline-after&quot;: &quot;always-multi-line&quot;, // 开括号的块之后需要新的一行(stylelint-config-standard)</span><br>    <span class="hljs-string">&#x27;selector-class-pattern&#x27;</span>: <span class="hljs-string">&quot;^[a-z]+([a-z0-9]?|[a-z0-9(-_&#x27;% ]*[a-z0-9)])$&quot;</span>, <span class="hljs-comment">// 兼容stylelint的bug(less的mixin没处理好), 暂时先这样处理～～～指定一个模式类选择符，限制选择器名称写法</span><br>    <span class="hljs-string">&#x27;selector-id-pattern&#x27;</span>: <span class="hljs-string">&quot;^[a-z]+([a-z0-9]?|[a-z0-9(-_&#x27;% ]*[a-z0-9)])$&quot;</span>, <span class="hljs-comment">// 兼容stylelint的bug(less的mixin没处理好), 暂时先这样处理～～～指定一个模式，id选择器，限制选择器名称写法</span><br>    <span class="hljs-string">&#x27;no-empty-source&#x27;</span>: <span class="hljs-literal">null</span>, <span class="hljs-comment">// 不允许空的来源</span><br>    <span class="hljs-string">&#x27;at-rule-no-unknown&#x27;</span>: <span class="hljs-literal">null</span>, <span class="hljs-comment">// 不允许at-rules不明</span><br>    <span class="hljs-comment">// &quot;indentation&quot;: 2, // 指定缩进(stylelint-config-standard)</span><br>    <span class="hljs-string">&#x27;max-nesting-depth&#x27;</span>: [<span class="hljs-number">5</span>, &#123; <span class="hljs-attr">severity</span>: <span class="hljs-string">&#x27;warning&#x27;</span> &#125;], <span class="hljs-comment">// 允许嵌套的深度为5</span><br>    <span class="hljs-string">&#x27;no-duplicate-selectors&#x27;</span>: <span class="hljs-literal">true</span>, <span class="hljs-comment">// 不允许重复的选择器</span><br>    <span class="hljs-comment">// &quot;no-eol-whitespace&quot;: true, // 不允许行尾空白(stylelint-config-standard)</span><br>    <span class="hljs-comment">// &quot;no-invalid-double-slash-comments&quot;: true // 不允许双斜杠注释(/ /…)不支持CSS(stylelint-config-standard)</span><br>    <span class="hljs-string">&#x27;order/order&#x27;</span>: [<br>      <span class="hljs-comment">// 指定声明块内的内容顺序</span><br>      [<span class="hljs-string">&#x27;custom-properties&#x27;</span>, <span class="hljs-string">&#x27;declarations&#x27;</span>],<br>    ],<br>    <span class="hljs-comment">// &quot;declaration-block-properties-order&quot;: &quot;alphabetical&quot;,</span><br>    <span class="hljs-string">&#x27;order/properties-order&#x27;</span>: [<br>      <span class="hljs-comment">// 指定声明块内属性的字母顺序</span><br>      <span class="hljs-string">&#x27;position&#x27;</span>,<br>      <span class="hljs-string">&#x27;top&#x27;</span>,<br>      <span class="hljs-string">&#x27;right&#x27;</span>,<br>      <span class="hljs-string">&#x27;bottom&#x27;</span>,<br>      <span class="hljs-string">&#x27;left&#x27;</span>,<br>      <span class="hljs-string">&#x27;z-index&#x27;</span>,<br>      <span class="hljs-string">&#x27;display&#x27;</span>,<br>      <span class="hljs-string">&#x27;float&#x27;</span>,<br>      <span class="hljs-string">&#x27;width&#x27;</span>,<br>      <span class="hljs-string">&#x27;height&#x27;</span>,<br>      <span class="hljs-string">&#x27;max-width&#x27;</span>,<br>      <span class="hljs-string">&#x27;max-height&#x27;</span>,<br>      <span class="hljs-string">&#x27;min-width&#x27;</span>,<br>      <span class="hljs-string">&#x27;min-height&#x27;</span>,<br>      <span class="hljs-string">&#x27;padding&#x27;</span>,<br>      <span class="hljs-string">&#x27;padding-top&#x27;</span>,<br>      <span class="hljs-string">&#x27;padding-right&#x27;</span>,<br>      <span class="hljs-string">&#x27;padding-bottom&#x27;</span>,<br>      <span class="hljs-string">&#x27;padding-left&#x27;</span>,<br>      <span class="hljs-string">&#x27;margin&#x27;</span>,<br>      <span class="hljs-string">&#x27;margin-top&#x27;</span>,<br>      <span class="hljs-string">&#x27;margin-right&#x27;</span>,<br>      <span class="hljs-string">&#x27;margin-bottom&#x27;</span>,<br>      <span class="hljs-string">&#x27;margin-left&#x27;</span>,<br>      <span class="hljs-string">&#x27;margin-collapse&#x27;</span>,<br>      <span class="hljs-string">&#x27;margin-top-collapse&#x27;</span>,<br>      <span class="hljs-string">&#x27;margin-right-collapse&#x27;</span>,<br>      <span class="hljs-string">&#x27;margin-bottom-collapse&#x27;</span>,<br>      <span class="hljs-string">&#x27;margin-left-collapse&#x27;</span>,<br>      <span class="hljs-string">&#x27;overflow&#x27;</span>,<br>      <span class="hljs-string">&#x27;overflow-x&#x27;</span>,<br>      <span class="hljs-string">&#x27;overflow-y&#x27;</span>,<br>      <span class="hljs-string">&#x27;clip&#x27;</span>,<br>      <span class="hljs-string">&#x27;clear&#x27;</span>,<br>      <span class="hljs-string">&#x27;font&#x27;</span>,<br>      <span class="hljs-string">&#x27;font-family&#x27;</span>,<br>      <span class="hljs-string">&#x27;font-size&#x27;</span>,<br>      <span class="hljs-string">&#x27;font-smoothing&#x27;</span>,<br>      <span class="hljs-string">&#x27;osx-font-smoothing&#x27;</span>,<br>      <span class="hljs-string">&#x27;font-style&#x27;</span>,<br>      <span class="hljs-string">&#x27;font-weight&#x27;</span>,<br>      <span class="hljs-string">&#x27;hyphens&#x27;</span>,<br>      <span class="hljs-string">&#x27;src&#x27;</span>,<br>      <span class="hljs-string">&#x27;line-height&#x27;</span>,<br>      <span class="hljs-string">&#x27;letter-spacing&#x27;</span>,<br>      <span class="hljs-string">&#x27;word-spacing&#x27;</span>,<br>      <span class="hljs-string">&#x27;color&#x27;</span>,<br>      <span class="hljs-string">&#x27;text-align&#x27;</span>,<br>      <span class="hljs-string">&#x27;text-decoration&#x27;</span>,<br>      <span class="hljs-string">&#x27;text-indent&#x27;</span>,<br>      <span class="hljs-string">&#x27;text-overflow&#x27;</span>,<br>      <span class="hljs-string">&#x27;text-rendering&#x27;</span>,<br>      <span class="hljs-string">&#x27;text-size-adjust&#x27;</span>,<br>      <span class="hljs-string">&#x27;text-shadow&#x27;</span>,<br>      <span class="hljs-string">&#x27;text-transform&#x27;</span>,<br>      <span class="hljs-string">&#x27;word-break&#x27;</span>,<br>      <span class="hljs-string">&#x27;word-wrap&#x27;</span>,<br>      <span class="hljs-string">&#x27;white-space&#x27;</span>,<br>      <span class="hljs-string">&#x27;vertical-align&#x27;</span>,<br>      <span class="hljs-string">&#x27;list-style&#x27;</span>,<br>      <span class="hljs-string">&#x27;list-style-type&#x27;</span>,<br>      <span class="hljs-string">&#x27;list-style-position&#x27;</span>,<br>      <span class="hljs-string">&#x27;list-style-image&#x27;</span>,<br>      <span class="hljs-string">&#x27;pointer-events&#x27;</span>,<br>      <span class="hljs-string">&#x27;cursor&#x27;</span>,<br>      <span class="hljs-string">&#x27;background&#x27;</span>,<br>      <span class="hljs-string">&#x27;background-attachment&#x27;</span>,<br>      <span class="hljs-string">&#x27;background-color&#x27;</span>,<br>      <span class="hljs-string">&#x27;background-image&#x27;</span>,<br>      <span class="hljs-string">&#x27;background-position&#x27;</span>,<br>      <span class="hljs-string">&#x27;background-repeat&#x27;</span>,<br>      <span class="hljs-string">&#x27;background-size&#x27;</span>,<br>      <span class="hljs-string">&#x27;border&#x27;</span>,<br>      <span class="hljs-string">&#x27;border-collapse&#x27;</span>,<br>      <span class="hljs-string">&#x27;border-top&#x27;</span>,<br>      <span class="hljs-string">&#x27;border-right&#x27;</span>,<br>      <span class="hljs-string">&#x27;border-bottom&#x27;</span>,<br>      <span class="hljs-string">&#x27;border-left&#x27;</span>,<br>      <span class="hljs-string">&#x27;border-color&#x27;</span>,<br>      <span class="hljs-string">&#x27;border-image&#x27;</span>,<br>      <span class="hljs-string">&#x27;border-top-color&#x27;</span>,<br>      <span class="hljs-string">&#x27;border-right-color&#x27;</span>,<br>      <span class="hljs-string">&#x27;border-bottom-color&#x27;</span>,<br>      <span class="hljs-string">&#x27;border-left-color&#x27;</span>,<br>      <span class="hljs-string">&#x27;border-spacing&#x27;</span>,<br>      <span class="hljs-string">&#x27;border-style&#x27;</span>,<br>      <span class="hljs-string">&#x27;border-top-style&#x27;</span>,<br>      <span class="hljs-string">&#x27;border-right-style&#x27;</span>,<br>      <span class="hljs-string">&#x27;border-bottom-style&#x27;</span>,<br>      <span class="hljs-string">&#x27;border-left-style&#x27;</span>,<br>      <span class="hljs-string">&#x27;border-width&#x27;</span>,<br>      <span class="hljs-string">&#x27;border-top-width&#x27;</span>,<br>      <span class="hljs-string">&#x27;border-right-width&#x27;</span>,<br>      <span class="hljs-string">&#x27;border-bottom-width&#x27;</span>,<br>      <span class="hljs-string">&#x27;border-left-width&#x27;</span>,<br>      <span class="hljs-string">&#x27;border-radius&#x27;</span>,<br>      <span class="hljs-string">&#x27;border-top-right-radius&#x27;</span>,<br>      <span class="hljs-string">&#x27;border-bottom-right-radius&#x27;</span>,<br>      <span class="hljs-string">&#x27;border-bottom-left-radius&#x27;</span>,<br>      <span class="hljs-string">&#x27;border-top-left-radius&#x27;</span>,<br>      <span class="hljs-string">&#x27;border-radius-topright&#x27;</span>,<br>      <span class="hljs-string">&#x27;border-radius-bottomright&#x27;</span>,<br>      <span class="hljs-string">&#x27;border-radius-bottomleft&#x27;</span>,<br>      <span class="hljs-string">&#x27;border-radius-topleft&#x27;</span>,<br>      <span class="hljs-string">&#x27;content&#x27;</span>,<br>      <span class="hljs-string">&#x27;quotes&#x27;</span>,<br>      <span class="hljs-string">&#x27;outline&#x27;</span>,<br>      <span class="hljs-string">&#x27;outline-offset&#x27;</span>,<br>      <span class="hljs-string">&#x27;opacity&#x27;</span>,<br>      <span class="hljs-string">&#x27;filter&#x27;</span>,<br>      <span class="hljs-string">&#x27;visibility&#x27;</span>,<br>      <span class="hljs-string">&#x27;size&#x27;</span>,<br>      <span class="hljs-string">&#x27;zoom&#x27;</span>,<br>      <span class="hljs-string">&#x27;transform&#x27;</span>,<br>      <span class="hljs-string">&#x27;box-align&#x27;</span>,<br>      <span class="hljs-string">&#x27;box-flex&#x27;</span>,<br>      <span class="hljs-string">&#x27;box-orient&#x27;</span>,<br>      <span class="hljs-string">&#x27;box-pack&#x27;</span>,<br>      <span class="hljs-string">&#x27;box-shadow&#x27;</span>,<br>      <span class="hljs-string">&#x27;box-sizing&#x27;</span>,<br>      <span class="hljs-string">&#x27;table-layout&#x27;</span>,<br>      <span class="hljs-string">&#x27;animation&#x27;</span>,<br>      <span class="hljs-string">&#x27;animation-delay&#x27;</span>,<br>      <span class="hljs-string">&#x27;animation-duration&#x27;</span>,<br>      <span class="hljs-string">&#x27;animation-iteration-count&#x27;</span>,<br>      <span class="hljs-string">&#x27;animation-name&#x27;</span>,<br>      <span class="hljs-string">&#x27;animation-play-state&#x27;</span>,<br>      <span class="hljs-string">&#x27;animation-timing-function&#x27;</span>,<br>      <span class="hljs-string">&#x27;animation-fill-mode&#x27;</span>,<br>      <span class="hljs-string">&#x27;transition&#x27;</span>,<br>      <span class="hljs-string">&#x27;transition-delay&#x27;</span>,<br>      <span class="hljs-string">&#x27;transition-duration&#x27;</span>,<br>      <span class="hljs-string">&#x27;transition-property&#x27;</span>,<br>      <span class="hljs-string">&#x27;transition-timing-function&#x27;</span>,<br>      <span class="hljs-string">&#x27;background-clip&#x27;</span>,<br>      <span class="hljs-string">&#x27;backface-visibility&#x27;</span>,<br>      <span class="hljs-string">&#x27;resize&#x27;</span>,<br>      <span class="hljs-string">&#x27;appearance&#x27;</span>,<br>      <span class="hljs-string">&#x27;user-select&#x27;</span>,<br>      <span class="hljs-string">&#x27;interpolation-mode&#x27;</span>,<br>      <span class="hljs-string">&#x27;direction&#x27;</span>,<br>      <span class="hljs-string">&#x27;marks&#x27;</span>,<br>      <span class="hljs-string">&#x27;page&#x27;</span>,<br>      <span class="hljs-string">&#x27;set-link-source&#x27;</span>,<br>      <span class="hljs-string">&#x27;unicode-bidi&#x27;</span>,<br>      <span class="hljs-string">&#x27;speak&#x27;</span>,<br>    ],<br>    <span class="hljs-string">&#x27;selector-pseudo-element-no-unknown&#x27;</span>: [<br>      <span class="hljs-literal">true</span>,<br>      &#123;<br>        <span class="hljs-attr">ignorePseudoElements</span>: [<span class="hljs-string">&#x27;v-deep&#x27;</span>],<br>      &#125;,<br>    ],<br>  &#125;,<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-prettier配置-prettier-config-js"><a href="#3-prettier配置-prettier-config-js" class="headerlink" title="3. prettier配置 - prettier.config.js"></a>3. prettier配置 - prettier.config.js</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = &#123;<br>  <span class="hljs-comment">// 一行最多 120 字符</span><br>  <span class="hljs-attr">printWidth</span>: <span class="hljs-number">120</span>,<br>  <span class="hljs-comment">// 使用 2 个空格缩进</span><br>  <span class="hljs-attr">tabWidth</span>: <span class="hljs-number">2</span>,<br>  <span class="hljs-comment">// 不使用缩进符，而使用空格</span><br>  <span class="hljs-attr">useTabs</span>: <span class="hljs-literal">false</span>,<br>  <span class="hljs-comment">// 行尾需要有分号</span><br>  <span class="hljs-attr">semi</span>: <span class="hljs-literal">true</span>,<br>  <span class="hljs-comment">// 使用单引号</span><br>  <span class="hljs-attr">singleQuote</span>: <span class="hljs-literal">true</span>,<br>  <span class="hljs-comment">// 对象的 key 仅在必要时用引号</span><br>  <span class="hljs-attr">quoteProps</span>: <span class="hljs-string">&#x27;as-needed&#x27;</span>,<br>  <span class="hljs-comment">// jsx 不使用单引号，而使用双引号</span><br>  <span class="hljs-attr">jsxSingleQuote</span>: <span class="hljs-literal">false</span>,<br>  <span class="hljs-comment">// 末尾需要有逗号</span><br>  <span class="hljs-attr">trailingComma</span>: <span class="hljs-string">&#x27;all&#x27;</span>,<br>  <span class="hljs-comment">// 大括号内的首尾需要空格</span><br>  <span class="hljs-attr">bracketSpacing</span>: <span class="hljs-literal">true</span>,<br>  <span class="hljs-comment">// jsx 标签的反尖括号需要换行</span><br>  <span class="hljs-attr">jsxBracketSameLine</span>: <span class="hljs-literal">false</span>,<br>  <span class="hljs-comment">// 箭头函数，只有一个参数的时候，也需要括号</span><br>  <span class="hljs-attr">arrowParens</span>: <span class="hljs-string">&#x27;always&#x27;</span>,<br>  <span class="hljs-comment">// 每个文件格式化的范围是文件的全部内容</span><br>  <span class="hljs-attr">rangeStart</span>: <span class="hljs-number">0</span>,<br>  <span class="hljs-attr">rangeEnd</span>: <span class="hljs-title class_">Infinity</span>,<br>  <span class="hljs-comment">// 不需要写文件开头的 @prettier</span><br>  <span class="hljs-attr">requirePragma</span>: <span class="hljs-literal">false</span>,<br>  <span class="hljs-comment">// 不需要自动在文件开头插入 @prettier</span><br>  <span class="hljs-attr">insertPragma</span>: <span class="hljs-literal">false</span>,<br>  <span class="hljs-comment">// 使用默认的折行标准</span><br>  <span class="hljs-attr">proseWrap</span>: <span class="hljs-string">&#x27;preserve&#x27;</span>,<br>  <span class="hljs-comment">// 根据显示样式决定 html 要不要折行</span><br>  <span class="hljs-attr">htmlWhitespaceSensitivity</span>: <span class="hljs-string">&#x27;css&#x27;</span>,<br>  <span class="hljs-comment">// vue 文件中的 script 和 style 内不用缩进</span><br>  <span class="hljs-attr">vueIndentScriptAndStyle</span>: <span class="hljs-literal">false</span>,<br>  <span class="hljs-comment">// 换行符使用 lf</span><br>  <span class="hljs-attr">endOfLine</span>: <span class="hljs-string">&#x27;lf&#x27;</span>,<br>&#125;;<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="4-EditorConfig部分："><a href="#4-EditorConfig部分：" class="headerlink" title="4. EditorConfig部分："></a>4. EditorConfig部分：</h3><blockquote>
+<p> editorConfig的作用是专门抹平不同编辑器同一配置之间差异。比较神奇的是它并不需要项目配依赖且配置及其简单，只需要编辑器安装指定扩展插件以及项目配置文件.editorConfig即可。</p>
+<blockquote>
+<ul>
+<li>VSCode中安装插件：EditorConfig for VS Code</li>
+<li>项目根目录下创建并配置.editorConfig：</li>
+</ul>
+</blockquote>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript">root = <span class="hljs-literal">true</span><br><br>[*]<br>charset = utf-<span class="hljs-number">8</span><br>indent_style = space<br>indent_size = <span class="hljs-number">4</span><br>end_of_line = lf<br>insert_final_newline = <span class="hljs-literal">true</span><br>trim_trailing_whitespace = <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="依赖清单"><a href="#依赖清单" class="headerlink" title="依赖清单"></a>依赖清单</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 依赖清单</span><br>[<br>    <span class="hljs-comment">// ESLint</span><br>    eslint,<br>    babel-eslint,<br>    eslint-plugin-vue,<br>    eslint-webpack-plugin,      <span class="hljs-comment">// 开发环境实时检测(可选</span><br>    <br>    <span class="hljs-comment">// StyleLint(可选)</span><br>    stylelint,<br>    stylelint-webpack-plugin,   <span class="hljs-comment">// 开发环境实时检测</span><br>    stylelint-config-standard,<br>    <br>    <span class="hljs-comment">// Prettier(可选)</span><br>    prettier,<br>    eslint-config-prettier,<br>    eslint-plugin-prettier,<br>    stylelint-config-prettier<br>]<br></code></pre></td></tr></table></figure>
+
+<h4 id="完整示例"><a href="#完整示例" class="headerlink" title="完整示例"></a>完整示例</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><br><span class="hljs-comment">// ESLint</span><br><span class="hljs-string">&quot;eslint&quot;</span>: <span class="hljs-string">&quot;^6.7.2&quot;</span>,<br><span class="hljs-string">&quot;eslint-config-airbnb-base&quot;</span>: <span class="hljs-string">&quot;^14.2.1&quot;</span>,<br><span class="hljs-string">&quot;eslint-import-resolver-alias&quot;</span>: <span class="hljs-string">&quot;^1.1.2&quot;</span>,<br><span class="hljs-string">&quot;eslint-plugin-vue&quot;</span>: <span class="hljs-string">&quot;^6.2.2&quot;</span>,<br><br><span class="hljs-comment">// StyleLint(可选)</span><br><span class="hljs-string">&quot;stylelint&quot;</span>: <span class="hljs-string">&quot;^13.12.0&quot;</span>,<br><span class="hljs-string">&quot;stylelint-order&quot;</span>: <span class="hljs-string">&quot;^4.1.0&quot;</span>,<br><br><span class="hljs-comment">// Prettier(可选)</span><br><span class="hljs-string">&quot;prettier&quot;</span>: <span class="hljs-string">&quot;^2.3.2&quot;</span>,<br><span class="hljs-string">&quot;eslint-config-prettier&quot;</span>: <span class="hljs-string">&quot;^8.3.0&quot;</span>,<br><span class="hljs-string">&quot;eslint-plugin-prettier&quot;</span>: <span class="hljs-string">&quot;^3.3.1&quot;</span>,<br><span class="hljs-string">&quot;stylelint-config-prettier&quot;</span>: <span class="hljs-string">&quot;^8.0.2&quot;</span>,<br></code></pre></td></tr></table></figure>
+
+<h2 id="第二步-命令行脚本配置"><a href="#第二步-命令行脚本配置" class="headerlink" title="第二步 - 命令行脚本配置"></a>第二步 - 命令行脚本配置</h2><p>在package.json文件的script脚本中配置</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs javascript">&#123;<br> <span class="hljs-comment">// 省略其余属性...</span><br> <span class="hljs-string">&quot;script&quot;</span>: &#123;<br>     <span class="hljs-string">&quot;eslint-lint&quot;</span>: <span class="hljs-string">&quot;eslint --ext .js,.vue --fix src&quot;</span>,<br>     <span class="hljs-string">&quot;stylelint-lint&quot;</span>: <span class="hljs-string">&quot;stylelint src/**/.css src/**/.vue src/**/.less --fix&quot;</span><br> &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+<h1 id="【有待争议的规则点】"><a href="#【有待争议的规则点】" class="headerlink" title="【有待争议的规则点】"></a>【有待争议的规则点】</h1><h2 id="vue相关"><a href="#vue相关" class="headerlink" title="vue相关"></a>vue相关</h2><p>1、vue&#x2F;html-self-closing 自关闭标签<br>2、vue&#x2F;attributes-order 属性顺序<br>3、vue&#x2F;attribute-hyphenation 属性需用连字符分割单词，（这里不建议，父子组件使用时，无法直接搜索）</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%A7%84%E8%8C%83/" class="category-chain-item">规范</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/vue/" class="print-no-link">#vue</a>
+      
+        <a href="/tags/eslint/" class="print-no-link">#eslint</a>
+      
+        <a href="/tags/stylelint/" class="print-no-link">#stylelint</a>
+      
+        <a href="/tags/Prettier/" class="print-no-link">#Prettier</a>
+      
+        <a href="/tags/EditorConfig/" class="print-no-link">#EditorConfig</a>
+      
+        <a href="/tags/jsconfig%E3%80%90vscode%E5%B7%A5%E4%BD%9C%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E3%80%91/" class="print-no-link">#jsconfig【vscode工作空间配置】</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>2021-05-06-vue编码规范</div>
+      <div>http://example.com/2025/11/30/2021-05-06-【规范】vue编码规范/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年11月30日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/11/30/2021-09-28-%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%91%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91-%E5%88%86%E5%8C%85/" title="2021-09-28-【小程序】小程序开发-环境篇">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">2021-09-28-【小程序】小程序开发-环境篇</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/11/30/2021-09-28-%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%91%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E4%B8%8A/" title="2021-09-28-【小程序】小程序开发-环境篇">
+                        <span class="hidden-mobile">2021-09-28-【小程序】小程序开发-环境篇</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
