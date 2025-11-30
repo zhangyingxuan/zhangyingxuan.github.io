@@ -142,9 +142,17 @@ hexo new post "我的第一篇博客"
 
 ```bash
 git clone https://github.com/next-theme/hexo-theme-next themes/next
+
 ```
 
-\_config.yml 里 theme: next 即可
+在`_config.yml` 里 theme: next 即可
+
+- 页面配置排序
+  > 修改`_config.yml`配置文件
+  > 找到：`index_generator:`配置
+  > path: ""
+  > per_page: 10 # 分页
+  > order_by: -path # 排序方式，按 title 中时间降序
 
 ### 6. 总结
 
