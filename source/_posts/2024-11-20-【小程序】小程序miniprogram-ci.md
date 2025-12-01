@@ -1,5 +1,5 @@
 ---
-title: 2024-11-20-【小程序】小程序自动化测试
+title: 2024-11-20-【小程序】小程序miniprogram-ci
 description:
 categories:
   - 工程化
