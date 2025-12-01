@@ -583,7 +583,3 @@ Chrome 垂直标签页管理扩展通过创新的垂直布局和智能分组功�
 3. TypeScript Handbook - https://www.typescriptlang.org/docs/
 4. Vite Build Tool - https://vitejs.dev/guide/
 5. Chrome Tab Groups API - https://developer.chrome.com/docs/extensions/reference/tabGroups/
-
----
-
-_本文详细介绍了 Chrome 垂直标签页管理扩展的开发全过程，从背景分析到技术实现，为类似项目开发提供了完整的技术参考。_
