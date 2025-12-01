@@ -1,0 +1,693 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.ico">
+  <link rel="icon" href="/img/favicon.ico">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="2024-05-24-【工程化】小程序代码规范">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2024-05-24-【工程化】小程序代码规范">
+<meta property="og:url" content="http://example.com/2025/12/01/2024-05-24-%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%91%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%96%B9%E6%A1%88/index.html">
+<meta property="og:site_name" content="张颖旋的个人博客">
+<meta property="og:description" content="2024-05-24-【工程化】小程序代码规范">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-12-01T03:32:52.786Z">
+<meta property="article:modified_time" content="2025-12-01T03:32:52.786Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="小程序开发规范">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>2024-05-24-【工程化】小程序代码规范 - 张颖旋的个人博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Blowsysun</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="2024-05-24-【工程化】小程序代码规范"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-12-01 03:32" pubdate>
+          2025年12月1日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          12 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">2024-05-24-【工程化】小程序代码规范</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/framework/performance/">性能与体验</a><br>启动性能、运行性能</p>
+<h2 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h2><p>性能扫描工具和代码优化</p>
+<h2 id="加载时优化"><a href="#加载时优化" class="headerlink" title="加载时优化"></a>加载时优化</h2><ol>
+<li>包体积优化： 首屏优化；<br>静态资源网络化：图片、视频、文件等网络化，利用 webp 技术降低图片体积<br>降低代码包大小：合理使用分包加载（降低代码包下载耗时、降低小程序代码注入耗时、降低页面渲染耗时、降低内存占用</li>
+<li>优化启动耗时（分包合理性）<br>独立分包<br>分包预下载<br>分包异步化（页面粒度细化到组件甚至文件粒度）</li>
+<li>避免非必要的全局自定义组件和插件</li>
+<li>控制代码包内的资源文件</li>
+<li>及时清理无用代码和资源</li>
+</ol>
+<h2 id="运行时优化"><a href="#运行时优化" class="headerlink" title="运行时优化"></a>运行时优化</h2><!-- 重绘、重排 -->
+
+<ol>
+<li>cr 代码评审，找出复杂逻辑优化点<br>生命周期，网络请求提前到 onLoad<br>合并 setData（通信的开销 + webview 更新的开销）<br>data 数据合理性分析</li>
+</ol>
+<h2 id="1-1-分包"><a href="#1-1-分包" class="headerlink" title="1.1 分包"></a>1.1 分包</h2><p>分包原则 单个包体积 &lt; 2MB，总包 &lt; 20MB</p>
+<p>自然人、企业、交易历史、主包（首页、个人中心、宣传页）</p>
+<p>「独立分包」<br>「分包预下载」</p>
+<p><a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/community/develop/doc/000e44abb2c7e89c2287f84b956c09">https://developers.weixin.qq.com/community/develop/doc/000e44abb2c7e89c2287f84b956c09</a><br><a target="_blank" rel="noopener" href="https://github.com/dujuncheng/blogs/blob/master/mini_program/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%96%B9%E6%A1%88%E2%80%94%E2%80%94%E8%AE%A9%E4%BD%A0%E7%9A%84%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%A6%82%E6%AD%A4%E4%B8%9D%E6%BB%91.md">https://github.com/dujuncheng/blogs/blob/master/mini_program/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%96%B9%E6%A1%88%E2%80%94%E2%80%94%E8%AE%A9%E4%BD%A0%E7%9A%84%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%A6%82%E6%AD%A4%E4%B8%9D%E6%BB%91.md</a><br><a target="_blank" rel="noopener" href="https://juejin.cn/post/7117179043430006820">https://juejin.cn/post/7117179043430006820</a></p>
+<h1 id="实施方案"><a href="#实施方案" class="headerlink" title="实施方案"></a>实施方案</h1><h2 id="图片很重要"><a href="#图片很重要" class="headerlink" title="图片很重要"></a>图片很重要</h2><p>如果使用图片不当（过多过大的图片），在加载时会消耗更多的系统资源，从而影响整个页面的性能，因此做好图片优化非常重要。</p>
+<h3 id="如何进行图片优化"><a href="#如何进行图片优化" class="headerlink" title="如何进行图片优化"></a>如何进行图片优化</h3><ol>
+<li>第一步：控制大小<br>（1）针对本地图片</li>
+</ol>
+<p>​ 由于放置在本地的图片会被直接打包到小程序包内，图片过大会导致包体积过大，加载时间变长。同时图片过大也会导致渲染时间变长，因此开发者需尽可能的压缩图片的大小。以下列出一些图片优化的思路：</p>
+<p>对于不需要透明格式的图片，推荐采用 jpeg 格式来代替 png 格式。</p>
+<p>安卓端可使用 webp 的图片格式。webp 图片格式在有损压缩的情况下，肉眼不易察觉出压缩前后的变化，但是体积却得到很明显的减小（注意： iOS 百度 App 版本 &lt; 11.22 时不支持 webp 格式）。</p>
+<p>确保小程序包内无冗余和无用的图片资源。</p>
+<p>请注意默认情况下会加载，但可能之后永远不会渲染的图片，例如“轮播图”，“手风琴”和“图片画廊”。</p>
+<p>为了缩短渲染关键图片所需的时间，请延迟加载不太重要的图片，并在关键图片渲染完成后再加载后续内容。</p>
+<p>使用工具对图片进行压缩。常见的压缩工具如下：</p>
+<p>图片格式 压缩工具 压缩比例<br>png 格式 <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/pngquant-bin">https://www.npmjs.com/package/pngquant-bin</a> 50-70<br>jpeg 格式 <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/mozjpeg">https://www.npmjs.com/package/mozjpeg</a> 默认<br>（2）针对网络图片</p>
+<p>在智能小程序项目中，除了小程序的 icon，基本都会部署到 CDN 上。对于这样的网络图片，也需要进行压缩。下面列出一些优化的思路：</p>
+<p>通过 CDN 静态资源服务器获取图片资源，并添加图片压缩规则。<br>使用如上节提起的工具对图片进行压缩后，再上传至 CDN。 2. 第二步：开启图片懒加载<br>可以使用懒加载优化小程序。智能小程序的 image 组件提供了 lazy-load 属性，可以开启图片的懒加载功能：</p>
+<image lazy-load="true"/>
+3. 第三步：谨慎使用耗费性能的属性
+image组件mode属性提供了 13 种模式，其中widthFix模式是其中一种，作用是保持图片宽度不变，高度自动变化，并保持宽高比不变。由于widthFix模式需要动态计算图片的宽度，导致页面的重绘，因此应谨慎使用mode属性的widthFix模式。
+
+<ol start="4">
+<li><p>第四步：使用渐进式 JPEG 来优化用户体验<br>使用 mozjpeg 不仅可以压缩 JPEG 图片的体积，还可以将图片转换为渐进式的 JPEG。 渐进式的 JPEG 图片在加载时会先展示整个图片的模糊轮廓，随着扫描次数的增加，图片变得越来越清晰。这种格式的主要优点是在网络较慢的情况下，可以预览到图片的轮廓，一定程度上可以提升用户体验。</p>
+</li>
+<li><p>第五步：减少页面抖动<br>当网络图片资源加载过慢时，页面可能会出现抖动现象，这是因为当 webview 无法获取到图像的 width, height 属性值，不能为图片预留空间，导致页面元素出现重排，在视觉上出现抖动现象。</p>
+</li>
+</ol>
+<p>为了减少页面的抖动，可以设置一个和图片资源宽高一致的默认图片或者空元素，这样可以避免页面重排带来的性能损耗，同时也能优化用户的体验。</p>
+<ol start="6">
+<li>第六步：利用体验评分工具检测图片问题<br>利用开发者工具提供的体验评分工具（Audits），开发者可以识别和检测影响智能小程序性能、体验的图片问题。<br>具体使用方法，详见体验评分工具说明。</li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%B7%A5%E7%A8%8B%E5%8C%96/" class="category-chain-item">工程化</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/" class="print-no-link">#小程序开发规范</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>2024-05-24-【工程化】小程序代码规范</div>
+      <div>http://example.com/2025/12/01/2024-05-24-【小程序】小程序性能优化方案/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年12月1日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/12/01/2024-05-24-%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%91%E5%B0%8F%E7%A8%8B%E5%BA%8F%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/" title="2024-05-24-【小程序】小程序踩坑日记">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">2024-05-24-【小程序】小程序踩坑日记</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/12/01/2024-05-24-%E3%80%90%E5%B7%A5%E7%A8%8B%E5%8C%96%E3%80%91%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/" title="2024-05-24-【工程化】小程序代码规范">
+                        <span class="hidden-mobile">2024-05-24-【工程化】小程序代码规范</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

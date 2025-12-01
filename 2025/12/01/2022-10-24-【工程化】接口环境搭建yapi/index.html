@@ -1,0 +1,757 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.ico">
+  <link rel="icon" href="/img/favicon.ico">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="开发环境搭建，gitlab、yapi接口管理工具">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2022-10-24-接口环境搭建yapi">
+<meta property="og:url" content="http://example.com/2025/12/01/2022-10-24-%E3%80%90%E5%B7%A5%E7%A8%8B%E5%8C%96%E3%80%91%E6%8E%A5%E5%8F%A3%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BAyapi/index.html">
+<meta property="og:site_name" content="张颖旋的个人博客">
+<meta property="og:description" content="开发环境搭建，gitlab、yapi接口管理工具">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/yapi/yapi1.png">
+<meta property="og:image" content="http://example.com/images/yapi/yapi2.png">
+<meta property="og:image" content="http://example.com/images/yapi/yapi3.png">
+<meta property="article:published_time" content="2025-12-01T03:32:52.784Z">
+<meta property="article:modified_time" content="2025-12-01T03:32:52.784Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="yapi">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/images/yapi/yapi1.png">
+  
+  
+  
+  <title>2022-10-24-接口环境搭建yapi - 张颖旋的个人博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Blowsysun</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="2022-10-24-接口环境搭建yapi"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-12-01 03:32" pubdate>
+          2025年12月1日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          9 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">2022-10-24-接口环境搭建yapi</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/ChiChengIT/article/details/97560583">yapi 环境搭建</a></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Yapi 是去哪儿网开源的一款接口管理工具。旨在为开发、产品、测试人员提供更优雅的接口管理服务。可以帮助开发者轻松创建、发布、维护 API。以及自动化生成接口文档。</p>
+<h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><blockquote>
+<p>操作系统：centos 7 环境要求：(若已有一下环境则可跳过)<br>nodejs&gt;7.6<br>mongodb&gt;2.6<br>git</p>
+</blockquote>
+<h2 id="1-安装-nodejs-（建议安装低版本-node-8-9-4）"><a href="#1-安装-nodejs-（建议安装低版本-node-8-9-4）" class="headerlink" title="1. 安装 nodejs （建议安装低版本 node 8.9.4）"></a>1. 安装 nodejs （建议安装低版本 node 8.9.4）</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">yum <span class="hljs-keyword">install</span> nodejs<br></code></pre></td></tr></table></figure>
+
+<p><strong>建议安装 nvm</strong><br>命令方式安装 nvm</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs awk">curl -o- https:<span class="hljs-regexp">//</span>raw.githubusercontent.com<span class="hljs-regexp">/nvm-sh/</span>nvm<span class="hljs-regexp">/v0.35.2/i</span>nstall.sh | bash<br>或<br><br>wget -qO- https:<span class="hljs-regexp">//</span>raw.githubusercontent.com<span class="hljs-regexp">/nvm-sh/</span>nvm<span class="hljs-regexp">/v0.35.2/i</span>nstall.sh | bash<br>其中版本v0.<span class="hljs-number">35.2</span>可以在https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/nvm-sh/</span>nvm/releases中选择自己需要版本<br></code></pre></td></tr></table></figure>
+
+<p>安装完成后在~&#x2F;.bashrc 等配置文件中会出现一下配置(如果没有请自己新增)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">export</span> NVM_DIR=<span class="hljs-string">&quot;<span class="hljs-subst">$([ -z <span class="hljs-string">&quot;<span class="hljs-variable">$&#123;XDG_CONFIG_HOME-&#125;</span>&quot;</span> ] &amp;&amp; printf %s <span class="hljs-string">&quot;<span class="hljs-variable">$&#123;HOME&#125;</span>/.nvm&quot;</span> || printf %s <span class="hljs-string">&quot;<span class="hljs-variable">$&#123;XDG_CONFIG_HOME&#125;</span>/nvm&quot;</span>)</span>&quot;</span><br>[ -s <span class="hljs-string">&quot;<span class="hljs-variable">$NVM_DIR</span>/nvm.sh&quot;</span> ] &amp;&amp; \. <span class="hljs-string">&quot;<span class="hljs-variable">$NVM_DIR</span>/nvm.sh&quot;</span> <span class="hljs-comment"># This loads nvm</span><br></code></pre></td></tr></table></figure>
+
+<p>执行 source ~&#x2F;.bashrc 使配置生效</p>
+<p>使用 command -v nvm 验证是否安装成功</p>
+<p>使用 nvm 安装 node，安装最新版本 node</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">nvm install <span class="hljs-keyword">node</span><br><span class="hljs-title">nvm</span> install v16.<span class="hljs-number">18.1</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="2-安装-mangodb"><a href="#2-安装-mangodb" class="headerlink" title="2. 安装 mangodb"></a>2. 安装 mangodb</h2><p>安装 5.0 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/hahaha111122222/p/15868006.html">https://www.cnblogs.com/hahaha111122222/p/15868006.html</a><br>卸载 <a target="_blank" rel="noopener" href="https://www.yisu.com/ask/7617.html">https://www.yisu.com/ask/7617.html</a></p>
+<ul>
+<li>1、更新 yum 源，非必须但是更新一下无害</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css">yum -<span class="hljs-attribute">y</span> update<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>2、添加 mongodb 源文件，在&#x2F;etc&#x2F;yum.repos.d 创建一个 mongodb-org.repo 文件</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">touch</span> /etc/yum.repos.d/mongodb-org.repo<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>3、编辑 mongodb-org.repo 文件</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">vim <span class="hljs-regexp">/etc/yum</span>.repos.d/mongodb-org.repo<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>4、添加文件内容</li>
+</ul>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[mongodb-org]</span><br><span class="hljs-attr">name</span>=MongoDB Repository<br><span class="hljs-attr">baseurl</span>=http://mirrors.aliyun.com/mongodb/yum/redhat/<span class="hljs-number">7</span>Server/mongodb-org/<span class="hljs-number">6.0</span>/x<span class="hljs-number">86_64</span>/<br><span class="hljs-attr">gpgcheck</span>=<span class="hljs-number">0</span><br><span class="hljs-attr">enabled</span>=<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>5、安装 mongodb</li>
+</ul>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">yum <span class="hljs-keyword">install</span> -y mongodb-org<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>6、启动 mongodb</li>
+</ul>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">service mongod <span class="hljs-literal">start</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>7、设置开机启动</li>
+</ul>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">chkconfig</span> mongod <span class="hljs-literal">on</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>8、打开 moMongoDB（可忽略）</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/bin/m</span>ongo<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>9、配置远程访问，修改 mongod.conf 配置文件</li>
+</ul>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">vim</span> /etc/mongod.conf<br><br>将 bindIp: <span class="hljs-number">127.0.0.1</span>  改为 bindIp: <span class="hljs-number">0.0.0.0</span><br><br>重启mongod执行 ：service mongod restart<br></code></pre></td></tr></table></figure>
+
+<h2 id="3-安装-git"><a href="#3-安装-git" class="headerlink" title="3. 安装 git"></a>3. 安装 git</h2><p>官方推荐，在内网部署的时候安装 git，可以根据自己所需安装</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">yum -y <span class="hljs-keyword">install</span> git<br></code></pre></td></tr></table></figure>
+
+<h2 id="4-搭建-yapi-环境"><a href="#4-搭建-yapi-环境" class="headerlink" title="4. 搭建 yapi 环境"></a>4. 搭建 yapi 环境</h2><ul>
+<li>1、准备环境搭建完成后，开始搭建 Yapi，安装命令</li>
+</ul>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli"><span class="hljs-keyword">cd</span> <span class="hljs-string">/usr/local</span><br>npm install -g yapi-cli <span class="hljs-params">--registry</span> https:<span class="hljs-string">//registry.npm.taobao.org</span><br>yapi server<br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/yapi/yapi1.png" srcset="/img/loading.gif" lazyload alt="安装yapi"></p>
+<ul>
+<li>2、执行 yapi server 启动可视化部署程序，浏览器打开提示窗口上的地址 9090 端口，非本地服务器，将 0.0.0.0 替换指定的域名或 IP，进入部署页面。<br><img src="/images/yapi/yapi2.png" srcset="/img/loading.gif" lazyload alt="启动yapi部署配置"></li>
+<li>3、根据项目实际需要可以修改部署信息，点击【开始部署】，完成部署任务，部署成功截图<br>可能会出错，报错信息如下：<br><img src="/images/yapi/yapi3.png" srcset="/img/loading.gif" lazyload alt="部署报错提示"></li>
+<li>原因：yapi.demo.qunar.com 这个域名服务器挂了</li>
+<li>修改方式：选择新部署版本重新部署，默认 1.4.1 改为 1.10.2 即可</li>
+<li>4、根据部署日志截图上的提示信息<br><strong>启动服务</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> usr/local/my-yapi <span class="hljs-comment"># 进入到自己的 yapi 里的当前目录</span><br>node vendors/server/app.js<br><br>账号<span class="hljs-string">&quot;827516789@qq.com&quot;</span>，密码：<span class="hljs-string">&quot;ymfe.org&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>启动服务（以守护进程启动）</strong></p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crmsh"><span class="hljs-keyword">node</span> <span class="hljs-title">vendors</span>/server/app.js &amp;<br></code></pre></td></tr></table></figure>
+
+<p>浏览器打开部署日志上的访问地址<a href="http://127.0.0.1:3000就可以访问搭建的YApi工具了（非本地服务器，将127.0.0.1替换指定的域名或IP），此时YApi环境搭建完。">http://127.0.0.1:3000就可以访问搭建的YApi工具了（非本地服务器，将127.0.0.1替换指定的域名或IP），此时YApi环境搭建完。</a></p>
+<ul>
+<li>5、pm2 方式管理进程（避免终端断开，杀死进程）</li>
+</ul>
+<p>要保证后台保持进程，需要安装 pm2。</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">全局安装：<br>npm install -g pm2<br><br>启动：<br>cd /usr/<span class="hljs-keyword">local</span>/my-yapi/vendors<br>pm2 <span class="hljs-keyword">start</span> <span class="hljs-keyword">server</span>/app.js <span class="hljs-comment">--watch</span><br><br>重启：<br><br>pm2 <span class="hljs-keyword">restart</span> <span class="hljs-keyword">server</span>/app.js<br><br>停止：<br><br>可以先通过pm2 list获取应用的名字（<span class="hljs-comment">--name指定的）或者进程id。</span><br><br>pm2 stop app_name|app_id<br></code></pre></td></tr></table></figure>
+
+<p>pm2 使用参考文档：<br><a target="_blank" rel="noopener" href="http://imweb.io/topic/57c8cbb27f226f687b365636">http://imweb.io/topic/57c8cbb27f226f687b365636</a></p>
+<p>6.升级</p>
+<p>升级项目版本是非常容易的，并且不会影响已有的项目数据，只会同步 vendors 目录下的源码文件。</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs stata"><span class="hljs-keyword">cd</span>  &#123;项目目录&#125;<br>yapi <span class="hljs-keyword">ls</span> <span class="hljs-comment">//查看版本号列表</span><br>yapi <span class="hljs-keyword">update</span> <span class="hljs-comment">//更新到最新版本</span><br>yapi <span class="hljs-keyword">update</span> -v &#123;<span class="hljs-keyword">Version</span>&#125; <span class="hljs-comment">//更新到指定版本</span><br></code></pre></td></tr></table></figure>
+
+<p>9.nginx 代理</p>
+<p>如果您是将服务器代理到 nginx 服务器，请配置 nginx 支持 websocket。</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">在<span class="hljs-keyword">location</span> <span class="hljs-title">/添加</span><br><span class="hljs-title">proxy_http_version</span> <span class="hljs-number">1.1</span>;<br>proxy_set_header Upgrade $http_upgrade;<br>proxy_set_header Connection <span class="hljs-string">&quot;upgrade&quot;</span>;<br></code></pre></td></tr></table></figure>
+
+<p>10.禁止注册</p>
+<p>在 config.json 添加 closeRegister:true 配置项,就可以禁止用户注册 yapi 平台，修改完成后，请重启 yapi 服务器。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;port&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;*****&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;closeRegister&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-literal"><span class="hljs-keyword">true</span></span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="http://wcmc.csu.edu.cn/doc/wcmc-GitLab%20User%20Guide.pdf">gitlab 私服搭建</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/" class="category-chain-item">前端工程化</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/yapi/" class="print-no-link">#yapi</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>2022-10-24-接口环境搭建yapi</div>
+      <div>http://example.com/2025/12/01/2022-10-24-【工程化】接口环境搭建yapi/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年12月1日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/12/01/2022-10-10-git%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/" title="2022-10-10-git常用操作">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">2022-10-10-git常用操作</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/12/01/2022-10-24-%E3%80%90%E7%A0%94%E5%8F%91%E5%B7%A5%E5%85%B7%E6%B1%87%E6%80%BB%E3%80%91%E5%BC%80%E5%8F%91%E8%B5%84%E6%BA%90%E5%A4%A7%E7%A4%BC%E5%8C%85/" title="2022-10-24 开发资源大礼包">
+                        <span class="hidden-mobile">2022-10-24 开发资源大礼包</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

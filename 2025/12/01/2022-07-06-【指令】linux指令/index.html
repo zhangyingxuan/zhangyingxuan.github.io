@@ -1,0 +1,755 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.ico">
+  <link rel="icon" href="/img/favicon.ico">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="linux指令">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2022-10-10-linux指令">
+<meta property="og:url" content="http://example.com/2025/12/01/2022-07-06-%E3%80%90%E6%8C%87%E4%BB%A4%E3%80%91linux%E6%8C%87%E4%BB%A4/index.html">
+<meta property="og:site_name" content="张颖旋的个人博客">
+<meta property="og:description" content="linux指令">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-12-01T03:32:52.784Z">
+<meta property="article:modified_time" content="2025-12-01T03:32:52.784Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>2022-10-10-linux指令 - 张颖旋的个人博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Blowsysun</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="2022-10-10-linux指令"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-12-01 03:32" pubdate>
+          2025年12月1日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          15 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">2022-10-10-linux指令</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="1-批量杀死多个进程的命令"><a href="#1-批量杀死多个进程的命令" class="headerlink" title="1. 批量杀死多个进程的命令"></a>1. 批量杀死多个进程的命令</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">$ ps -ef | grep python | cut -c <span class="hljs-number">6</span>-<span class="hljs-number">11</span> | xargs kill -<span class="hljs-number">9</span><br></code></pre></td></tr></table></figure>
+
+<p>Linux 中的管道符“|”用来隔开两个命令，管道符左边的输出会作为管道符右边命令的输入</p>
+<p>ps -ef 是查看所有进程的命令。ps 是 process status 的缩写</p>
+<p>grep 是过滤符号，grep name 含义是所有包含”python”的进程</p>
+<p>cut -c 6-11 是截取输入行的第 6 个字符到第 11 个字符，正好是进程号 PID</p>
+<p>xargs kill -9 其中 xagrs 的命令是用来把前面命令的输出结果（PID）作为“kill -9”命令的参数，kill -9”会强行杀掉指定进程</p>
+<h2 id="2-cat-和-vi-vim-和-nano-区别"><a href="#2-cat-和-vi-vim-和-nano-区别" class="headerlink" title="2. cat 和 vi&#x2F;vim 和 nano 区别"></a>2. cat 和 vi&#x2F;vim 和 nano 区别</h2><p>cat 命令是 linux 系统下一个文本打印的命令，用于输出一个文本的信息到控制台上，该命令的输入类似于使用 word 打开一个文档，但是该文档不能编辑。</p>
+<p>vi&#x2F;vim 命令是 linux 系统下用于文本查看、编辑的命令，不仅仅可以查看，还可以编辑。</p>
+<p>nano 命令类似于 vim 命令的功能，命令语句为：nano p（打开 p 文件）</p>
+<ul>
+<li><p>vi 和 vim 区别<br>vi 不需要安装，打开代码，颜色一样（黑色）<br>vim 需要额外安装，打开代码，用颜色区分代码</p>
+</li>
+<li><p>cat 用法 <code>cat [option] [path/to/file]...</code>；option：-n（空行也已编号） –b （空行无编号）<br>（1）cat 和 EOF 简介<br>cat 用于显示文本文件内容，全部输出<br>EOF “end of file”，表示文本结束符<br>（2）使用<br>用法 1.多行导入文件（新建文件或者覆盖文件内容）<br>在 cat &lt;<EOF >abcd.txt 命令 与下一个输入的 EOF 行之间的所有文本行都会被当做是 stdin 数据。</p>
+</li>
+</ul>
+<p>用法 2.文件追加<br>cat &lt;&lt; EOF &gt;&gt; test.sh</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-keyword">cat</span> <span class="hljs-built_in">log</span>.txt | <span class="hljs-keyword">grep</span> <span class="hljs-string">&#x27;ERROR&#x27;</span> -B <span class="hljs-number">5</span>  //前<span class="hljs-number">5</span>行<br><span class="hljs-keyword">cat</span> <span class="hljs-built_in">log</span>.txt | <span class="hljs-keyword">grep</span> <span class="hljs-string">&#x27;ERROR&#x27;</span> -C <span class="hljs-number">5</span>  //前后<span class="hljs-number">5</span>行<br><span class="hljs-keyword">cat</span> <span class="hljs-built_in">log</span>.txt | <span class="hljs-keyword">grep</span> -v <span class="hljs-string">&#x27;ERROR&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="3-解压指令"><a href="#3-解压指令" class="headerlink" title="3. 解压指令"></a>3. 解压指令</h2><p><strong>1、.tar</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript">解包：tar xvf <span class="hljs-title class_">FileName</span>.<span class="hljs-property">tar</span><br>打包：tar cvf <span class="hljs-title class_">FileName</span>.<span class="hljs-property">tar</span> <span class="hljs-title class_">DirName</span><br>（注：tar是打包，不是压缩！）<br></code></pre></td></tr></table></figure>
+
+<p><strong>2、.gz</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript">解压<span class="hljs-number">1</span>：gunzip <span class="hljs-title class_">FileName</span>.<span class="hljs-property">gz</span><br>解压<span class="hljs-number">2</span>：gzip -d <span class="hljs-title class_">FileName</span>.<span class="hljs-property">gz</span><br>压缩：gzip <span class="hljs-title class_">FileName</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>3、.tar.gz 和 .tgz</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript">解压：tar zxvf <span class="hljs-title class_">FileName</span>.<span class="hljs-property">tar</span>.<span class="hljs-property">gz</span><br>压缩：tar zcvf <span class="hljs-title class_">FileName</span>.<span class="hljs-property">tar</span>.<span class="hljs-property">gz</span> <span class="hljs-title class_">DirName</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="4-、-zip"><a href="#4-、-zip" class="headerlink" title="4**、.zip**"></a>4**、.zip**</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript">解压：unzip <span class="hljs-title class_">FileName</span>.<span class="hljs-property">zip</span><br>压缩：zip <span class="hljs-title class_">FileName</span>.<span class="hljs-property">zip</span> <span class="hljs-title class_">DirName</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="5-scp-远程拷贝"><a href="#5-scp-远程拷贝" class="headerlink" title="5. scp 远程拷贝"></a>5. scp 远程拷贝</h4><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs elixir"><span class="hljs-comment"># 拷贝整个文件夹 到本地 -r参数</span><br>scp -r root@服务器地址<span class="hljs-symbol">:/root/</span>.pm2/logs ./<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>如果执行报错，如下</li>
+</ul>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs lsl">Host <span class="hljs-type">key</span> for 服务器ip has <span class="hljs-section">changed</span> and you have requested strict checking.<br>Host <span class="hljs-type">key</span> verification failed.<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>则执行以下指令</li>
+</ul>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-symbol">ssh</span>-keygen -R 服务器<span class="hljs-built_in">ip</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>下载单个文件到本地<br>scp -p user@ServerIp:source_dictionary_file target_dictionary<br>scp <a href="mailto:&#x72;&#111;&#111;&#x74;&#64;&#49;&#57;&#x32;&#46;&#49;&#54;&#x38;&#x2e;&#48;&#46;&#x32;">root@192.168.0.2</a>:&#x2F;home&#x2F;hellowood&#x2F;wechat.jpg &#x2F;User&#x2F;hellowood&#x2F;wechat.jpg</li>
+<li>下载文件夹到本地<br>scp <a href="mailto:&#114;&#x6f;&#111;&#x74;&#x40;&#x34;&#x33;&#46;&#x31;&#x35;&#52;&#46;&#50;&#48;&#57;&#x2e;&#x31;&#52;&#49;">root@43.154.209.141</a>:&#x2F;usr&#x2F;local&#x2F;mysql&#x2F;backup&#x2F;funds_data_2023-08-04.sql &#x2F;Users&#x2F;sunny&#x2F;Desktop</li>
+</ul>
+<p>上传<br>上传单个文件<br>scp -p port source_dictionary_file user@ServerIp:target_dictionary_file<br>prot 默认是 22，如果使用默认可以不写</p>
+<p>scp &#x2F;User&#x2F;hellowood&#x2F;wechat.jpg <a href="mailto:&#114;&#111;&#111;&#x74;&#64;&#x31;&#57;&#x32;&#46;&#x31;&#x36;&#56;&#46;&#x30;&#x2e;&#x32;">root@192.168.0.2</a>:&#x2F;home&#x2F;hellowood&#x2F;wechat.jpg<br>上传整个文件夹<br>scp -p port -r source_dictionary user@ServerIp:target_dictionary<br>scp -r &#x2F;Users&#x2F;sunny&#x2F;Downloads&#x2F;blowsysun.top_nginx <a href="mailto:&#114;&#x6f;&#111;&#116;&#x40;&#x34;&#51;&#x2e;&#49;&#53;&#x34;&#46;&#x32;&#x30;&#57;&#x2e;&#x31;&#52;&#49;">root@43.154.209.141</a>:&#x2F;usr&#x2F;local&#x2F;etc</p>
+<h2 id="关于-shell"><a href="#关于-shell" class="headerlink" title="关于 shell"></a>关于 shell</h2><p>牛程序员看到不爽的 Shell，就会自己重新写一套，慢慢形成了一些标准，常用的 Shell 有这么几种，sh、bash、csh 等，想知道你的系统有几种 shell，可以通过以下命令查看：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">cat /etc/shells<br></code></pre></td></tr></table></figure>
+
+<h2 id="查看日志"><a href="#查看日志" class="headerlink" title="查看日志"></a>查看日志</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 查看最后300行日志</span><br><span class="hljs-built_in">tail</span> -n 300 XX.<span class="hljs-built_in">log</span><br><br><span class="hljs-built_in">cat</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="获取-mac-内网地址"><a href="#获取-mac-内网地址" class="headerlink" title="获取 mac 内网地址"></a>获取 mac 内网地址</h2><p><code>ifconfig | grep &quot;inet &quot; | grep -v 127.0.0.1</code></p>
+<h2 id="linux-根目录下-子目录"><a href="#linux-根目录下-子目录" class="headerlink" title="linux 根目录下 子目录"></a>linux 根目录下 子目录</h2><p>在 Linux 系统中，根目录（<code>/</code>）是文件系统层次结构的起始点。根目录下包含多个子目录，每个子目录都有特定的用途。以下是一些常见的根目录下的文件夹及其基本介绍：</p>
+<ol>
+<li><p><strong>&#x2F;bin</strong> - 存放基本的二进制文件（即系统命令），如 <code>ls</code>、<code>cp</code>、<code>mv</code> 等，这些是系统启动和运行所必需的。</p>
+</li>
+<li><p><strong>&#x2F;boot</strong> - 包含 Linux 内核和引导加载程序所需的文件，比如 <code>vmlinuz</code> 和 <code>initrd</code>。</p>
+</li>
+<li><p><strong>&#x2F;dev</strong> - 包含设备文件，这些文件作为系统硬件设备和软件接口。</p>
+</li>
+<li><p><strong>&#x2F;etc</strong> - 存放系统配置文件，大多数没有二进制文件，如 <code>fstab</code>、<code>passwd</code>、<code>resolv.conf</code> 等。</p>
+</li>
+<li><p><strong>&#x2F;home</strong> - 用户的主目录，每个用户在该目录下有自己的子目录，例如 <code>/home/username</code>。</p>
+</li>
+<li><p><strong>&#x2F;lib</strong> - 包含系统使用的库文件，这些是程序运行时需要的共享代码。</p>
+</li>
+<li><p><strong>&#x2F;media</strong> - 用于挂载可移动设备，如 USB 驱动器、CD-ROMs 等。</p>
+</li>
+<li><p><strong>&#x2F;mnt</strong> - 传统上用于临时挂载文件系统，尽管这个用途已经逐渐被 <code>/media</code> 取代。</p>
+</li>
+<li><p><strong>&#x2F;opt</strong> - 用于存放可选的第三方软件包。</p>
+</li>
+<li><p><strong>&#x2F;proc</strong> - 虚拟文件系统，提供关于运行中的进程和内核的信息。</p>
+</li>
+<li><p><strong>&#x2F;root</strong> - 系统管理员的用户主目录。</p>
+</li>
+<li><p><strong>&#x2F;sbin</strong> - 存放系统二进制文件，通常是系统管理员使用的命令，如 <code>fdisk</code>、<code>ifconfig</code> 等。</p>
+</li>
+<li><p><strong>&#x2F;srv</strong> - 存放服务相关的数据，比如一些服务器软件的数据。</p>
+</li>
+<li><p><strong>&#x2F;tmp</strong> - 存放临时文件，通常在系统启动时被清空。</p>
+</li>
+<li><p><strong>&#x2F;usr</strong> - 用户相关的应用程序和文件，通常分为 <code>/usr/bin</code>、<code>/usr/lib</code>、<code>/usr/share</code> 等子目录。</p>
+</li>
+<li><p><strong>&#x2F;var</strong> - 包含经常变化的文件，如日志文件、数据库文件等，通常分为 <code>/var/log</code>、<code>/var/mail</code> 等子目录。</p>
+</li>
+<li><p><strong>&#x2F;sys</strong> - 另一个虚拟文件系统，提供对内核数据结构的访问。</p>
+</li>
+<li><p><strong>&#x2F;selinux</strong> - 安全相关的文件，特别是与 SELinux 安全模块相关的配置和状态信息。</p>
+</li>
+<li><p><strong>&#x2F;lost+found</strong> - 文件系统检查工具（如 <code>fsck</code>）使用的一个特殊目录，用于存放损坏的文件片段。</p>
+</li>
+<li><p><strong>&#x2F;run</strong> - 包含系统运行时的数据，与 <code>/tmp</code> 类似，但用于存放系统级的运行时数据。</p>
+</li>
+</ol>
+<p>这些目录是大多数 Linux 发行版中的标准组成部分，但具体内容可能会根据不同的发行版和配置有所不同。</p>
+<h5 id="一、查看-Linux-系统发行版本"><a href="#一、查看-Linux-系统发行版本" class="headerlink" title="一、查看 Linux 系统发行版本"></a>一、查看 Linux 系统发行版本</h5><p>命令 1：lsb_release -a</p>
+<p>该命令适用于所有 Linux 系统，会显示出完整的版本信息，包括 Linux 系统的名称，如 Debian、Ubuntu、CentOS 等，和对应的版本号，以及该版本的代号，例如在 Debian 8 中将会显示代号 jessie。</p>
+<p>$ lsb_release -a<code>No LSB modules are available. </code>Distributor ID: Debian <code>Description: Debian GNU</code>&#x2F;Linux<code>8.0 (jessie) </code>Release: 8.0 &#96;&#96;Codename: jessie<br>命令 2： cat &#x2F;etc&#x2F;issue</p>
+<p>该命令适用于所有 Linux 系统，显示的版本信息较为简略，只有系统名称和对应版本号。</p>
+<p>$ <code>cat` `/etc/issue</code>Debian GNU&#96;&#96;&#x2F;Linux<code> </code>8 \n \1<br>命令 3： cat &#x2F;etc&#x2F;redhat-release</p>
+<p>该命令仅适用于 Redhat 系列的 Linux 系统，显示的版本信息也较为简略。</p>
+<p>$ <code>cat` `/etc/redhat-release</code>CentOS release 6.0 (Final)<br>**二、查看 Linux 内核版本<br>**</p>
+<p>命令 1： uname -a</p>
+<p>$ <code>uname` `-a</code>Linux CodeBelief 3.16.0-4-amd64 &#96;&#96;#1 SMP Debian 3.16.7-ckt9-3~deb8ul (2015-04-24) x86_64 GNU&#x2F;Linux<br>命令 2： cat &#x2F;proc&#x2F;version</p>
+<p>$ <code>cat` `/proc/version</code>Linux version 3.16.0-4-amd64 (<a href="mailto:&#x64;&#101;&#x62;&#105;&#97;&#110;&#x2d;&#107;&#101;&#x72;&#x6e;&#x65;&#x6c;&#x40;&#x6c;&#x69;&#x73;&#116;&#115;&#46;&#100;&#101;&#98;&#105;&#x61;&#110;&#x2e;&#111;&#114;&#x67;">debian-kernel@lists.debian.org</a>) (gcc version 4.8.4 (Debian 4.8.4-1) ) &#96;&#96;#1 SMP Debian 3.16.7-ckt9-3~deb8ul (2.15-04-24)<br>以上就是用于查询 Linux 系统版本的常见命令，希望对大家有所帮助。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%8C%87%E4%BB%A4/" class="category-chain-item">指令</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/linux/" class="print-no-link">#linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>2022-10-10-linux指令</div>
+      <div>http://example.com/2025/12/01/2022-07-06-【指令】linux指令/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年12月1日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/12/01/2022-04-17-%E3%80%90%E5%B7%A5%E7%A8%8B%E5%8C%96%E3%80%91vue3-vite4-ts%E9%85%8D%E7%BD%AEmock/" title="2022-04-17-【工程化】vue3-vite4-ts配置husky、pre-commit、commitizen、linet-staged">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">2022-04-17-【工程化】vue3-vite4-ts配置husky、pre-commit、commitizen、linet-staged</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/12/01/2022-08-10-npx%E4%B8%8Enpm/" title="2022-10-10-npx与npm">
+                        <span class="hidden-mobile">2022-10-10-npx与npm</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

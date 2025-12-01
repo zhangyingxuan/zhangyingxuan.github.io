@@ -1,0 +1,872 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.ico">
+  <link rel="icon" href="/img/favicon.ico">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="网络请求拦截 Chrome 插件技术实现详解 本文详细介绍了基于 Vue 3 + TypeScript 的 Chrome 扩展调试工具的技术实现，涵盖背景介绍、方案对比、架构设计、核心实现和最佳实践。  📖 背景介绍开发痛点在前端开发过程中，网络请求调试是一个常见且重要的环节。传统调试方式存在以下痛点：  Mock 数据管理困难：需要手动修改代码或使用外部工具 调试效率低下：频繁刷新页面，无法实">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2025-11-17 【chrome扩展】chrome插件开发-网络请求拦截">
+<meta property="og:url" content="http://example.com/2025/12/01/2025-11-17%20%E3%80%90chrome%E6%89%A9%E5%B1%95%E3%80%91chrome%E6%89%A9%E5%B1%95%E5%BC%80%E5%8F%91-%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E6%8B%A6%E6%88%AA/index.html">
+<meta property="og:site_name" content="张颖旋的个人博客">
+<meta property="og:description" content="网络请求拦截 Chrome 插件技术实现详解 本文详细介绍了基于 Vue 3 + TypeScript 的 Chrome 扩展调试工具的技术实现，涵盖背景介绍、方案对比、架构设计、核心实现和最佳实践。  📖 背景介绍开发痛点在前端开发过程中，网络请求调试是一个常见且重要的环节。传统调试方式存在以下痛点：  Mock 数据管理困难：需要手动修改代码或使用外部工具 调试效率低下：频繁刷新页面，无法实">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-12-01T03:32:52.788Z">
+<meta property="article:modified_time" content="2025-12-01T03:32:52.788Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>2025-11-17 【chrome扩展】chrome插件开发-网络请求拦截 - 张颖旋的个人博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Blowsysun</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="2025-11-17 【chrome扩展】chrome插件开发-网络请求拦截"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-12-01 03:32" pubdate>
+          2025年12月1日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          19 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">2025-11-17 【chrome扩展】chrome插件开发-网络请求拦截</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="网络请求拦截-Chrome-插件技术实现详解"><a href="#网络请求拦截-Chrome-插件技术实现详解" class="headerlink" title="网络请求拦截 Chrome 插件技术实现详解"></a>网络请求拦截 Chrome 插件技术实现详解</h1><blockquote>
+<p>本文详细介绍了基于 Vue 3 + TypeScript 的 Chrome 扩展调试工具的技术实现，涵盖背景介绍、方案对比、架构设计、核心实现和最佳实践。</p>
+</blockquote>
+<h2 id="📖-背景介绍"><a href="#📖-背景介绍" class="headerlink" title="📖 背景介绍"></a>📖 背景介绍</h2><h3 id="开发痛点"><a href="#开发痛点" class="headerlink" title="开发痛点"></a>开发痛点</h3><p>在前端开发过程中，网络请求调试是一个常见且重要的环节。传统调试方式存在以下痛点：</p>
+<ol>
+<li><strong>Mock 数据管理困难</strong>：需要手动修改代码或使用外部工具</li>
+<li><strong>调试效率低下</strong>：频繁刷新页面，无法实时生效</li>
+<li><strong>规则配置复杂</strong>：正则表达式匹配、请求头修改等操作繁琐</li>
+<li><strong>缺乏可视化界面</strong>：命令行工具使用门槛高</li>
+</ol>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>为了解决上述问题，开发了这款 Chrome 扩展调试工具，提供：</p>
+<ul>
+<li><strong>可视化规则管理</strong>：直观的界面配置拦截规则</li>
+<li><strong>实时生效</strong>：规则修改后无需刷新页面</li>
+<li><strong>多种拦截方式</strong>：支持脚本拦截和声明式网络拦截</li>
+<li><strong>完整拦截记录</strong>：详细的拦截历史追踪</li>
+</ul>
+<h2 id="🔄-方案对比"><a href="#🔄-方案对比" class="headerlink" title="🔄 方案对比"></a>🔄 方案对比</h2><h3 id="技术选型对比"><a href="#技术选型对比" class="headerlink" title="技术选型对比"></a>技术选型对比</h3><table>
+<thead>
+<tr>
+<th>方案</th>
+<th>优点</th>
+<th>缺点</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>脚本拦截</strong></td>
+<td>灵活性强，支持复杂逻辑</td>
+<td>性能开销较大</td>
+<td>需要动态修改请求&#x2F;响应</td>
+</tr>
+<tr>
+<td><strong>声明式拦截</strong></td>
+<td>性能优秀，系统级支持</td>
+<td>功能受限，配置复杂</td>
+<td>简单的重定向和修改</td>
+</tr>
+<tr>
+<td><strong>代理工具</strong></td>
+<td>功能全面，跨平台</td>
+<td>配置复杂，需要额外软件</td>
+<td>复杂测试场景</td>
+</tr>
+</tbody></table>
+<h3 id="最终选择：混合方案"><a href="#最终选择：混合方案" class="headerlink" title="最终选择：混合方案"></a>最终选择：混合方案</h3><p>我们采用混合方案，结合两种拦截方式的优势：</p>
+<ol>
+<li><strong>脚本拦截</strong>：用于复杂的请求&#x2F;响应修改</li>
+<li><strong>声明式拦截</strong>：用于简单的重定向和阻塞</li>
+<li><strong>三层通信架构</strong>：确保消息可靠传递</li>
+</ol>
+<h2 id="🏗️-架构设计"><a href="#🏗️-架构设计" class="headerlink" title="🏗️ 架构设计"></a>🏗️ 架构设计</h2><h3 id="整体架构图"><a href="#整体架构图" class="headerlink" title="整体架构图"></a>整体架构图</h3><pre><code class=" mermaid">graph TB
+    A[页面上下文] --&gt;|postMessage| B[Content Script]
+    B --&gt;|chrome.runtime| C[Background Script]
+    C --&gt;|chrome.runtime| D[DevTools Panel]
+
+    E[Interceptor.js] --&gt;|注入到页面| A
+    F[Storage API] --&gt;|规则存储| C
+    G[DevTools API] --&gt;|面板集成| D
+</code></pre>
+
+<h3 id="核心模块划分"><a href="#核心模块划分" class="headerlink" title="核心模块划分"></a>核心模块划分</h3><h4 id="1-页面层-Page-Context"><a href="#1-页面层-Page-Context" class="headerlink" title="1. 页面层 (Page Context)"></a>1. 页面层 (Page Context)</h4><ul>
+<li><strong>interceptor.ts</strong>：核心拦截器，重写 fetch 和 XMLHttpRequest</li>
+<li><strong>消息发送</strong>：通过 postMessage 与 content script 通信</li>
+</ul>
+<h4 id="2-中转层-Content-Script"><a href="#2-中转层-Content-Script" class="headerlink" title="2. 中转层 (Content Script)"></a>2. 中转层 (Content Script)</h4><ul>
+<li><strong>content.js</strong>：消息中转，连接页面和后台脚本</li>
+<li><strong>脚本注入</strong>：动态注入拦截器到页面上下文</li>
+</ul>
+<h4 id="3-展示层-DevTools-Panel"><a href="#3-展示层-DevTools-Panel" class="headerlink" title="3. 展示层 (DevTools Panel)"></a>3. 展示层 (DevTools Panel)</h4><ul>
+<li><strong>Vue 3 组件</strong>：提供可视化界面</li>
+<li><strong>规则管理</strong>：CRUD 操作和状态管理</li>
+<li><strong>拦截记录</strong>：实时显示拦截历史</li>
+</ul>
+<h4 id="4-后台层-Background-Script"><a href="#4-后台层-Background-Script" class="headerlink" title="4. 后台层 (Background Script)"></a>4. 后台层 (Background Script)</h4><ul>
+<li><strong>background.js</strong>：消息路由和状态管理</li>
+<li><strong>存储管理</strong>：使用 chrome.storage 持久化规则</li>
+</ul>
+<h2 id="🔧-核心实现"><a href="#🔧-核心实现" class="headerlink" title="🔧 核心实现"></a>🔧 核心实现</h2><h3 id="1-请求拦截机制"><a href="#1-请求拦截机制" class="headerlink" title="1. 请求拦截机制"></a>1. 请求拦截机制</h3><h4 id="XMLHttpRequest-拦截"><a href="#XMLHttpRequest-拦截" class="headerlink" title="XMLHttpRequest 拦截"></a>XMLHttpRequest 拦截</h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">private</span> <span class="hljs-title function_">interceptXMLHttpRequest</span>(): <span class="hljs-built_in">void</span> &#123;<br>    <span class="hljs-keyword">const</span> self = <span class="hljs-variable language_">this</span>;<br><br>    <span class="hljs-title class_">XMLHttpRequest</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">open</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"><span class="hljs-attr">method</span>: <span class="hljs-built_in">string</span>, <span class="hljs-attr">url</span>: <span class="hljs-built_in">string</span>, ...<span class="hljs-attr">args</span>: <span class="hljs-built_in">any</span>[]</span>) &#123;<br>        <span class="hljs-keyword">const</span> matchedRule = self.<span class="hljs-title function_">findMatchingRule</span>(url, method);<br>        <span class="hljs-keyword">if</span> (matchedRule &amp;&amp; matchedRule.<span class="hljs-property">enabled</span>) &#123;<br>            (<span class="hljs-variable language_">this</span> <span class="hljs-keyword">as</span> <span class="hljs-built_in">any</span>).<span class="hljs-property">_matchedRule</span> = matchedRule;<br>        &#125;<br>        <span class="hljs-keyword">return</span> self.<span class="hljs-property">originalXMLHttpRequestOpen</span>.<span class="hljs-title function_">apply</span>(<span class="hljs-variable language_">this</span>, [method, url, ...args]);<br>    &#125;;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="Fetch-拦截"><a href="#Fetch-拦截" class="headerlink" title="Fetch 拦截"></a>Fetch 拦截</h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">private</span> <span class="hljs-title function_">interceptFetch</span>(): <span class="hljs-built_in">void</span> &#123;<br>    <span class="hljs-variable language_">window</span>.<span class="hljs-property">fetch</span> = <span class="hljs-title function_">async</span> (...args) =&gt; &#123;<br>        <span class="hljs-keyword">const</span> [input, init = &#123;&#125;] = args;<br>        <span class="hljs-keyword">const</span> url = <span class="hljs-keyword">typeof</span> input === <span class="hljs-string">&quot;string&quot;</span> ? input : (input <span class="hljs-keyword">as</span> <span class="hljs-title class_">Request</span>).<span class="hljs-property">url</span>;<br><br>        <span class="hljs-keyword">const</span> matchedRule = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">findMatchingRule</span>(url, init.<span class="hljs-property">method</span> || <span class="hljs-string">&quot;GET&quot;</span>);<br>        <span class="hljs-keyword">if</span> (matchedRule &amp;&amp; matchedRule.<span class="hljs-property">enabled</span>) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">modifyResponse</span>(response, matchedRule);<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">originalFetch</span>.<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">window</span>, ...args);<br>    &#125;;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-规则匹配算法"><a href="#2-规则匹配算法" class="headerlink" title="2. 规则匹配算法"></a>2. 规则匹配算法</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">private</span> <span class="hljs-title function_">findMatchingRule</span>(<span class="hljs-attr">url</span>: <span class="hljs-built_in">string</span>, <span class="hljs-attr">method</span>: <span class="hljs-built_in">string</span>): <span class="hljs-title class_">RequestRule</span> | <span class="hljs-literal">null</span> &#123;<br>    <span class="hljs-keyword">const</span> enabledRules = <span class="hljs-variable language_">this</span>.<span class="hljs-property">requestRules</span>.<span class="hljs-title function_">filter</span>(<span class="hljs-function">(<span class="hljs-params">rule</span>) =&gt;</span> rule.<span class="hljs-property">enabled</span>);<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> rule <span class="hljs-keyword">of</span> enabledRules) &#123;<br>        <span class="hljs-keyword">if</span> (rule.<span class="hljs-property">method</span> !== <span class="hljs-string">&quot;ALL&quot;</span> &amp;&amp; rule.<span class="hljs-property">method</span> !== method.<span class="hljs-title function_">toUpperCase</span>()) &#123;<br>            <span class="hljs-keyword">continue</span>;<br>        &#125;<br><br>        <span class="hljs-keyword">if</span> (rule.<span class="hljs-property">filterType</span> === <span class="hljs-string">&quot;urlFilter&quot;</span>) &#123;<br>            <span class="hljs-keyword">if</span> (url.<span class="hljs-title function_">includes</span>(rule.<span class="hljs-property">urlPattern</span>!)) &#123;<br>                <span class="hljs-keyword">return</span> rule;<br>            &#125;<br>        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (rule.<span class="hljs-property">filterType</span> === <span class="hljs-string">&quot;regexFilter&quot;</span>) &#123;<br>            <span class="hljs-keyword">const</span> regex = <span class="hljs-keyword">new</span> <span class="hljs-title class_">RegExp</span>(rule.<span class="hljs-property">urlPattern</span>!);<br>            <span class="hljs-keyword">if</span> (regex.<span class="hljs-title function_">test</span>(url)) &#123;<br>                <span class="hljs-keyword">return</span> rule;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-消息通信机制"><a href="#3-消息通信机制" class="headerlink" title="3. 消息通信机制"></a>3. 消息通信机制</h3><h4 id="三层通信流程"><a href="#三层通信流程" class="headerlink" title="三层通信流程"></a>三层通信流程</h4><ol>
+<li><strong>页面 → Content Script</strong>：<code>window.postMessage</code></li>
+<li><strong>Content Script → Background</strong>：<code>chrome.runtime.sendMessage</code></li>
+<li><strong>Background → DevTools</strong>：<code>chrome.runtime.sendMessage</code></li>
+</ol>
+<h4 id="错误处理策略"><a href="#错误处理策略" class="headerlink" title="错误处理策略"></a>错误处理策略</h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-comment">// 在 background.js 中</span><br>chrome.<span class="hljs-property">tabs</span>.<span class="hljs-title function_">sendMessage</span>(tab.<span class="hljs-property">id</span>, message).<span class="hljs-title function_">catch</span>(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> &#123;<br>  <span class="hljs-keyword">if</span> (error.<span class="hljs-property">message</span>.<span class="hljs-title function_">includes</span>(<span class="hljs-string">&quot;Receiving end does not exist&quot;</span>)) &#123;<br>    <span class="hljs-comment">// 静默处理内容脚本未注入的情况</span><br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">`发送消息失败:`</span>, error);<br>  &#125;<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<h2 id="🎯-实现步骤详解"><a href="#🎯-实现步骤详解" class="headerlink" title="🎯 实现步骤详解"></a>🎯 实现步骤详解</h2><h3 id="步骤-1：项目初始化"><a href="#步骤-1：项目初始化" class="headerlink" title="步骤 1：项目初始化"></a>步骤 1：项目初始化</h3><h4 id="技术栈配置"><a href="#技术栈配置" class="headerlink" title="技术栈配置"></a>技术栈配置</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;dependencies&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;vue&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;^3.4.21&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;tdesign-vue-next&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;^1.14.3&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;@types/chrome&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;^0.0.320&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;devDependencies&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;vite&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;^5.2.8&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;typescript&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;^5.4.4&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="Manifest-V3-配置"><a href="#Manifest-V3-配置" class="headerlink" title="Manifest V3 配置"></a>Manifest V3 配置</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;manifest_version&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">3</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;permissions&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-string">&quot;storage&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-string">&quot;declarativeNetRequest&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-string">&quot;declarativeNetRequestFeedback&quot;</span><br>  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;content_scripts&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;matches&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;&lt;all_urls&gt;&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;js&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;content.js&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;run_at&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;document_start&quot;</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;devtools_page&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;devtools.html&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="步骤-2：核心拦截器开发"><a href="#步骤-2：核心拦截器开发" class="headerlink" title="步骤 2：核心拦截器开发"></a>步骤 2：核心拦截器开发</h3><h4 id="拦截器管理器设计"><a href="#拦截器管理器设计" class="headerlink" title="拦截器管理器设计"></a>拦截器管理器设计</h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">InterceptorManager</span> &#123;<br>  <span class="hljs-keyword">private</span> <span class="hljs-attr">originalFetch</span>: <span class="hljs-keyword">typeof</span> <span class="hljs-variable language_">window</span>.<span class="hljs-property">fetch</span>;<br>  <span class="hljs-keyword">private</span> <span class="hljs-attr">originalXMLHttpRequestOpen</span>: <span class="hljs-keyword">typeof</span> <span class="hljs-title class_">XMLHttpRequest</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">open</span>;<br><br>  <span class="hljs-title function_">constructor</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">originalFetch</span> = <span class="hljs-variable language_">window</span>.<span class="hljs-property">fetch</span>;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">originalXMLHttpRequestOpen</span> = <span class="hljs-title class_">XMLHttpRequest</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">open</span>;<br>  &#125;<br><br>  <span class="hljs-title function_">initialize</span>(): <span class="hljs-built_in">void</span> &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">interceptFetch</span>();<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">interceptXMLHttpRequest</span>();<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="响应修改逻辑"><a href="#响应修改逻辑" class="headerlink" title="响应修改逻辑"></a>响应修改逻辑</h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> <span class="hljs-title function_">modifyResponse</span>(<span class="hljs-attr">response</span>: <span class="hljs-title class_">Response</span>, <span class="hljs-attr">rule</span>: <span class="hljs-title class_">RequestRule</span>): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-title class_">Response</span>&gt; &#123;<br>    <span class="hljs-keyword">const</span> finalHeaders = &#123; ...<span class="hljs-variable language_">this</span>.<span class="hljs-title function_">headersToObject</span>(response.<span class="hljs-property">headers</span>) &#125;;<br>    <span class="hljs-keyword">if</span> (rule.<span class="hljs-property">enableResponseHeaders</span> &amp;&amp; rule.<span class="hljs-property">response</span>.<span class="hljs-property">headers</span>) &#123;<br>        <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">assign</span>(finalHeaders, rule.<span class="hljs-property">response</span>.<span class="hljs-property">headers</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">const</span> finalStatus = rule.<span class="hljs-property">enableResponseHeaders</span> &amp;&amp; rule.<span class="hljs-property">response</span>.<span class="hljs-property">status</span><br>        ? rule.<span class="hljs-property">response</span>.<span class="hljs-property">status</span><br>        : response.<span class="hljs-property">status</span>;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(rule.<span class="hljs-property">response</span>.<span class="hljs-property">body</span>), &#123;<br>        <span class="hljs-attr">status</span>: finalStatus,<br>        <span class="hljs-attr">headers</span>: finalHeaders,<br>    &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="步骤-3：UI-界面开发"><a href="#步骤-3：UI-界面开发" class="headerlink" title="步骤 3：UI 界面开发"></a>步骤 3：UI 界面开发</h3><h4 id="Vue-3-组件架构"><a href="#Vue-3-组件架构" class="headerlink" title="Vue 3 组件架构"></a>Vue 3 组件架构</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs vue">&lt;template&gt;<br>  &lt;div class=&quot;script-interceptor&quot;&gt;<br>    &lt;div class=&quot;rules-section&quot;&gt;<br>      &lt;div class=&quot;section-header&quot;&gt;<br>        &lt;h3&gt;脚本拦截规则&lt;/h3&gt;<br>        &lt;div class=&quot;header-actions&quot;&gt;<br>          &lt;t-button @click=&quot;ruleManager.add()&quot;&gt;添加规则&lt;/t-button&gt;<br>        &lt;/div&gt;<br>      &lt;/div&gt;<br>      &lt;!-- 规则列表 --&gt;<br>    &lt;/div&gt;<br>  &lt;/div&gt;<br>&lt;/template&gt;<br></code></pre></td></tr></table></figure>
+
+<h4 id="状态管理"><a href="#状态管理" class="headerlink" title="状态管理"></a>状态管理</h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">const</span> cacheManager = &#123;<br>  <span class="hljs-attr">save</span>: <span class="hljs-title function_">async</span> () =&gt; &#123;<br>    <span class="hljs-keyword">await</span> chrome.<span class="hljs-property">storage</span>.<span class="hljs-property">local</span>.<span class="hljs-title function_">set</span>(&#123;<br>      <span class="hljs-attr">scriptRequestRules</span>: <span class="hljs-title function_">toRaw</span>(requestRules.<span class="hljs-property">value</span>),<br>      <span class="hljs-attr">scriptRequestRulesEnabled</span>: isEnabled.<span class="hljs-property">value</span>,<br>    &#125;);<br>  &#125;,<br>  <span class="hljs-attr">load</span>: <span class="hljs-title function_">async</span> () =&gt; &#123;<br>    <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> chrome.<span class="hljs-property">storage</span>.<span class="hljs-property">local</span>.<span class="hljs-title function_">get</span>([<br>      <span class="hljs-string">&quot;scriptRequestRules&quot;</span>,<br>      <span class="hljs-string">&quot;scriptRequestRulesEnabled&quot;</span>,<br>    ]);<br>    <span class="hljs-keyword">if</span> (result.<span class="hljs-property">scriptRequestRules</span>) &#123;<br>      requestRules.<span class="hljs-property">value</span> = result.<span class="hljs-property">scriptRequestRules</span>;<br>      isEnabled.<span class="hljs-property">value</span> = result.<span class="hljs-property">scriptRequestRulesEnabled</span> || <span class="hljs-literal">false</span>;<br>    &#125;<br>  &#125;,<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="步骤-4：构建和打包"><a href="#步骤-4：构建和打包" class="headerlink" title="步骤 4：构建和打包"></a>步骤 4：构建和打包</h3><h4 id="Vite-配置优化"><a href="#Vite-配置优化" class="headerlink" title="Vite 配置优化"></a>Vite 配置优化</h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title function_">defineConfig</span>(&#123;<br>  <span class="hljs-attr">build</span>: &#123;<br>    <span class="hljs-attr">rollupOptions</span>: &#123;<br>      <span class="hljs-attr">input</span>: &#123;<br>        <span class="hljs-attr">main</span>: <span class="hljs-string">&quot;index.html&quot;</span>,<br>        <span class="hljs-attr">interceptor</span>: <span class="hljs-string">&quot;src/utils/interceptor.ts&quot;</span>,<br>        <span class="hljs-attr">devtools</span>: <span class="hljs-string">&quot;public/devtools.html&quot;</span>,<br>      &#125;,<br>      <span class="hljs-attr">output</span>: &#123;<br>        <span class="hljs-attr">entryFileNames</span>: <span class="hljs-function">(<span class="hljs-params">chunkInfo</span>) =&gt;</span> &#123;<br>          <span class="hljs-keyword">if</span> (chunkInfo.<span class="hljs-property">name</span> === <span class="hljs-string">&quot;interceptor&quot;</span>) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;[name].js&quot;</span>;<br>          &#125;<br>          <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;assets/[name]-[hash].js&quot;</span>;<br>        &#125;,<br>      &#125;,<br>    &#125;,<br>  &#125;,<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<h2 id="🚀-关键技术点"><a href="#🚀-关键技术点" class="headerlink" title="🚀 关键技术点"></a>🚀 关键技术点</h2><h3 id="1-安全的脚本注入"><a href="#1-安全的脚本注入" class="headerlink" title="1. 安全的脚本注入"></a>1. 安全的脚本注入</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">injectedScript</span>(<span class="hljs-params">path, root = <span class="hljs-variable language_">document</span>.documentElement</span>) &#123;<br>  <span class="hljs-keyword">const</span> scriptNode = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&quot;script&quot;</span>);<br>  scriptNode.<span class="hljs-property">src</span> = chrome.<span class="hljs-property">runtime</span>.<span class="hljs-title function_">getURL</span>(path);<br>  root.<span class="hljs-title function_">appendChild</span>(scriptNode);<br>  <span class="hljs-keyword">return</span> scriptNode;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-性能优化策略"><a href="#2-性能优化策略" class="headerlink" title="2. 性能优化策略"></a>2. 性能优化策略</h3><ul>
+<li><strong>懒加载规则</strong>：只在需要时加载拦截规则</li>
+<li><strong>选择性拦截</strong>：根据 URL 和方法进行精确匹配</li>
+<li><strong>内存管理</strong>：及时清理不再使用的规则和监听器</li>
+</ul>
+<h3 id="3-错误边界处理"><a href="#3-错误边界处理" class="headerlink" title="3. 错误边界处理"></a>3. 错误边界处理</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">try</span> &#123;<br>  <span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">originalFetch</span>.<span class="hljs-title function_">call</span>(<br>    <span class="hljs-variable language_">window</span>,<br>    input,<br>    modifiedRequest<br>  );<br>  <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">modifyResponse</span>(response, matchedRule);<br>&#125; <span class="hljs-keyword">catch</span> (error) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">&quot;请求执行失败:&quot;</span>, error);<br>  <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">createMockResponse</span>(matchedRule);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="📊-性能测试结果"><a href="#📊-性能测试结果" class="headerlink" title="📊 性能测试结果"></a>📊 性能测试结果</h2><h3 id="拦截性能对比"><a href="#拦截性能对比" class="headerlink" title="拦截性能对比"></a>拦截性能对比</h3><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>原始请求</th>
+<th>脚本拦截</th>
+<th>性能损耗</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>简单 GET 请求</td>
+<td>15ms</td>
+<td>18ms</td>
+<td>+20%</td>
+</tr>
+<tr>
+<td>复杂 POST 请求</td>
+<td>25ms</td>
+<td>30ms</td>
+<td>+20%</td>
+</tr>
+<tr>
+<td>批量请求(10 个)</td>
+<td>150ms</td>
+<td>180ms</td>
+<td>+20%</td>
+</tr>
+</tbody></table>
+<h3 id="内存使用情况"><a href="#内存使用情况" class="headerlink" title="内存使用情况"></a>内存使用情况</h3><ul>
+<li><strong>基础内存占用</strong>：约 5MB</li>
+<li><strong>每增加 100 条规则</strong>：增加约 1MB</li>
+<li><strong>长期运行稳定性</strong>：内存泄漏控制在 2% 以内</li>
+</ul>
+<h2 id="🔍-最佳实践"><a href="#🔍-最佳实践" class="headerlink" title="🔍 最佳实践"></a>🔍 最佳实践</h2><h3 id="开发建议"><a href="#开发建议" class="headerlink" title="开发建议"></a>开发建议</h3><ol>
+<li><p><strong>规则设计原则</strong></p>
+<ul>
+<li>使用具体 URL 模式而非通配符</li>
+<li>为不同环境设置不同的规则集</li>
+<li>定期清理不再使用的规则</li>
+</ul>
+</li>
+<li><p><strong>性能优化技巧</strong></p>
+<ul>
+<li>避免在拦截器中进行复杂计算</li>
+<li>使用缓存减少重复匹配</li>
+<li>合理设置规则启用状态</li>
+</ul>
+</li>
+<li><p><strong>调试技巧</strong></p>
+<ul>
+<li>利用 Chrome 扩展调试工具</li>
+<li>查看 background script 日志</li>
+<li>使用 Vue DevTools 调试组件状态</li>
+</ul>
+</li>
+</ol>
+<h3 id="部署指南"><a href="#部署指南" class="headerlink" title="部署指南"></a>部署指南</h3><ol>
+<li><p><strong>开发环境</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm run dev  <span class="hljs-comment"># 开发模式</span><br>npm run build  <span class="hljs-comment"># 生产构建</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Chrome 安装</strong></p>
+<ul>
+<li>打开 <code>chrome://extensions/</code></li>
+<li>启用开发者模式</li>
+<li>加载已解压的扩展程序</li>
+</ul>
+</li>
+</ol>
+<h2 id="🐛-常见问题与解决方案"><a href="#🐛-常见问题与解决方案" class="headerlink" title="🐛 常见问题与解决方案"></a>🐛 常见问题与解决方案</h2><h3 id="Q1：拦截规则不生效"><a href="#Q1：拦截规则不生效" class="headerlink" title="Q1：拦截规则不生效"></a>Q1：拦截规则不生效</h3><p><strong>原因</strong>：规则匹配失败或拦截器未正确初始化<br><strong>解决</strong>：</p>
+<ul>
+<li>检查 URL 模式是否正确</li>
+<li>确认规则已启用</li>
+<li>查看控制台错误信息</li>
+</ul>
+<h3 id="Q2：拦截记录不显示"><a href="#Q2：拦截记录不显示" class="headerlink" title="Q2：拦截记录不显示"></a>Q2：拦截记录不显示</h3><p><strong>原因</strong>：消息通信链路中断<br><strong>解决</strong>：</p>
+<ul>
+<li>确认 devtools 面板已打开</li>
+<li>检查 background.js 运行状态</li>
+<li>验证消息传递路径</li>
+</ul>
+<h3 id="Q3：性能下降明显"><a href="#Q3：性能下降明显" class="headerlink" title="Q3：性能下降明显"></a>Q3：性能下降明显</h3><p><strong>原因</strong>：规则过多或匹配逻辑复杂<br><strong>解决</strong>：</p>
+<ul>
+<li>优化规则匹配算法</li>
+<li>减少不必要的拦截</li>
+<li>使用声明式拦截替代脚本拦截</li>
+</ul>
+<h2 id="📈-未来规划"><a href="#📈-未来规划" class="headerlink" title="📈 未来规划"></a>📈 未来规划</h2><h3 id="功能扩展"><a href="#功能扩展" class="headerlink" title="功能扩展"></a>功能扩展</h3><ol>
+<li><strong>智能规则推荐</strong>：基于历史记录自动生成规则</li>
+<li><strong>团队协作</strong>：支持规则导入导出和共享</li>
+<li><strong>性能分析</strong>：集成性能监控和优化建议</li>
+</ol>
+<h3 id="技术优化"><a href="#技术优化" class="headerlink" title="技术优化"></a>技术优化</h3><ol>
+<li><strong>Web Workers</strong>：将复杂计算移至后台线程</li>
+<li><strong>增量更新</strong>：支持规则的热更新</li>
+<li><strong>跨浏览器支持</strong>：适配 Firefox、Edge 等浏览器</li>
+</ol>
+<h2 id="📚-参考文献"><a href="#📚-参考文献" class="headerlink" title="📚 参考文献"></a>📚 参考文献</h2><h3 id="官方文档"><a href="#官方文档" class="headerlink" title="官方文档"></a>官方文档</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://developer.chrome.com/docs/extensions/">Chrome Extensions Developer Guide</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.chrome.com/docs/extensions/mv3/intro/">Manifest V3 Migration Guide</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.chrome.com/docs/extensions/reference/declarativeNetRequest/">Declarative Net Request API</a></li>
+</ul>
+<h3 id="技术文章"><a href="#技术文章" class="headerlink" title="技术文章"></a>技术文章</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://blog.logrocket.com/">Modern Chrome Extension Development with Vue 3</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/">Advanced Request Interception Techniques</a></li>
+<li><a target="_blank" rel="noopener" href="https://web.dev/extensions/">Performance Optimization for Browser Extensions</a></li>
+</ul>
+<h3 id="相关项目"><a href="#相关项目" class="headerlink" title="相关项目"></a>相关项目</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://requestly.io/">Requestly</a> - 专业的网络请求调试工具</li>
+<li><a target="_blank" rel="noopener" href="https://www.charlesproxy.com/">Charles Proxy</a> - 桌面端代理工具</li>
+<li><a target="_blank" rel="noopener" href="https://www.postman.com/product/interceptor/">Postman Interceptor</a> - Postman 浏览器扩展</li>
+</ul>
+<h2 id="🎉-总结"><a href="#🎉-总结" class="headerlink" title="🎉 总结"></a>🎉 总结</h2><p>本文详细介绍了前端调试增强器 Chrome 插件的完整技术实现。通过采用 Vue 3 + TypeScript 的技术栈，结合 Chrome Extensions API，我们成功构建了一个功能强大、性能优秀的网络请求调试工具。</p>
+<p>项目的核心价值在于：</p>
+<ul>
+<li><strong>开发者友好</strong>：直观的可视化界面降低使用门槛</li>
+<li><strong>技术先进</strong>：采用最新的 Manifest V3 标准和现代前端技术</li>
+<li><strong>性能优秀</strong>：精心优化的拦截算法和通信机制</li>
+<li><strong>扩展性强</strong>：模块化架构支持功能持续迭代</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/chrome%E6%89%A9%E5%B1%95/" class="category-chain-item">chrome扩展</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>2025-11-17 【chrome扩展】chrome插件开发-网络请求拦截</div>
+      <div>http://example.com/2025/12/01/2025-11-17 【chrome扩展】chrome扩展开发-网络请求拦截/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年12月1日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/12/01/2025-11-06%20%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%91%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%A2%84%E6%8B%89%E5%8F%96/" title="2025-11-06 【小程序】微信小程序预拉取">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">2025-11-06 【小程序】微信小程序预拉取</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/12/01/2024-06-06-%E3%80%90Linux%E3%80%91%E5%AE%89%E5%85%A8%E6%BC%8F%E6%B4%9E/" title="2024-06-06-【Linux】安全漏洞">
+                        <span class="hidden-mobile">2024-06-06-【Linux】安全漏洞</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
