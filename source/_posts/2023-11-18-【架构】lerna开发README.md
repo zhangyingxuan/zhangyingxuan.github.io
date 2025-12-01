@@ -1,5 +1,5 @@
 ---
-title: 2023-11-18 【架构】lerna开发README
+title: 2023-11-18-【架构】lerna开发README
 date: 2023-11-18 00:14:39
 description:
 categories:
@@ -12,7 +12,7 @@ tags:
 
 ## 目录介绍
 
-- packages/tgac-web-common:一网通办公共组件仓库
+- packages/tgac-web-common:公共组件仓库
 
 ## 环境依赖
 
