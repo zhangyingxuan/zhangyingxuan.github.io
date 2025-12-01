@@ -26,24 +26,23 @@ jobs:
         with:
           node-version: 20
           cache: "npm"
-
-      # 3. 安装 Hexo 及依赖
-      - name: Install dependencies
-        run: |
-          npm ci --production
-
-      # 4. 生成静态文件
-      - name: Build
-        run: |
-          npx hexo clean
-          npx hexo generate
-
+      - run: npm install
+      - run: npm run clean
+      - run: npm run build # 对应 package.json 里 "build": "hexo generate"
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
       # 5. 部署到 gh-pages 分支
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
-          publish_branch: gh-pages
-          # cname: | # 如果有自定义域名，把 xxx.com 换成你的
-          #   xxx.com
+        uses: actions/deploy-pages@v4
+        # with:
+        #   github_token: ${{ secrets.GITHUB_TOKEN }}
+        #   publish_dir: ./public
+        #   publish_branch: gh-pages
+        # cname: | # 如果有自定义域名，把 xxx.com 换成你的
+        #   xxx.com
