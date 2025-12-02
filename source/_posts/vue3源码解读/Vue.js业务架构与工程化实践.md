@@ -1,0 +1,624 @@
+# Vue.js 业务架构与工程化实践
+
+## 业务架构设计模式
+
+### 1. 分层架构模式
+
+#### 前端应用分层设计
+
+```typescript
+// 典型的分层架构示例
+src/
+├── api/           # API 层：数据请求和接口管理
+├── components/     # 组件层：可复用UI组件
+├── composables/    # 组合式函数层：业务逻辑复用
+├── pages/         # 页面层：路由页面组件
+├── stores/         # 状态管理层：全局状态管理
+├── utils/          # 工具层：通用工具函数
+└── types/          # 类型层：TypeScript类型定义
+```
+
+#### API 层设计
+
+```typescript
+// src/api/user.ts
+export interface User {
+  id: number
+  name: string
+  email: string
+  avatar?: string
+}
+
+export interface LoginParams {
+  username: string
+  password: string
+}
+
+export class UserAPI {
+  private static instance: UserAPI
+  
+  public static getInstance(): UserAPI {
+    if (!UserAPI.instance) {
+      UserAPI.instance = new UserAPI()
+    }
+    return UserAPI.instance
+  }
+  
+  async login(params: LoginParams): Promise<User> {
+    const response = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(params)
+    })
+    
+    if (!response.ok) {
+      throw new Error('Login failed')
+    }
+    
+    return response.json()
+  }
+  
+  async getUser(id: number): Promise<User> {
+    const response = await fetch(`/api/users/${id}`)
+    if (!response.ok) {
+      throw new Error('User not found')
+    }
+    return response.json()
+  }
+}
+
+// 使用示例
+export function useUserAPI() {
+  const userAPI = UserAPI.getInstance()
+  
+  return {
+    login: userAPI.login.bind(userAPI),
+    getUser: userAPI.getUser.bind(userAPI)
+  }
+}
+```
+
+### 2. 组件架构模式
+
+#### 智能组件与展示组件分离
+
+```vue
+<!-- 智能组件：包含业务逻辑 -->
+<template>
+  <UserList 
+    :users="users"
+    :loading="loading"
+    :error="error"
+    @refresh="loadUsers"
+    @delete-user="handleDeleteUser"
+  />
+</template>
+
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import UserList from './UserList.vue'
+import { useUserAPI } from '../api/user'
+
+const { getUsers, deleteUser } = useUserAPI()
+
+const users = ref([])
+const loading = ref(false)
+const error = ref<string | null>(null)
+
+const loadUsers = async () => {
+  loading.value = true
+  error.value = null
+  
+  try {
+    users.value = await getUsers()
+  } catch (err) {
+    error.value = err.message
+  } finally {
+    loading.value = false
+  }
+}
+
+const handleDeleteUser = async (userId: number) => {
+  try {
+    await deleteUser(userId)
+    await loadUsers() // 重新加载数据
+  } catch (err) {
+    error.value = err.message
+  }
+}
+
+onMounted(() => {
+  loadUsers()
+})
+</script>
+```
+
+```vue
+<!-- 展示组件：纯UI展示 -->
+<template>
+  <div class="user-list">
+    <div v-if="loading" class="loading">加载中...</div>
+    <div v-else-if="error" class="error">{{ error }}</div>
+    <ul v-else class="user-items">
+      <li 
+        v-for="user in users" 
+        :key="user.id"
+        class="user-item"
+      >
+        <span>{{ user.name }}</span>
+        <button @click="$emit('delete-user', user.id)">删除</button>
+      </li>
+    </ul>
+    <button @click="$emit('refresh')">刷新</button>
+  </div>
+</template>
+
+<script setup lang="ts">
+defineProps<{
+  users: Array<{ id: number; name: string }>
+  loading: boolean
+  error: string | null
+}>()
+
+defineEmits<{
+  refresh: []
+  'delete-user': [id: number]
+}>()
+</script>
+```
+
+### 3. 状态管理架构
+
+#### Pinia 状态管理最佳实践
+
+```typescript
+// src/stores/user.ts
+import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
+import type { User } from '../types/user'
+
+export const useUserStore = defineStore('user', () => {
+  // State
+  const currentUser = ref<User | null>(null)
+  const users = ref<User[]>([])
+  const loading = ref(false)
+  const error = ref<string | null>(null)
+  
+  // Getters
+  const isLoggedIn = computed(() => currentUser.value !== null)
+  const userCount = computed(() => users.value.length)
+  const adminUsers = computed(() => 
+    users.value.filter(user => user.role === 'admin')
+  )
+  
+  // Actions
+  const login = async (username: string, password: string) => {
+    loading.value = true
+    error.value = null
+    
+    try {
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        body: JSON.stringify({ username, password })
+      })
+      
+      if (!response.ok) throw new Error('Login failed')
+      
+      currentUser.value = await response.json()
+    } catch (err) {
+      error.value = err.message
+      throw err
+    } finally {
+      loading.value = false
+    }
+  }
+  
+  const logout = () => {
+    currentUser.value = null
+    users.value = []
+  }
+  
+  const fetchUsers = async () => {
+    loading.value = true
+    
+    try {
+      const response = await fetch('/api/users')
+      users.value = await response.json()
+    } catch (err) {
+      error.value = err.message
+    } finally {
+      loading.value = false
+    }
+  }
+  
+  return {
+    // State
+    currentUser,
+    users,
+    loading,
+    error,
+    
+    // Getters
+    isLoggedIn,
+    userCount,
+    adminUsers,
+    
+    // Actions
+    login,
+    logout,
+    fetchUsers
+  }
+})
+```
+
+## 工程化最佳实践
+
+### 1. 项目配置和构建优化
+
+#### Vite 配置优化
+
+```typescript
+// vite.config.ts
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import { resolve } from 'path'
+
+export default defineConfig({
+  plugins: [vue({
+    reactivityTransform: true // 启用响应式语法糖
+  })],
+  
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, 'src'),
+      '@components': resolve(__dirname, 'src/components'),
+      '@composables': resolve(__dirname, 'src/composables'),
+      '@stores': resolve(__dirname, 'src/stores'),
+    }
+  },
+  
+  build: {
+    // 代码分割优化
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['vue', 'pinia', 'vue-router'],
+          ui: ['element-plus', '@element-plus/icons-vue']
+        }
+      }
+    },
+    
+    // 压缩优化
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true
+      }
+    }
+  },
+  
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
+  }
+})
+```
+
+#### TypeScript 配置
+
+```json
+// tsconfig.json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "preserve",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@components/*": ["src/components/*"],
+      "@composables/*": ["src/composables/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
+```
+
+### 2. 代码规范和代码质量
+
+#### ESLint 配置
+
+```javascript
+// .eslintrc.js
+module.exports = {
+  root: true,
+  env: {
+    node: true,
+    browser: true,
+    es2021: true
+  },
+  extends: [
+    'eslint:recommended',
+    '@vue/typescript/recommended',
+    'plugin:vue/vue3-essential',
+    '@vue/prettier'
+  ],
+  parserOptions: {
+    ecmaVersion: 2021,
+    parser: '@typescript-eslint/parser'
+  },
+  rules: {
+    'vue/multi-word-component-names': 'off',
+    '@typescript-eslint/no-unused-vars': 'error',
+    '@typescript-eslint/explicit-function-return-type': 'warn',
+    'vue/component-tags-order': ['error', {
+      order: ['script', 'template', 'style']
+    }]
+  }
+}
+```
+
+#### Prettier 配置
+
+```json
+// .prettierrc.json
+{
+  "semi": false,
+  "singleQuote": true,
+  "printWidth": 80,
+  "trailingComma": "es5",
+  "tabWidth": 2,
+  "useTabs": false,
+  "bracketSpacing": true,
+  "arrowParens": "avoid",
+  "vueIndentScriptAndStyle": true
+}
+```
+
+### 3. 测试策略
+
+#### 单元测试配置
+
+```typescript
+// vitest.config.ts
+import { defineConfig } from 'vitest/config'
+import vue from '@vitejs/plugin-vue'
+
+export default defineConfig({
+  plugins: [vue()],
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/test/setup.ts',
+    coverage: {
+      reporter: ['text', 'json', 'html'],
+      exclude: [
+        'src/test/**',
+        '**/*.d.ts',
+        '**/types/**'
+      ]
+    }
+  }
+})
+```
+
+#### 组件测试示例
+
+```typescript
+// src/components/__tests__/UserList.test.ts
+import { describe, it, expect } from 'vitest'
+import { mount } from '@vue/test-utils'
+import UserList from '../UserList.vue'
+
+describe('UserList', () => {
+  it('渲染用户列表', () => {
+    const users = [
+      { id: 1, name: '张三' },
+      { id: 2, name: '李四' }
+    ]
+    
+    const wrapper = mount(UserList, {
+      props: { users, loading: false, error: null }
+    })
+    
+    expect(wrapper.findAll('.user-item')).toHaveLength(2)
+    expect(wrapper.text()).toContain('张三')
+    expect(wrapper.text()).toContain('李四')
+  })
+  
+  it('显示加载状态', () => {
+    const wrapper = mount(UserList, {
+      props: { users: [], loading: true, error: null }
+    })
+    
+    expect(wrapper.find('.loading').exists()).toBe(true)
+  })
+  
+  it('触发删除事件', async () => {
+    const users = [{ id: 1, name: '张三' }]
+    const wrapper = mount(UserList, {
+      props: { users, loading: false, error: null }
+    })
+    
+    await wrapper.find('button').trigger('click')
+    
+    expect(wrapper.emitted('delete-user')).toBeTruthy()
+    expect(wrapper.emitted('delete-user')[0]).toEqual([1])
+  })
+})
+```
+
+## 性能优化策略
+
+### 1. 编译时优化
+
+#### 静态提升配置
+
+```typescript
+// 编译器配置示例
+const compilerOptions = {
+  hoistStatic: true,      // 静态节点提升
+  cacheHandlers: true,    // 事件处理器缓存
+  prefixIdentifiers: true // 标识符前缀
+}
+```
+
+### 2. 运行时优化
+
+#### 组件懒加载
+
+```typescript
+// 路由懒加载
+const routes = [
+  {
+    path: '/users',
+    name: 'Users',
+    component: () => import('@/pages/Users.vue')
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: () => import('@/pages/Settings.vue')
+  }
+]
+```
+
+#### 虚拟滚动优化
+
+```vue
+<template>
+  <VirtualList
+    :items="largeList"
+    :item-height="50"
+    :buffer-size="10"
+  >
+    <template #default="{ item }">
+      <div class="list-item">{{ item.name }}</div>
+    </template>
+  </VirtualList>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+import VirtualList from 'vue-virtual-scroller'
+
+const largeList = ref(Array.from({ length: 10000 }, (_, i) => ({
+  id: i,
+  name: `Item ${i}`
+})))
+</script>
+```
+
+### 3. 打包优化
+
+#### 代码分割策略
+
+```typescript
+// 动态导入优化
+const loadComponent = (name: string) => {
+  return defineAsyncComponent({
+    loader: () => import(`@/components/${name}.vue`),
+    loadingComponent: LoadingSpinner,
+    errorComponent: ErrorComponent,
+    delay: 200,
+    timeout: 3000
+  })
+}
+```
+
+## 部署和监控
+
+### 1. 环境配置
+
+```typescript
+// src/config/env.ts
+export const config = {
+  development: {
+    apiBaseUrl: 'http://localhost:3000/api',
+    debug: true,
+    logLevel: 'debug'
+  },
+  production: {
+    apiBaseUrl: 'https://api.example.com',
+    debug: false,
+    logLevel: 'error'
+  },
+  staging: {
+    apiBaseUrl: 'https://staging-api.example.com',
+    debug: true,
+    logLevel: 'warn'
+  }
+}[import.meta.env.MODE]
+```
+
+### 2. 错误监控
+
+```typescript
+// src/utils/errorHandler.ts
+export class ErrorHandler {
+  static init() {
+    // Vue 错误处理
+    app.config.errorHandler = (err, instance, info) => {
+      this.report(err, { component: instance?.$options.name, info })
+    }
+    
+    // 全局错误处理
+    window.addEventListener('error', (event) => {
+      this.report(event.error, { type: 'window' })
+    })
+    
+    // Promise 错误处理
+    window.addEventListener('unhandledrejection', (event) => {
+      this.report(event.reason, { type: 'promise' })
+    })
+  }
+  
+  static report(error: Error, context: Record<string, any> = {}) {
+    // 发送到错误监控服务
+    console.error('Error reported:', error, context)
+    
+    if (import.meta.env.PROD) {
+      // 生产环境错误上报
+      fetch('/api/error', {
+        method: 'POST',
+        body: JSON.stringify({
+          error: error.message,
+          stack: error.stack,
+          context,
+          timestamp: Date.now()
+        })
+      })
+    }
+  }
+}
+```
+
+## 总结
+
+Vue.js 在现代前端业务架构中表现出色，主要体现在：
+
+1. **架构清晰**：分层设计、组件化架构、状态管理完善
+2. **开发体验优秀**：TypeScript 支持、工具链完善、热重载快速
+3. **性能卓越**：编译时优化、运行时优化、打包优化
+4. **工程化成熟**：代码规范、测试策略、部署监控完善
+
+通过合理的架构设计和工程化实践，Vue.js 能够支撑从简单页面到复杂企业级应用的各种场景。

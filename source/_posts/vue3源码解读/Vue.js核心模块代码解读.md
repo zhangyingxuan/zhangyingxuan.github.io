@@ -1,0 +1,764 @@
+# Vue.js 核心模块代码深度解读
+
+## 响应式系统源码分析
+
+### 1. Ref 实现机制
+
+#### RefImpl 类核心实现
+
+```typescript
+// packages/reactivity/src/ref.ts
+export class RefImpl<T = any> {
+  private _value: T
+  private _rawValue: T
+  
+  // 依赖收集器
+  dep: Dep = new Dep()
+  
+  // 标识符
+  public readonly [ReactiveFlags.IS_REF] = true
+
+  constructor(value: T, isShallow: boolean) {
+    this._rawValue = isShallow ? value : toRaw(value)
+    this._value = isShallow ? value : toReactive(value)
+  }
+
+  get value() {
+    // 依赖收集
+    if (__DEV__) {
+      this.dep.track({
+        target: this,
+        type: TrackOpTypes.GET,
+        key: 'value',
+      })
+    } else {
+      this.dep.track()
+    }
+    return this._value
+  }
+
+  set value(newValue) {
+    const oldValue = this._rawValue
+    
+    // 判断是否需要深度响应式转换
+    const useDirectValue = this[ReactiveFlags.IS_SHALLOW] || 
+                          isShallow(newValue) || 
+                          isReadonly(newValue)
+    
+    newValue = useDirectValue ? newValue : toRaw(newValue)
+    
+    // 值变化时才触发更新
+    if (hasChanged(newValue, oldValue)) {
+      this._rawValue = newValue
+      this._value = useDirectValue ? newValue : toReactive(newValue)
+      
+      // 派发更新
+      if (__DEV__) {
+        this.dep.trigger({
+          target: this,
+          type: TriggerOpTypes.SET,
+          key: 'value',
+          newValue,
+          oldValue,
+        })
+      } else {
+        this.dep.trigger()
+      }
+    }
+  }
+}
+```
+
+#### 依赖收集器 Dep 实现
+
+```typescript
+// packages/reactivity/src/dep.ts
+export class Dep {
+  private _subscribers = new Set<ReactiveEffect>()
+  
+  track(effect?: ReactiveEffect) {
+    if (effect && activeEffect) {
+      // 双向依赖关系
+      effect.deps.add(this)
+      this._subscribers.add(effect)
+    }
+  }
+  
+  trigger(info?: TriggerInfo) {
+    // 避免无限循环更新
+    if (isTracking) return
+    
+    isTracking = true
+    try {
+      // 复制订阅者集合，避免在遍历过程中修改
+      const effects = new Set(this._subscribers)
+      
+      for (const effect of effects) {
+        if (effect !== activeEffect) {
+          effect.run()
+        }
+      }
+    } finally {
+      isTracking = false
+    }
+  }
+}
+```
+
+### 2. Reactive 实现机制
+
+#### 响应式代理创建
+
+```typescript
+// packages/reactivity/src/reactive.ts
+export function reactive<T extends object>(target: T): UnwrapNestedRefs<T> {
+  // 如果已经是响应式对象，直接返回
+  if (isReactive(target)) {
+    return target as UnwrapNestedRefs<T>
+  }
+  
+  // 创建响应式代理
+  return createReactiveObject(
+    target,
+    false, // isReadonly
+    mutableHandlers,
+    reactiveMap,
+  )
+}
+
+function createReactiveObject(
+  target: Target,
+  isReadonly: boolean,
+  baseHandlers: ProxyHandler<any>,
+  proxyMap: WeakMap<Target, any>,
+) {
+  // 检查是否已经是代理对象
+  const existingProxy = proxyMap.get(target)
+  if (existingProxy) {
+    return existingProxy
+  }
+  
+  // 创建代理
+  const proxy = new Proxy(target, baseHandlers)
+  proxyMap.set(target, proxy)
+  
+  return proxy
+}
+```
+
+#### 代理处理器 (Proxy Handlers)
+
+```typescript
+// packages/reactivity/src/baseHandlers.ts
+export const mutableHandlers: ProxyHandler<object> = {
+  get(target: Target, key: string | symbol, receiver: object) {
+    // 特殊属性处理
+    if (key === ReactiveFlags.IS_REACTIVE) {
+      return true
+    }
+    if (key === ReactiveFlags.RAW) {
+      return target
+    }
+    
+    const res = Reflect.get(target, key, receiver)
+    
+    // 依赖收集
+    track(target, TrackOpTypes.GET, key)
+    
+    // 嵌套响应式转换
+    if (isObject(res)) {
+      return reactive(res)
+    }
+    
+    return res
+  },
+  
+  set(target: Target, key: string | symbol, value: any, receiver: object) {
+    const oldValue = (target as any)[key]
+    
+    // 检查是否是新增属性
+    const hadKey = hasOwn(target, key)
+    
+    const result = Reflect.set(target, key, value, receiver)
+    
+    // 派发更新
+    if (hadKey) {
+      trigger(target, TriggerOpTypes.SET, key, value, oldValue)
+    } else {
+      trigger(target, TriggerOpTypes.ADD, key, value)
+    }
+    
+    return result
+  },
+  
+  deleteProperty(target: Target, key: string | symbol) {
+    const hadKey = hasOwn(target, key)
+    const oldValue = (target as any)[key]
+    
+    const result = Reflect.deleteProperty(target, key)
+    
+    if (result && hadKey) {
+      trigger(target, TriggerOpTypes.DELETE, key, undefined, oldValue)
+    }
+    
+    return result
+  }
+}
+```
+
+## 编译器源码分析
+
+### 1. 模板解析器 (Parser)
+
+#### AST 节点定义
+
+```typescript
+// packages/compiler-core/src/ast.ts
+export interface BaseElementNode extends Node {
+  type: NodeTypes.ELEMENT
+  tag: string
+  tagType: ElementTypes
+  props: AttributeNode[]
+  children: TemplateChildNode[]
+  isSelfClosing: boolean
+  codegenNode?: CodegenNode
+}
+
+export interface DirectiveNode extends Node {
+  type: NodeTypes.DIRECTIVE
+  name: string
+  exp: ExpressionNode | undefined
+  arg: ExpressionNode | undefined
+  modifiers: string[]
+}
+```
+
+#### 解析器核心实现
+
+```typescript
+// packages/compiler-core/src/parser.ts
+export function baseParse(
+  content: string,
+  options: ParserOptions = {},
+): RootNode {
+  const context = createParserContext(content, options)
+  const children = parseChildren(context, TextModes.DATA, [])
+  
+  return {
+    type: NodeTypes.ROOT,
+    children,
+    helpers: new Set(),
+    components: [],
+    directives: [],
+    hoists: [],
+    imports: [],
+    cached: [],
+    temps: 0,
+    codegenNode: undefined,
+  }
+}
+
+function parseChildren(context: ParserContext, mode: TextMode, ancestors: ElementNode[]) {
+  const nodes: TemplateChildNode[] = []
+  
+  while (!isEnd(context, mode, ancestors)) {
+    const s = context.source
+    let node: TemplateChildNode | undefined = undefined
+    
+    if (mode === TextModes.DATA || mode === TextModes.RCDATA) {
+      if (s[0] === '<') {
+        // 标签开始
+        if (s.length === 1) {
+          emitError(context, ErrorCodes.EOF_IN_TAG)
+        } else if (s[1] === '!') {
+          // 注释
+          node = parseComment(context)
+        } else if (s[1] === '/') {
+          // 结束标签
+          parseTag(context, TagType.End, ancestors[ancestors.length - 1])
+          continue
+        } else if (/[a-z]/i.test(s[1])) {
+          // 开始标签
+          node = parseElement(context, ancestors)
+        }
+      } else if (startsWith(s, '{{')) {
+        // 插值表达式
+        node = parseInterpolation(context, mode)
+      }
+    }
+    
+    if (!node) {
+      // 文本节点
+      node = parseText(context, mode)
+    }
+    
+    if (isArray(node)) {
+      for (let i = 0; i < node.length; i++) {
+        pushNode(nodes, node[i])
+      }
+    } else {
+      pushNode(nodes, node)
+    }
+  }
+  
+  return nodes
+}
+```
+
+### 2. 转换器 (Transformer)
+
+#### v-if 转换器实现
+
+```typescript
+// packages/compiler-core/src/transforms/vIf.ts
+export const transformIf: NodeTransform = (node, context) => {
+  if (node.type === NodeTypes.ELEMENT) {
+    // 查找 v-if 指令
+    for (let i = 0; i < node.props.length; i++) {
+      const prop = node.props[i]
+      if (prop.type === NodeTypes.DIRECTIVE && prop.name === 'if') {
+        // 处理 v-if
+        return processIf(node, prop, context, (ifNode, branch, isRoot) => {
+          return () => {
+            if (isRoot) {
+              ifNode.codegenNode = createCodegenNodeForBranch(
+                branch,
+                context,
+              )
+            } else {
+              // 将分支节点附加到父节点
+              const parent = context.parent!
+              const siblings = parent.children
+              const branchIndex = siblings.indexOf(ifNode)
+              parent.children.splice(branchIndex, 1, ...branch)
+            }
+          }
+        })
+      }
+    }
+  }
+}
+
+function processIf(
+  node: ElementNode,
+  dir: DirectiveNode,
+  context: TransformContext,
+  processCodegen?: (
+    node: IfNode,
+    branch: IfBranchNode,
+    isRoot: boolean,
+  ) => (() => void) | undefined,
+) {
+  // 创建条件表达式
+  const exp = dir.exp!
+  const branch = createIfBranch(node, exp)
+  
+  const ifNode: IfNode = {
+    type: NodeTypes.IF,
+    loc: node.loc,
+    branches: [branch],
+    codegenNode: undefined,
+  }
+  
+  // 替换原始节点
+  context.replaceNode(ifNode)
+  
+  if (processCodegen) {
+    return processCodegen(ifNode, branch, true)
+  }
+}
+```
+
+#### v-for 转换器实现
+
+```typescript
+// packages/compiler-core/src/transforms/vFor.ts
+export const transformFor: NodeTransform = (node, context) => {
+  if (node.type === NodeTypes.ELEMENT) {
+    const forDir = findDir(node, 'for')
+    if (forDir) {
+      return processFor(node, forDir, context, (forNode) => {
+        // 创建渲染列表函数
+        const renderExp = createCallExpression(context.helper(RENDER_LIST), [
+          forDir.exp!,
+          createFunctionExpression(
+            createForLoopParams(forNode.parseResult),
+            node.children.length === 1
+              ? node.children[0]
+              : createSequenceExpression(node.children),
+            false,
+            node.loc,
+          ),
+        ])
+        
+        // 替换为列表渲染表达式
+        context.replaceNode({
+          type: NodeTypes.FOR,
+          loc: node.loc,
+          source: forDir.exp!,
+          valueAlias: forNode.parseResult[0],
+          keyAlias: forNode.parseResult[1],
+          indexAlias: forNode.parseResult[2],
+          children: node.children,
+          codegenNode: renderExp,
+        })
+      })
+    }
+  }
+}
+```
+
+### 3. 代码生成器 (Code Generator)
+
+#### 渲染函数生成
+
+```typescript
+// packages/compiler-core/src/codegen.ts
+export function generate(
+  ast: RootNode,
+  options: CodegenOptions = {},
+): CodegenResult {
+  const context = createCodegenContext(ast, options)
+  const { mode, push, indent, deindent } = context
+  
+  // 生成导入语句
+  if (ast.helpers.size) {
+    genHelpers(ast.helpers, context)
+  }
+  
+  // 生成渲染函数
+  push(`function render(`)
+  const args = ['_ctx', '_cache']
+  push(args.join(', '))
+  push(`) {`)
+  indent()
+  
+  // 生成渲染逻辑
+  if (ast.codegenNode) {
+    genNode(ast.codegenNode, context)
+  } else {
+    push(`return `)
+    if (ast.children.length === 1) {
+      genNode(ast.children[0], context)
+    } else {
+      push(`[`)
+      for (let i = 0; i < ast.children.length; i++) {
+        genNode(ast.children[i], context)
+        if (i < ast.children.length - 1) {
+          push(`,`)
+        }
+      }
+      push(`]`)
+    }
+  }
+  
+  deindent()
+  push(`}`)
+  
+  return {
+    code: context.code,
+    ast,
+    map: context.map,
+  }
+}
+```
+
+## 虚拟DOM源码分析
+
+### 1. VNode 创建
+
+```typescript
+// packages/runtime-core/src/vnode.ts
+export function createVNode(
+  type: VNodeTypes,
+  props: (Data & VNodeProps) | null = null,
+  children: unknown = null,
+  patchFlag: number = 0,
+  dynamicProps: string[] | null = null,
+  isBlockNode = false,
+): VNode {
+  // 类型检查和规范化
+  if (!type) {
+    if (__DEV__) {
+      warn(`Invalid vnode type when creating vnode: ${type}.`)
+    }
+    type = Comment
+  }
+  
+  // 处理类组件
+  if (isClassComponent(type)) {
+    type = type.__vccOpts
+  }
+  
+  // 处理属性和样式
+  if (props) {
+    props = guardReactiveProps(props)!
+    let { class: klass, style } = props
+    if (klass && !isString(klass)) {
+      props.class = normalizeClass(klass)
+    }
+    if (isObject(style)) {
+      props.style = normalizeStyle(style)
+    }
+  }
+  
+  // 计算形状标志
+  const shapeFlag = isString(type)
+    ? ShapeFlags.ELEMENT
+    : __FEATURE_SUSPENSE__ && isSuspense(type)
+      ? ShapeFlags.SUSPENSE
+      : isTeleport(type)
+        ? ShapeFlags.TELEPORT
+        : isObject(type)
+          ? ShapeFlags.STATEFUL_COMPONENT
+          : isFunction(type)
+            ? ShapeFlags.FUNCTIONAL_COMPONENT
+            : 0
+  
+  return createBaseVNode(
+    type,
+    props,
+    children,
+    patchFlag,
+    dynamicProps,
+    shapeFlag,
+    isBlockNode,
+    true,
+  )
+}
+```
+
+### 2. 块树优化
+
+```typescript
+// packages/runtime-core/src/vnode.ts
+export function openBlock(disableTracking = false): void {
+  blockStack.push((currentBlock = disableTracking ? null : []))
+}
+
+export function createBlock(
+  type: VNodeTypes,
+  props?: Record<string, any> | null,
+  children?: any,
+  patchFlag?: number,
+  dynamicProps?: string[],
+): VNode {
+  return setupBlock(
+    createVNode(
+      type,
+      props,
+      children,
+      patchFlag,
+      dynamicProps,
+      true, // isBlock: prevent a block from tracking itself
+    ),
+  )
+}
+
+function setupBlock(vnode: VNode) {
+  // 保存当前块的动态子节点
+  vnode.dynamicChildren = 
+    isBlockTreeEnabled > 0 ? currentBlock || (EMPTY_ARR as any) : null
+  
+  // 关闭块
+  closeBlock()
+  
+  // 将块作为父块的子节点跟踪
+  if (isBlockTreeEnabled > 0 && currentBlock) {
+    currentBlock.push(vnode)
+  }
+  
+  return vnode
+}
+```
+
+### 3. Diff 算法实现
+
+```typescript
+// packages/runtime-core/src/renderer.ts
+export function patch(
+  n1: VNode | null,
+  n2: VNode,
+  container: RendererElement,
+  anchor: RendererNode | null,
+  parentComponent: ComponentInternalInstance | null,
+  parentSuspense: SuspenseBoundary | null,
+  isSVG: boolean,
+  slotScopeIds: string[] | null,
+  optimized: boolean,
+) {
+  // 相同节点类型，直接更新
+  if (n1 && isSameVNodeType(n1, n2)) {
+    patchElement(n1, n2, container, anchor, parentComponent, parentSuspense, isSVG, slotScopeIds, optimized)
+  } else {
+    // 不同类型节点，卸载旧节点，挂载新节点
+    if (n1) {
+      unmount(n1, parentComponent, parentSuspense, true)
+    }
+    mountElement(n2, container, anchor, parentComponent, parentSuspense, isSVG, slotScopeIds, optimized)
+  }
+}
+
+function patchElement(
+  n1: VNode,
+  n2: VNode,
+  container: RendererElement,
+  anchor: RendererNode | null,
+  parentComponent: ComponentInternalInstance | null,
+  parentSuspense: SuspenseBoundary | null,
+  isSVG: boolean,
+  slotScopeIds: string[] | null,
+  optimized: boolean,
+) {
+  const el = (n2.el = n1.el!)
+  
+  // 获取新旧节点的 patchFlag
+  const oldPatchFlag = n1.patchFlag
+  const newPatchFlag = n2.patchFlag
+  
+  // 优化路径：根据 patchFlag 进行靶向更新
+  if (newPatchFlag > 0) {
+    if (newPatchFlag & PatchFlags.FULL_PROPS) {
+      // 全属性更新
+      patchProps(el, n2, oldProps, newProps, parentComponent, parentSuspense, isSVG)
+    } else {
+      // 部分属性更新
+      if (newPatchFlag & PatchFlags.CLASS) {
+        if (oldProps.class !== newProps.class) {
+          hostPatchProp(el, 'class', null, newProps.class, isSVG)
+        }
+      }
+      if (newPatchFlag & PatchFlags.STYLE) {
+        hostPatchProp(el, 'style', oldProps.style, newProps.style, isSVG)
+      }
+      // 其他属性更新...
+    }
+  }
+  
+  // 处理子节点
+  patchChildren(n1, n2, el, anchor, parentComponent, parentSuspense, isSVG, slotScopeIds, optimized)
+}
+```
+
+## 组件系统源码分析
+
+### 1. 组件实例创建
+
+```typescript
+// packages/runtime-core/src/component.ts
+export function createComponentInstance(
+  vnode: VNode,
+  parent: ComponentInternalInstance | null,
+  suspense: SuspenseBoundary | null,
+) {
+  const type = vnode.type as ConcreteComponent
+  
+  const instance: ComponentInternalInstance = {
+    uid: uid++,
+    type,
+    parent,
+    appContext: parent ? parent.appContext : vnode.appContext,
+    
+    // 生命周期状态
+    isMounted: false,
+    isUnmounted: false,
+    
+    // 响应式数据
+    props: EMPTY_OBJ,
+    attrs: EMPTY_OBJ,
+    slots: EMPTY_OBJ,
+    
+    // 渲染相关
+    vnode,
+    subTree: null!,
+    update: null!,
+    render: null,
+    
+    // setup 相关
+    setupState: EMPTY_OBJ,
+    setupContext: undefined,
+    
+    // 依赖注入
+    provides: parent ? parent.provides : Object.create(appContext.provides),
+    
+    // 其他属性...
+  }
+  
+  return instance
+}
+```
+
+### 2. Setup 函数执行
+
+```typescript
+// packages/runtime-core/src/component.ts
+export function setupComponent(
+  instance: ComponentInternalInstance,
+  isSSR = false,
+) {
+  const { props, children } = instance.vnode
+  const isStateful = isStatefulComponent(instance)
+  
+  // 初始化 props 和 slots
+  initProps(instance, props, isStateful, isSSR)
+  initSlots(instance, children)
+  
+  // 执行 setup 函数
+  const setupResult = isStateful
+    ? setupStatefulComponent(instance, isSSR)
+    : undefined
+  
+  return setupResult
+}
+
+function setupStatefulComponent(
+  instance: ComponentInternalInstance,
+  isSSR: boolean,
+) {
+  const Component = instance.type as ComponentOptions
+  
+  // 创建 setup 上下文
+  const setupContext = instance.setupContext =
+    Component.setup?.length > 1 ? createSetupContext(instance) : undefined
+  
+  // 执行 setup 函数
+  const setupResult = callWithErrorHandling(
+    Component.setup!,
+    instance,
+    ErrorCodes.SETUP_FUNCTION,
+    [instance.props, setupContext],
+  )
+  
+  // 处理 setup 返回值
+  handleSetupResult(instance, setupResult, isSSR)
+}
+
+function handleSetupResult(
+  instance: ComponentInternalInstance,
+  setupResult: unknown,
+  isSSR: boolean,
+) {
+  if (isFunction(setupResult)) {
+    // setup 返回渲染函数
+    instance.render = setupResult
+  } else if (isObject(setupResult)) {
+    // setup 返回响应式状态
+    instance.setupState = proxyRefs(setupResult)
+  } else if (__DEV__ && setupResult !== undefined) {
+    warn(`setup() should return an object or a function.`)
+  }
+  
+  finishComponentSetup(instance, isSSR)
+}
+```
+
+## 总结
+
+通过深入分析 Vue.js 的核心源码，我们可以看到：
+
+1. **响应式系统**：基于 Proxy 的细粒度依赖收集和派发更新机制
+2. **编译器**：三阶段编译流程（解析→转换→代码生成）的完整实现
+3. **虚拟DOM**：块树优化和靶向更新的高性能 Diff 算法
+4. **组件系统**：组合式 API 的完整生命周期管理
+
+这些核心模块的精心设计和实现，共同构成了 Vue.js 高性能、易用性和可维护性的技术基础。
