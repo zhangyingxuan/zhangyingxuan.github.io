@@ -7,14 +7,14 @@ title: 张颖旋的个人博客
 subtitle: ""
 description: ""
 keywords:
-author: John Doe
+author: blowsysun
 language: zh-CN # 指定语言，会影响主题显示的语言，按需修改
 # language: en
 timezone: ""
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://example.com
+url: https://zhangyingxuan.github.io
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
