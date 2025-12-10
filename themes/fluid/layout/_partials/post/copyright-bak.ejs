@@ -9,24 +9,6 @@
     license = license.toUpperCase()
   %>
 
-  <% 
-    const title = page.title;
-    const regex = /(\d{4}-\d{2}-\d{2})/;  // 匹配 YYYY-MM-DD
-    const match = title.match(regex);
-    let displayDate;
-
-    if (match) {
-      // 提取日期字符串并转换为日期对象（供格式化）
-      const dateObj = new Date(match[1]);  // 如 "2024-05-20" → Date 对象
-      // 按自定义格式渲染（支持 Moment.js 语法，如 YYYY年MM月DD日）
-      displayDate = date(dateObj, 'YYYY年MM月DD日');  // 结果："2024年05月20日"
-      // 或用主题全局配置：displayDate = date(dateObj, config.date_format);
-    } else {
-      // 无标题日期时用默认 date 字段（按主题配置的 date_format 格式化）
-      displayDate = full_date(page.date, theme.post.copyright.post_date.format || 'LL');
-    }
-  %>
-
   <div class="license-box my-3">
     <div class="license-title">
       <div><%= page.title %></div>
@@ -42,7 +24,7 @@
       <% if (theme.post.copyright.post_date.enable && page.date) { %>
         <div class="license-meta-item license-meta-date">
           <div><%- __('post.copyright.posted') %></div>
-          <div><%= displayDate %></div>
+          <div><%= full_date(page.date, theme.post.copyright.post_date.format || 'LL') %></div>
         </div>
       <% } %>
       <% if (theme.post.copyright.update_date.enable && page.updated && compare_date(page.date, page.updated)) { %>
