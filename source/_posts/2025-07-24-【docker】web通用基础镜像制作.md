@@ -1,13 +1,10 @@
 ---
-title: 【Docker】Web通用基础镜像制作完全指南
+title: 2025-07-24-【docker】web通用基础镜像制作
 description: 企业级Web应用Docker基础镜像的最佳实践，涵盖安全加固、性能优化、运维工具和扩展配置
 categories:
-  - 工程化
+  - docker
 tags:
   - docker
-  - 容器化
-  - 安全
-  - 性能优化
   - devops
 ---
 

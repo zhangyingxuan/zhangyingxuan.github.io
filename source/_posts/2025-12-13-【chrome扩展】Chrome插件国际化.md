@@ -1,12 +1,10 @@
 ---
-title: Chrome插件国际化(i18n)最佳实践
+title: 2025-12-13-【Chrome扩展】Chrome插件国际化
 date: 2025-12-13 16:50:00
-tags:
-  - Chrome Extension
-  - i18n
-  - 前端开发
 categories:
   - Chrome扩展
+tags:
+  - i18n
 ---
 
 在全球化日益深入的今天，开发一款支持多语言的 Chrome 插件（Extension）对于扩大用户群体至关重要。Chrome 官方提供了强大的 `chrome.i18n` API，使得插件的国际化（Internationalization，简称 i18n）变得标准化且易于实现。
@@ -270,5 +268,5 @@ Chrome 的语言匹配策略如下：
 
 [prompt]
 
-1. 为当前 chrome v3 拓展添加国际化支持，至少支持简体中文、繁体中文、英文、日语，默认简体中文，支持主动切换语言
+1. 为当前 chrome v3 拓展添加国际化支持，至少支持简体中文、繁体中文、英文、日语，默认简体中文；添加切换语言图标，点击后切换语言
 2. 添加关于图标，点击后跳转https://zhangyingxuan.github.io/about 页面

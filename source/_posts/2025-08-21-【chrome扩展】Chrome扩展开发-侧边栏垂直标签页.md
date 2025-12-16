@@ -1,6 +1,5 @@
 ---
-title: 2025-10-16 【chrome扩展】Chrome扩展开发-垂直标签页管理d
-date: 2025-10-16 19:18:27
+title: 2025-08-21-【chrome扩展】Chrome扩展开发-侧边栏垂直标签页
 description:
 categories:
   - chrome扩展
