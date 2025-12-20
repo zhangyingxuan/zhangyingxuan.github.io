@@ -148,6 +148,7 @@ git clone https://github.com/next-theme/hexo-theme-next themes/next
 在`_config.yml` 里 theme: next 即可
 
 - 页面配置排序
+
   > 修改`_config.yml`配置文件
   > 找到：`index_generator:`配置
   > path: ""
@@ -155,6 +156,11 @@ git clone https://github.com/next-theme/hexo-theme-next themes/next
   > order_by: -path # 排序方式，按 title 中时间降序
   > 内置字段：date（创建时间）、updated（修改时间）、title（标题）、path（URL 路径）、slug（别名）等；
   > 自定义字段：用户可在 Front-matter 中添加任意字段（如 priority: 1），并通过 order_by: priority 排序。
+
+- 开启 mermaid 能力
+  > 打开 `themes/next/_config.yml` 文件
+  > 开启 `mermaid:
+      enable: true` 设置为true
 
 ### 6. 总结
 
