@@ -6,14 +6,15 @@
         <%- page.author || config.author %>
       </span>
     <% } %>
-    <% if (theme.post.meta.date.enable) { %>
+    <!-- 去除时间 -->
+    <!-- <% if (theme.post.meta.date.enable) { %>
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
         <time datetime="<%= full_date(page.date, 'YYYY-MM-DD HH:mm') %>" pubdate>
           <%= full_date(page.date, theme.post.meta.date.format) %>
         </time>
       </span>
-    <% } %>
+    <% } %> -->
   </div>
 
   <div class="mt-1">

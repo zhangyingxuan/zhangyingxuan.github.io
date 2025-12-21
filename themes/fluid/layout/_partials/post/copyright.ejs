@@ -21,12 +21,13 @@
           <div><%- page.author || config.author %></div>
         </div>
       <% } %>
-      <% if (theme.post.copyright.post_date.enable && page.date) { %>
+    <!-- 去除时间 -->
+      <!-- <% if (theme.post.copyright.post_date.enable && page.date) { %>
         <div class="license-meta-item license-meta-date">
           <div><%- __('post.copyright.posted') %></div>
           <div><%= full_date(page.date, theme.post.copyright.post_date.format || 'LL') %></div>
         </div>
-      <% } %>
+      <% } %> -->
       <% if (theme.post.copyright.update_date.enable && page.updated && compare_date(page.date, page.updated)) { %>
         <div class="license-meta-item license-meta-date">
           <div><%- __('post.copyright.updated') %></div>
