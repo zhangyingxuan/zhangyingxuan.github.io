@@ -1,5 +1,5 @@
 ---
-title: 2025-09-23 【架构】vite性能优化最佳实践
+title: 2025-09-24 【架构】nginx支持brotli
 description:
 categories:
   - 架构设计
