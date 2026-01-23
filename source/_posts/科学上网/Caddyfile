@@ -1,0 +1,156 @@
+xxxx.com {
+    # 强制启用 H3 响应头
+    header Alt-Svc "h3=\":443\"; ma=2592000"    
+    
+    # 1. 科学上网路径反代 (保持不变)
+    handle /lm7TqxOZV* {
+        reverse_proxy localhost:27076
+    }
+
+    # 网站根目录
+    root * /workspace/www/image-tools
+    
+    # 启用文件服务
+    file_server {
+        # 隐藏 . 开头的文件
+        hide .git .env .DS_Store
+    }
+    
+    # ==========================================
+    # WASM 文件配置
+    # ==========================================
+    @wasm {
+        path *.wasm
+    }
+    header @wasm {
+        Content-Type application/wasm
+        # SharedArrayBuffer 支持（WASM 多线程需要）
+        Cross-Origin-Opener-Policy same-origin
+        Cross-Origin-Embedder-Policy require-corp
+    }
+    
+    # ==========================================
+    # 静态资源缓存策略
+    # ==========================================
+    
+    # JS/CSS 文件 - 长期缓存（带 hash 的资源）
+    @staticAssets {
+        path *.js *.css *.mjs
+    }
+    header @staticAssets {
+        Cache-Control "public, max-age=31536000, immutable"
+    }
+    
+    # 图片文件 - 长期缓存
+    @images {
+        path *.png *.jpg *.jpeg *.gif *.ico *.svg *.webp *.avif
+    }
+    header @images {
+        Cache-Control "public, max-age=31536000, immutable"
+    }
+    
+    # 字体文件 - 长期缓存
+    @fonts {
+        path *.woff *.woff2 *.ttf *.eot *.otf
+    }
+    header @fonts {
+        Cache-Control "public, max-age=31536000, immutable"
+        Access-Control-Allow-Origin *
+    }
+    
+    # HTML 文件 - 不缓存
+    @html {
+        path *.html
+    }
+    header @html {
+        Cache-Control "no-cache, no-store, must-revalidate"
+        Pragma no-cache
+        Expires 0
+    }
+    
+    # ==========================================
+    # SPA 路由回退（仅对页面路由，不对静态资源）
+    # ==========================================
+    
+    # 静态资源直接返回，不回退
+    @staticFiles {
+        path *.js *.mjs *.css *.wasm *.png *.jpg *.jpeg *.gif *.ico *.svg *.webp *.avif *.woff *.woff2 *.ttf *.eot *.otf *.json *.map
+    }
+    handle @staticFiles {
+        file_server
+    }
+    
+    # _nuxt 目录下的资源直接返回
+    handle /_nuxt/* {
+        file_server
+    }
+    
+    # 转换页面路由 - 回退到对应的预渲染 HTML
+    @convertRoutes {
+        path /convert/*
+        not file
+        not path *.js *.mjs *.css *.wasm *.json *.map
+    }
+    handle @convertRoutes {
+        try_files {path} {path}.html {path}/index.html /convert/index.html
+    }
+    
+    # 其他页面路由回退到 index.html
+    handle {
+        try_files {path} {path}.html {path}/index.html /index.html
+    }
+    
+    # ==========================================
+    # 安全头
+    # ==========================================
+    header {
+        # 防止点击劫持
+        X-Frame-Options "SAMEORIGIN"
+        # 防止 MIME 类型嗅探
+        X-Content-Type-Options "nosniff"
+        # XSS 保护
+        X-XSS-Protection "1; mode=block"
+        # 引用策略
+        Referrer-Policy "strict-origin-when-cross-origin"
+        # 权限策略
+        Permissions-Policy "geolocation=(), microphone=(), camera=()"
+        # 移除 Server 头
+        -Server
+    }
+    
+    # ==========================================
+    # Gzip/Brotli 压缩（Caddy 默认启用）
+    # ==========================================
+    encode gzip zstd
+    
+    # ==========================================
+    # 日志配置
+    # ==========================================
+    log {
+        output file /var/log/caddy/imagetools.access.log {
+            roll_size 10mb
+            roll_keep 10
+            roll_keep_for 720h
+        }
+        format json
+    }
+    
+    # ==========================================
+    # 错误处理
+    # ==========================================
+    handle_errors {
+        # 静态资源 404 直接返回 404，不回退
+        @staticFile404 {
+            expression {http.error.status_code} == 404
+            path *.js *.mjs *.css *.wasm *.png *.jpg *.jpeg *.gif *.ico *.svg *.webp *.avif *.woff *.woff2 *.ttf *.eot *.otf *.json *.map
+        }
+        respond @staticFile404 "Not Found" 404
+        
+        # 页面 404 回退到 index.html
+        @page404 {
+            expression {http.error.status_code} == 404
+        }
+        rewrite @page404 /index.html
+        file_server
+    }
+}

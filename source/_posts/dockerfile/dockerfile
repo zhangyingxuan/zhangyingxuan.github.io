@@ -1,0 +1,41 @@
+# 使用固定版本的基础镜像，避免latest带来的不确定性
+FROM csighub.tencentyun.com/tkex/tlinux2.2-bridge-tcloud-underlay-mini:2.2.0
+
+# 设置工作目录
+WORKDIR /app
+
+# 合并所有目录创建和vim配置到单个RUN指令
+RUN mkdir -p /data/conf /data/logs && \
+    echo "set encoding=utf-8" >> ~/.vimrc && \
+    echo "set fileencodings=utf-8,gb2312,gbk,gb18030" >> ~/.vimrc && \
+    echo "set termencoding=utf-8" >> ~/.vimrc
+
+# 使用COPY替代ADD（除非需要解压缩或网络下载）
+COPY ./tkex_start.sh /etc/kickStart.d/
+COPY ./conf/nginx/nginx.conf /data/conf/
+COPY ./conf/logrotate/nginx.logrotate /data/conf/
+
+# 合并所有安装和权限设置，并清理yum缓存
+RUN chmod u+x /etc/kickStart.d/tkex_start.sh && \
+    yum install -y nginx-1.20.1-10.el7 logrotate-3.8.6-14.tl2 && \
+    yum clean all && \
+    rm -rf /var/cache/yum
+
+# 设置非root用户运行（安全最佳实践）
+RUN groupadd -r nginx && useradd -r -g nginx nginx && \
+    chown -R nginx:nginx /data/logs
+
+# 暴露端口
+EXPOSE 80
+EXPOSE 8080
+EXPOSE 443
+
+# 添加健康检查（对于web服务很重要）
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:80/ || exit 1
+
+# 设置启动命令
+# CMD ["/etc/kickStart.d/tkex_start.sh"]
+# 注意 不要使用 CMD/ENTRYPOINT 命令设置自己的 Docker 启动命令，因为tlinux基础镜像启动需要CMD ["/usr/sbin/initStart"]，即systemd作为1号守护进程。
+# 用户再写 CMD/ENTRYPOINT 会导致原CMD命令覆盖，导致 systemd 无法启动。导致相关依赖 agent 无法启动。
+# 另外，由于织云安装脚本默认有来源IP限制，因此需要在 IDC 环境构建镜像。建议通过Coding、蓝盾、OCI 等平台构建

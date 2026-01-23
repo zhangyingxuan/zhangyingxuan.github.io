@@ -3,7 +3,7 @@
 # 占用空间：127 MB
 # 使用bash替换ubuntu的dash
 # 设置nginx默认使用前台运行 daemon off;
-FROM dockerhub.woa.com/arm64v8/ubuntu:20.04
+FROM dockerhub.xxx.com/arm64v8/ubuntu:20.04
 
 RUN apt-get update && apt-get install -y tzdata && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "Asia/Shanghai" > /etc/timezone \
 && apt-get install -y wget net-tools telnet inetutils-ping tcpdump tar procps vim zip unzip cron curl apt-utils \

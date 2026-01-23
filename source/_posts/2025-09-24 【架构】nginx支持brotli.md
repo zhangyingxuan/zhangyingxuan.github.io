@@ -4,8 +4,7 @@ description:
 categories:
   - 架构设计
 tags:
-  - vite
-  - RUM
+  - brotli
 ---
 
 针对 **Nginx/1.18.0**（这是 Ubuntu 20.04 等系统的默认版本），由于官方二进制包不含 Brotli，最简单的办法是**通过动态模块注入**。

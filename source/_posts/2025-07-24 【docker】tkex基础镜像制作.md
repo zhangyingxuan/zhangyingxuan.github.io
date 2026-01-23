@@ -15,7 +15,7 @@ tags:
 
 # 二、web 基础镜像制作
 
-[项目地址 nginx_fed](https://git.woa.com/tax_delivery/base_images/nginx_fed)
+[项目地址 nginx_fed](https://git.xxx/nginx_fed)
 
 ## 2.1 dockerfile 方式创建
 
